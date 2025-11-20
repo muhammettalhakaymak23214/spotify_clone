@@ -6,6 +6,8 @@ class AppPaddings {
   //bottom
   static const EdgeInsets bottom10 = EdgeInsets.only(bottom: 10.0);
   static const EdgeInsets bottom130 = EdgeInsets.only(bottom: 130);
+
+  static const EdgeInsets right10 = EdgeInsets.only(right: 10.0);
   
 
 }

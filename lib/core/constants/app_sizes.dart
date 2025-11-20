@@ -1,5 +1,6 @@
 class AppSizes {
   static const double avatarSize = 50;
+  static const double avatarSize2 = 50;
 
   static const double bottomSheetHeight = 300;
 

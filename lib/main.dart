@@ -14,12 +14,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Spotify Clone',
       debugShowCheckedModeBanner: false,
+      
       theme: ThemeData(
         scaffoldBackgroundColor:AppColors.darkToneInk    , //const Color.fromARGB(100, 18, 18, 18),
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        appBarTheme: AppBarThemeData(actionsPadding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),  titleSpacing: 10, titleTextStyle: TextStyle(fontSize: 25,fontWeight: FontWeight.bold)),
         bottomAppBarTheme: BottomAppBarThemeData(
           height: 70,
-          color: Colors.transparent,
+          color: const Color.fromARGB(140, 0, 0, 0),
         ),
         tabBarTheme: TabBarThemeData(
           dividerColor: Colors.transparent,

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:spotify_clone/view/home_view.dart';
+import 'package:spotify_clone/view/library_view.dart';
 import 'package:spotify_clone/view/premium_view.dart';
+import 'package:spotify_clone/view/search_view.dart';
 import 'package:spotify_clone/widgets/custom_bottom_app_bar.dart';
 
 
@@ -38,9 +41,9 @@ TabBarView tabBarView(TabController controller) {
     controller: controller,
     physics: NeverScrollableScrollPhysics(),
     children: [
-      Container(color: Colors.amber),
-      Container(color: const Color.fromARGB(255, 3, 40, 8)),
-      Container(color: const Color.fromARGB(255, 32, 7, 255)),
+      HomeView(),
+      SearchView(),
+      LibraryView(),
       PremiumView(),
     ],
   );
