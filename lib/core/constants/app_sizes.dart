@@ -2,6 +2,7 @@ import 'dart:ui';
 
 class AppSizes {
   static final double size50 = 50;
+  static final double size30 = 30;
   //Avatar Size
   static final double avatarSize = 50;
   static final double avatarSize2 = 50;
@@ -9,8 +10,9 @@ class AppSizes {
   static final double bottomSheetHeight = 300;
   //Icon Size
   static final double iconSize = 22;
-  //Font Size
+  //Font Sizes
   static final double fontSize = 12;
+  static final double fontSize16 = 16;
   //AppBar Size
   static final Size bottomPreferredSize = Size.fromHeight(50);
 

@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
+import 'package:spotify_clone/core/constants/app_paddings.dart';
 import 'package:spotify_clone/core/constants/app_sizes.dart';
+import 'package:spotify_clone/core/constants/app_strings.dart';
 import 'package:spotify_clone/view/search_detail_view.dart';
-import 'package:spotify_clone/widgets/custom_app_bar.dart';
 
 class SearchView extends StatefulWidget {
   const SearchView({super.key});
-
   @override
   State<SearchView> createState() => _SearchViewState();
 }
 
 class _SearchViewState extends State<SearchView> {
+  final double expandedHeight = 130;
+  final EdgeInsetsGeometry paddingH10V5 = EdgeInsetsGeometry.symmetric(horizontal: 10 ,vertical: 5);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,10 +25,10 @@ class _SearchViewState extends State<SearchView> {
               floating: true,
               snap: false,
               pinned: true,
-              expandedHeight: 130,
-              backgroundColor: Colors.black,
+              expandedHeight: expandedHeight,
+              backgroundColor: AppColors.black,
               leading: Padding(
-                padding: const EdgeInsets.only(left: 15, right: 5),
+                padding: AppPaddings.leadingPadding,
                 child: Container(
                   width: AppSizes.avatarSize2,
                   height: AppSizes.avatarSize2,
@@ -35,16 +37,16 @@ class _SearchViewState extends State<SearchView> {
                     color: AppColors.blackPanther,
                   ),
                   child: Center(
-                    child: Image.asset("assets/png/profile_photo.png"),
+                    child: Image.asset(AppStrings.profileImagePath),
                   ),
                 ),
               ),
-              title: Text("Ara"),
+              title: Text(AppStrings.search),
               actions: [
                 Padding(
-                  padding: const EdgeInsets.only(right: 8),
+                  padding: AppPaddings.right10,
                   child: IconButton(
-                    color: Colors.white,
+                    color: AppColors.white,
                     onPressed: () {},
                     icon: FaIcon(FontAwesomeIcons.camera),
                   ),
@@ -53,7 +55,7 @@ class _SearchViewState extends State<SearchView> {
               bottom: PreferredSize(
                 preferredSize: Size.fromHeight(60),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                  padding: paddingH10V5,
                   child: GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -66,26 +68,26 @@ class _SearchViewState extends State<SearchView> {
                     child: Container(
                       height: 50,
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: AppColors.white,
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                       ),
                       child: Row(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: AppPaddings.all10,
                             child: Icon(
                               Icons.search,
-                              color: const Color.fromARGB(255, 0, 0, 0),
-                              size: 30,
+                              color: AppColors.black,
+                              size: AppSizes.size30,
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 5),
+                            padding: AppPaddings.left10,
                             child: Text(
-                              "Ne dinlemek istiyorsun?",
+                              AppStrings.searchBarTitle,
                               style: TextStyle(
-                                color: const Color.fromARGB(255, 0, 0, 0),
-                                fontSize: 16,
+                                color: AppColors.black,
+                                fontSize: AppSizes.fontSize16,
                               ),
                             ),
                           ),

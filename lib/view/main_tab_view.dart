@@ -14,7 +14,7 @@ class MainTabView extends StatefulWidget {
 }
 
 class _MainTabViewState extends State<MainTabView>
-    with TickerProviderStateMixin {
+  with TickerProviderStateMixin {
   late TabController tabController;
 
   @override
@@ -31,10 +31,7 @@ class _MainTabViewState extends State<MainTabView>
       bottomNavigationBar: CustomBottomAppBar(tabController: tabController),
     );
   }
-
-  
 }
-
 
 TabBarView tabBarView(TabController controller) {
   return TabBarView(

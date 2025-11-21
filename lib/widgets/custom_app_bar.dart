@@ -23,8 +23,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   final Size minSize = Size(0, 30);
 
-
-
   @override
   Widget build(BuildContext context) {
     return AppBar(

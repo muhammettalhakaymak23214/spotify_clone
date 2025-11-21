@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
 import 'package:spotify_clone/core/constants/app_paddings.dart';
 import 'package:spotify_clone/core/constants/app_sizes.dart';
+import 'package:spotify_clone/core/constants/app_strings.dart';
 import 'package:spotify_clone/widgets/custom_app_bar.dart';
 
 class HomeView extends StatefulWidget {
@@ -37,7 +38,7 @@ class _HomeViewState extends State<HomeView> {
                             ),
                   onPressed: () {
                    
-                 }, child: Text("Tümü", style: TextStyle(color: AppColors.white),)),
+                 }, child: Text(AppStrings.all, style: TextStyle(color: AppColors.white),)),
                ),
              ),
              Padding(
@@ -56,7 +57,7 @@ class _HomeViewState extends State<HomeView> {
                             ),
                   onPressed: () {
                    
-                 }, child: Text("Müzik", style: TextStyle(color: AppColors.white),)),
+                 }, child: Text(AppStrings.music,  style: TextStyle(color: AppColors.white),)),
                ),
              ),
              Padding(
@@ -75,7 +76,7 @@ class _HomeViewState extends State<HomeView> {
                             ),
                   onPressed: () {
                    
-                 }, child: Text("Podcast'ler", style: TextStyle(color: AppColors.white),)),
+                 }, child: Text(AppStrings.podcasts,  style: TextStyle(color: AppColors.white),)),
                ),
              ),
            ],
