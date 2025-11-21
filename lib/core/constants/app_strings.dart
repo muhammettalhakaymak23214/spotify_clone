@@ -25,5 +25,7 @@ class AppStrings {
   static final String search = "Ara";
   static final String library = "Kütüphanen";
 
+  static final String sampleImageUrl = "https://img.freepik.com/free-vector/gradient-album-cover-template_23-2150597431.jpg?semt=ais_hybrid&w=740&q=80";
+
 
 }

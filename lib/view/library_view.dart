@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
 import 'package:spotify_clone/core/constants/app_strings.dart';
+import 'package:spotify_clone/models/library_model.dart';
+import 'package:spotify_clone/view_model/library_view_model.dart';
 import 'package:spotify_clone/widgets/custom_app_bar.dart';
 import 'package:spotify_clone/widgets/custom_bottom_sheet.dart';
 
@@ -13,6 +16,13 @@ class LibraryView extends StatefulWidget {
 }
 
 class _LibraryViewState extends State<LibraryView> {
+  final LibraryViewModel viewModel = LibraryViewModel();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +30,11 @@ class _LibraryViewState extends State<LibraryView> {
         actionButtonsData: [
           AppBarButtonData(
             icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
-            onPressed: () {},
+            onPressed: () {
+              viewModel.addItem(
+                
+              );
+            },
           ),
           AppBarButtonData(
             icon: FaIcon(FontAwesomeIcons.plus),
@@ -42,20 +56,25 @@ class _LibraryViewState extends State<LibraryView> {
         //Text(title ?? "", style: TextStyle(color: AppColors.white),
         appBarHeight: 110,
       ),
-      body: ListView(
-        children: [
-          Container(color: Colors.amber, height: 100),
-          SizedBox(height: 20),
-          Container(color: Colors.amber, height: 100),
-          SizedBox(height: 20),
-          Container(color: Colors.amber, height: 100),
-          SizedBox(height: 20),
-          Container(color: Colors.amber, height: 100),
-          SizedBox(height: 20),
-          Container(color: Colors.amber, height: 100),
-          SizedBox(height: 20),
-          Container(color: Colors.amber, height: 100),
-        ],
+      body: Observer(
+        builder: (context) => ListView.builder(
+          itemCount: viewModel.items.length,
+          itemBuilder: (context, index) {
+            final item = viewModel.items[index];
+            return ListTile(
+              leading: Image.network(
+                item.imageUrl ?? "",
+                    fit: BoxFit.cover,
+              ),
+              title: Text(
+                item.title ?? "",
+                style: TextStyle(color: Colors.white),
+              ),
+              subtitle: Text(item.subTitle ?? ""),
+              
+            );
+          },
+        ),
       ),
     );
   }
