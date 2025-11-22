@@ -23,9 +23,21 @@ class AppStrings {
   static final String profileImagePath = "assets/png/profile_photo.png";
 
   static final String search = "Ara";
-  static final String library = "Kütüphanen";
+  static final String library = "Kitaplığın";
 
   static final String sampleImageUrl = "https://img.freepik.com/free-vector/gradient-album-cover-template_23-2150597431.jpg?semt=ais_hybrid&w=740&q=80";
 
+
+  //drawer
+  static final String accountHeader = "muhammet";
+  static final String profileView = "Profili görüntüle";
+  static final String addAccount = "Hesap ekle";
+  static final String updates = "Yenilikler";
+  static final String listeningStats = "Dinleme istatistikleri";
+  static final String recentlyPlayed = "Son çalınanlar";
+  static final String notifications = "Güncellemelerin";
+  static final String settingsPrivacy = "Ayarlar ve gizlilik";
+  
+  
 
 }

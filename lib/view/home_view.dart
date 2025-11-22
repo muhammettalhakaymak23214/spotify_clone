@@ -20,6 +20,7 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(leading: Image.asset(imagePath),
+      onTap: () => Scaffold.of(context).openDrawer(),
          title: Row(
            children: [
             Padding(

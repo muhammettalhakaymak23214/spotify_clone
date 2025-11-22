@@ -25,15 +25,15 @@ class _LibraryViewState extends State<LibraryView> {
 
   @override
   Widget build(BuildContext context) {
+    final double appBarHeight = 110;
+
     return Scaffold(
       appBar: CustomAppBar(
         actionButtonsData: [
           AppBarButtonData(
             icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
             onPressed: () {
-              viewModel.addItem(
-                
-              );
+              viewModel.addItem();
             },
           ),
           AppBarButtonData(
@@ -49,33 +49,30 @@ class _LibraryViewState extends State<LibraryView> {
           AppBarButtonData(text: AppStrings.albums, onPressed: () {}),
           AppBarButtonData(text: AppStrings.artists, onPressed: () {}),
         ],
-        leading: Image.asset("assets/png/profile_photo.png"),
+        leading: Image.asset(AppStrings.profileImagePath),
+        onTap: () => Scaffold.of(context).openDrawer(),
         title: SizedBox(
-          child: Text("Kitaplığın", style: TextStyle(color: AppColors.white)),
+          child: Text(AppStrings.library, style: TextStyle(color: AppColors.white)),
         ),
-        //Text(title ?? "", style: TextStyle(color: AppColors.white),
-        appBarHeight: 110,
+        appBarHeight: appBarHeight,
       ),
       body: Observer(
         builder: (context) => ListView.builder(
           itemCount: viewModel.items.length,
           itemBuilder: (context, index) {
             final item = viewModel.items[index];
-            return ListTile(
-              leading: Image.network(
-                item.imageUrl ?? "",
-                    fit: BoxFit.cover,
-              ),
-              title: Text(
-                item.title ?? "",
-                style: TextStyle(color: Colors.white),
-              ),
-              subtitle: Text(item.subTitle ?? ""),
-              
-            );
+            return _customListTile(item);
           },
         ),
       ),
+    );
+  }
+
+  ListTile _customListTile(LibraryItem item) {
+    return ListTile(
+      leading: Image.network(item.imageUrl ?? "", fit: BoxFit.cover),
+      title: Text(item.title ?? "", style: TextStyle(color: Colors.white)),
+      subtitle: Text(item.subTitle ?? ""),
     );
   }
 }

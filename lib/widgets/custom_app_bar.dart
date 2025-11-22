@@ -12,11 +12,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.leading,
     this.appBarHeight,
     this.bottomButtonsData,
-    this.actionButtonsData,
+    this.actionButtonsData, this.onTap,
   });
 
   final Widget? title;
   final Image? leading;
+  final VoidCallback? onTap;
   final double? appBarHeight;
   final List<AppBarButtonData>? bottomButtonsData;
   final List<AppBarButtonData>? actionButtonsData;
@@ -91,14 +92,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Padding _leading() {
     return Padding(
       padding: AppPaddings.leadingPadding,
-      child: Container(
-        width: AppSizes.avatarSize2,
-        height: AppSizes.avatarSize2,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: AppColors.blackPanther,
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          width: AppSizes.avatarSize2,
+          height: AppSizes.avatarSize2,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: AppColors.blackPanther,
+          ),
+          child: Center(child: leading ?? SizedBox.shrink()),
         ),
-        child: Center(child: leading ?? SizedBox.shrink()),
       ),
     );
   }

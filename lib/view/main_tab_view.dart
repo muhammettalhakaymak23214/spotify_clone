@@ -4,7 +4,7 @@ import 'package:spotify_clone/view/library_view.dart';
 import 'package:spotify_clone/view/premium_view.dart';
 import 'package:spotify_clone/view/search_view.dart';
 import 'package:spotify_clone/widgets/custom_bottom_app_bar.dart';
-
+import 'package:spotify_clone/widgets/custom_drawer.dart';
 
 class MainTabView extends StatefulWidget {
   const MainTabView({super.key});
@@ -14,7 +14,7 @@ class MainTabView extends StatefulWidget {
 }
 
 class _MainTabViewState extends State<MainTabView>
-  with TickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late TabController tabController;
 
   @override
@@ -25,24 +25,26 @@ class _MainTabViewState extends State<MainTabView>
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
+      key: _scaffoldKey,
       extendBody: true,
-      body: tabBarView(tabController),
+      body: tabBarView(tabController , _scaffoldKey),
       bottomNavigationBar: CustomBottomAppBar(tabController: tabController),
+      drawer: SizedBox(
+        width: MediaQuery.of(context).size.width * 0.90,
+        child: CustomDrawer(),
+      ),
     );
   }
 }
 
-TabBarView tabBarView(TabController controller) {
+
+
+TabBarView tabBarView(TabController controller , GlobalKey<ScaffoldState> scaffoldKey) {
   return TabBarView(
     controller: controller,
     physics: NeverScrollableScrollPhysics(),
-    children: [
-      HomeView(),
-      SearchView(),
-      LibraryView(),
-      PremiumView(),
-    ],
+    children: [HomeView(), SearchView(scaffoldKey: scaffoldKey), LibraryView(), PremiumView()],
   );
 }
-

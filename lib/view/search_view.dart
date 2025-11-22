@@ -7,14 +7,20 @@ import 'package:spotify_clone/core/constants/app_strings.dart';
 import 'package:spotify_clone/view/search_detail_view.dart';
 
 class SearchView extends StatefulWidget {
-  const SearchView({super.key});
+  final GlobalKey<ScaffoldState> scaffoldKey; 
+  const SearchView({super.key, required this.scaffoldKey});
   @override
   State<SearchView> createState() => _SearchViewState();
 }
 
 class _SearchViewState extends State<SearchView> {
   final double expandedHeight = 130;
+  
+  
+
   final EdgeInsetsGeometry paddingH10V5 = EdgeInsetsGeometry.symmetric(horizontal: 10 ,vertical: 5);
+
+  _SearchViewState();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,15 +35,20 @@ class _SearchViewState extends State<SearchView> {
               backgroundColor: AppColors.black,
               leading: Padding(
                 padding: AppPaddings.leadingPadding,
-                child: Container(
-                  width: AppSizes.avatarSize2,
-                  height: AppSizes.avatarSize2,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppColors.blackPanther,
-                  ),
-                  child: Center(
-                    child: Image.asset(AppStrings.profileImagePath),
+                child: GestureDetector(
+                  onTap: () {
+                    widget.scaffoldKey.currentState!.openDrawer();
+                  } ,
+                  child: Container(
+                    width: AppSizes.avatarSize2,
+                    height: AppSizes.avatarSize2,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: AppColors.blackPanther,
+                    ),
+                    child: Center(
+                      child: Image.asset(AppStrings.profileImagePath),
+                    ),
                   ),
                 ),
               ),

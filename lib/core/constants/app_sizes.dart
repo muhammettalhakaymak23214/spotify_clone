@@ -3,6 +3,7 @@ import 'dart:ui';
 class AppSizes {
   static final double size50 = 50;
   static final double size30 = 30;
+  static final double size25 = 25;
   //Avatar Size
   static final double avatarSize = 50;
   static final double avatarSize2 = 50;

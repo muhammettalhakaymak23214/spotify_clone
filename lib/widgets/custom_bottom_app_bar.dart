@@ -52,7 +52,7 @@ class CustomBottomAppBar extends StatelessWidget {
 
 enum _MainTab { home, search, library, premium, create }
 
-extension MainTabExtension on _MainTab {
+extension _MainTabExtension on _MainTab {
   String get title {
     switch (this) {
       case _MainTab.home:
