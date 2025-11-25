@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
 import 'package:spotify_clone/core/constants/app_paddings.dart';
@@ -12,7 +13,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.leading,
     this.appBarHeight,
     this.bottomButtonsData,
-    this.actionButtonsData, this.onTap,
+    this.actionButtonsData, this.onTap, this.viewModel,
   });
 
   final Widget? title;
@@ -21,6 +22,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double? appBarHeight;
   final List<AppBarButtonData>? bottomButtonsData;
   final List<AppBarButtonData>? actionButtonsData;
+  final dynamic viewModel; 
 
   final Size minSize = Size(0, 30);
 
@@ -40,10 +42,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
+
+
+
+
+
   PreferredSize _bottom(BuildContext context) {
     return PreferredSize(
             preferredSize: AppSizes.bottomPreferredSize,
-            child: Container(
+            child: Observer(builder: (context) {
+               return Container(
               padding: AppPaddings.horizontal10,
               height: AppSizes.size50,
               child: ListView(
@@ -55,12 +63,19 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                         padding: AppPaddings.right10,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.blackPanther,
+                          backgroundColor:AppColors.blackPanther,
+                            
+                           
+                                
                             padding: AppPaddings.horizontal10,
                             minimumSize: minSize,
                             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           ),
-                          onPressed: data.onPressed,
+                          onPressed:
+                            data.onPressed,
+                          
+                          
+                           
                           child: Text(
                             data.text,
                             style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.white),
@@ -70,9 +85,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     )
                     .toList(),
               ),
-            ),
+            );
+            },)
           );
   }
+  
 
   Padding _title() {
     return Padding(padding: AppPaddings.top10, child: title ?? SizedBox());
@@ -112,9 +129,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 }
 
 class AppBarButtonData {
-  AppBarButtonData({this.icon, this.text = "Boş", required this.onPressed});
-
+  AppBarButtonData( {
+    this.type = "Boş", this.icon, this.text = "Boş", required this.onPressed});
   final String text;
   final Icon? icon;
   final VoidCallback onPressed;
+  final String type;
 }

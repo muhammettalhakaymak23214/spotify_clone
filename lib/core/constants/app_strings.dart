@@ -25,8 +25,8 @@ class AppStrings {
   static final String search = "Ara";
   static final String library = "Kitaplığın";
 
-  static final String sampleImageUrl = "https://img.freepik.com/free-vector/gradient-album-cover-template_23-2150597431.jpg?semt=ais_hybrid&w=740&q=80";
-
+  static final String sampleImageUrl =
+      "https://img.freepik.com/free-vector/gradient-album-cover-template_23-2150597431.jpg?semt=ais_hybrid&w=740&q=80";
 
   //drawer
   static final String accountHeader = "muhammet";
@@ -37,7 +37,14 @@ class AppStrings {
   static final String recentlyPlayed = "Son çalınanlar";
   static final String notifications = "Güncellemelerin";
   static final String settingsPrivacy = "Ayarlar ve gizlilik";
-  
-  
 
+  //token
+  static final String token = "Bearer ";
+  //api
+  static final String apiUrlPlaylist =
+      "https://api.spotify.com/v1/me/playlists";
+  static final String apiUrlAlbum = "https://api.spotify.com/v1/me/albums";
+  static final String apiUrlArtist =
+      "https://api.spotify.com/v1/me/following?type=artist";
+  static final String apiUrlPodcast = "https://api.spotify.com/v1/me/shows";
 }
