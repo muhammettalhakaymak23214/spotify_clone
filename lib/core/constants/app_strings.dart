@@ -39,7 +39,7 @@ class AppStrings {
   static final String settingsPrivacy = "Ayarlar ve gizlilik";
 
   //token
-  static final String token = "Bearer ";
+  static final String token = "Bearer BQDXllnn9VRyaYdMCD62yCqLM-bk_cY-nHMQTRhEOTBTHiwjvjEDtcAwrep_4U0Ni5bdeLfH7F25sOOw_295UEHNv_Yt_ceTgnB6ZxstF4NjfHvy5f4vti3S73XTvSEdS5wl3rVBrNBKfGxO4oH4-SRE77XrVLqwtwnhWaUTeMMZaSi74kaq3aivigFz9gd--9EzpVzbLHEvxjBBA6nt60IhBXcmWH-poFKv3PtVpSw-YE-BZDqSk3pSkf2veSHjP4zk7OP6HhJcanut-oMCfx5BaxCFL0QMRP7VWQIcny-VahhnEE4R0OFSOIo8XOsZOdgP-Ofsfdvej66Wt3w2oXtSf847E5oF0q2nscdCJ9b-f_KOMAQ";
   //api
   static final String apiUrlPlaylist =
       "https://api.spotify.com/v1/me/playlists";
@@ -47,4 +47,6 @@ class AppStrings {
   static final String apiUrlArtist =
       "https://api.spotify.com/v1/me/following?type=artist";
   static final String apiUrlPodcast = "https://api.spotify.com/v1/me/shows";
+  static final String apiUrlNewReleases = "https://api.spotify.com/v1/browse/new-releases";
+  static final String apiUrlUserTopArtists = "https://api.spotify.com/v1/me/top/artists";
 }
