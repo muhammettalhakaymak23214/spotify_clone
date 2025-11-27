@@ -8,5 +8,15 @@ class AppColors {
   static const Color blackPanther = Color.fromARGB(255, 45, 45, 45);
   static const Color white = Colors.white;
   static const Color black = Colors.black;
+  static const Color grey = Color.fromARGB(143, 255, 255, 255);
+  static const Color dividerColor = Color.fromARGB(143, 255, 255, 255);
+  static const Color planSectionColor =Color.fromARGB(136, 44, 42, 42);
+
+  static const Color pinkColor = Color.fromARGB(255, 255, 210, 215);
+  static const Color purpleColor = Color.fromARGB(255, 197, 177, 212);
+  static const Color yellowColor = Color.fromARGB(255, 254, 201, 99);
+  static const Color blueColor = Color.fromARGB(255, 165, 187, 210);
+
+  
 
 }

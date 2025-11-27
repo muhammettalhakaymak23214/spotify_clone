@@ -1,4 +1,5 @@
 class AppStrings {
+  static final String emty = "";
   //BottomSheet
   static final String title1 = "Çalma listesi";
   static final String title2 = "Ortak çalma listesi";
@@ -39,7 +40,8 @@ class AppStrings {
   static final String settingsPrivacy = "Ayarlar ve gizlilik";
 
   //token
-  static final String token = "Bearer BQDXllnn9VRyaYdMCD62yCqLM-bk_cY-nHMQTRhEOTBTHiwjvjEDtcAwrep_4U0Ni5bdeLfH7F25sOOw_295UEHNv_Yt_ceTgnB6ZxstF4NjfHvy5f4vti3S73XTvSEdS5wl3rVBrNBKfGxO4oH4-SRE77XrVLqwtwnhWaUTeMMZaSi74kaq3aivigFz9gd--9EzpVzbLHEvxjBBA6nt60IhBXcmWH-poFKv3PtVpSw-YE-BZDqSk3pSkf2veSHjP4zk7OP6HhJcanut-oMCfx5BaxCFL0QMRP7VWQIcny-VahhnEE4R0OFSOIo8XOsZOdgP-Ofsfdvej66Wt3w2oXtSf847E5oF0q2nscdCJ9b-f_KOMAQ";
+  static final String token =
+      "Bearer BQDDiCDLkc6TXXn8FWDWUVjXnw04s3SF5URx5eyGzXYRIN--hWJa-aknzbHlso0xCmiUDo15Vc7Xxtbt_ilbtL8k6g9PAIPpKd9j5rNEF-JMgpQJieObVbkgQgcDucw6hJB4LApCTwgB5iXebarw-_Q8fAO3ysxrS4ZS91fb_yS5xNPXvFqEe0wT6t9TbPYBtTPZLvbLv7PdrVN_fLAuCBv30sPzEt-MJrMZXdMY9vHplz-2WSjzsHyzQMhdDpT6sGABvLLrolVsAqsCt5KcIzRaQ6zAuRg2NVvtHYHhBCrkuGmqSlo9D1yU-u08UPYg3fghCvfZGrrG6ieSaP5wO6w98M11Xkv2wdHTNo8et088HoHetFo";
   //api
   static final String apiUrlPlaylist =
       "https://api.spotify.com/v1/me/playlists";
@@ -47,6 +49,75 @@ class AppStrings {
   static final String apiUrlArtist =
       "https://api.spotify.com/v1/me/following?type=artist";
   static final String apiUrlPodcast = "https://api.spotify.com/v1/me/shows";
-  static final String apiUrlNewReleases = "https://api.spotify.com/v1/browse/new-releases";
-  static final String apiUrlUserTopArtists = "https://api.spotify.com/v1/me/top/artists";
+  static final String apiUrlNewReleases =
+      "https://api.spotify.com/v1/browse/new-releases";
+  static final String apiUrlUserTopArtists =
+      "https://api.spotify.com/v1/me/top/artists";
+
+  //Premium Page
+  static final String premium = "Premium";
+  static final String premiumButtonTitle ="Premium'u edin";
+  static final String premiumPageTitle =
+      "Premium'a geri dön: Spotify'a üye olduğunda ilk 2 ay boyunca \u20BA45,00*";
+  static final String premiumPageSubtitle = "Sınırlı süreli teklif";
+  static final String getPremium1 =
+      "İlk 2 ay boyunca \u20BA45, sonra ayda \u20BA99. Premium Bireysel için tekrar hoş geldin teklifi. Premium'a erişimi 30 günden uzun süre önce sona eren ve son 24 ay içinde hiçbir \"tekrar hoş geldin\" teklifinden yararlanmamış olan kullanıcılar tarafından kullanılabilir. Sadece Spotify aracılığıyla üye olan kişiler tekliften yararlanabilir. Google Play'de teklifler farklı olabilir.";
+
+  static final String getPremium2 = " Koşullar geçerlidir.";
+  static final String getPremium3 =
+      "\nTeklif 31 Aralık 2025 tarihinde sona erecek.";
+   static final String currentPlans =  "Mevcut Planlar";
+
+  static final String whyPremiumSection1 = "Neden Premium'a katılmalısın?";
+  static final String whyPremiumSection2 = "Reklamsız müzik dinle";
+  static final String whyPremiumSection3 = "İndir ve çevrimdışı dinle";
+  static final String whyPremiumSection4 = "Şarkıları istediğin sırada çal";
+  static final String whyPremiumSection5 = "Yüksek ses kalitesi";
+  static final String whyPremiumSection6 = "Arkadaşlarınla aynı anda dinle";
+  static final String whyPremiumSection7 = "Dinleme sıranı düzenle";
+
+  static final String planTitle1 = "2 ay boyunca \u20BA45";
+
+  static final String planSubtitle1 = "Bireysel";
+  static final String planSubtitle2 = "Öğrenci";
+  static final String planSubtitle3 = "Duo";
+  static final String planSubtitle4 = "Aile";
+
+  static final String planPrice1 = "2 ay boyunca \u20BA45";
+  static final String planPriceDescription1 = "Sonra ayda \u20BA99";
+  static final String planPrice2 = "\u20BA55\\ay";
+  static final String planPrice3 = "\u20BA135\\ay";
+  static final String planPrice4 = "\u20BA165\\ay";
+
+  static final String planPackageDetails1_1 = "1 Premium hesabı";
+  static final String planPackageDetails1_2 = "İstediğin zaman iptal et";
+  static final String planPackageDetails2_1 = "Doğrulanmış 1 Premium hesabı";
+  static final String planPackageDetails2_2 =
+      "Koşulları sağlayan öğrenciler için indirim";
+  static final String planPackageDetails2_3 = "İstediğin zaman iptal et";
+  static final String planPackageDetails3_1 = "2 Premium hesap";
+  static final String planPackageDetails3_2 = "İstediğin zaman iptal et";
+  static final String planPackageDetails4_1 = "6 Premium hesap";
+  static final String planPackageDetails4_2 =
+      "Sansürsüz olarak işaretlenen içerikleri kontrol et";
+  static final String planPackageDetails4_3 = "İstediğin zaman iptal et";
+
+  static final String planButtonTitle1 = "Premium'u edin";
+  static final String planButtonTitle2 = "Premium Öğrenci planını edin";
+  static final String planButtonTitle3 = "Premium Duo planını edin";
+  static final String planButtonTitle4 = "Premium Aile planını edin";
+
+  static final String planConditions1_1 =
+      "İlk 2 ay boyunca \u20BA45, sonra ayda \u20BA99. Premium Bireysel için tekrar hoş geldin teklifi. Premium'a erişimi 30 günden uzun süre önce sona eren ve son 24 ay içinde hiçbir \"tekrar hoş geldin\" teklifinden yararlanmamış olan kullanıcılar tarafından kullanılabilir. Sadece Spotify aracılığıyla üye olan kişiler tekliften yararlanabilir. Google Play'de teklifler farklı olabilir.";
+  static final String planConditions1_2 = " Koşullar geçerlidir.";
+  static final String planConditions1_3 =
+      "\nTeklif 31 Aralık 2025 tarihinde sona erecek.";
+  static final String planConditions2_1 =
+      "Teklif, yalnızca geçerli yükseköğretim kurumlarındaki öğrenciler içindir.";
+  static final String planConditions2_2 = " Koşullar geçerlidir.";
+  static final String planConditions3_1 = "Aynı adreste yaşayan çiftler için.";
+  static final String planConditions3_2 = " Koşullar geçerlidir.";
+  static final String planConditions4_1 =
+      "Aynı adreste oturan en fazla 6 aile üyesi için.";
+  static final String planConditions4_2 = " Koşullar geçerlidir.";
 }
