@@ -41,7 +41,7 @@ class AppStrings {
 
   //token
   static final String token =
-      "Bearer BQDDiCDLkc6TXXn8FWDWUVjXnw04s3SF5URx5eyGzXYRIN--hWJa-aknzbHlso0xCmiUDo15Vc7Xxtbt_ilbtL8k6g9PAIPpKd9j5rNEF-JMgpQJieObVbkgQgcDucw6hJB4LApCTwgB5iXebarw-_Q8fAO3ysxrS4ZS91fb_yS5xNPXvFqEe0wT6t9TbPYBtTPZLvbLv7PdrVN_fLAuCBv30sPzEt-MJrMZXdMY9vHplz-2WSjzsHyzQMhdDpT6sGABvLLrolVsAqsCt5KcIzRaQ6zAuRg2NVvtHYHhBCrkuGmqSlo9D1yU-u08UPYg3fghCvfZGrrG6ieSaP5wO6w98M11Xkv2wdHTNo8et088HoHetFo";
+      "Bearer BQBV-NNDqWjICkZF5cidpd6pQdfbhJez7Sp7DR1shdbptheKTqAcKg4wN9b9PwkTfPo1RfoCoQu7Dur3Dy1FL32En4hWAVNKSwL1AzNtXzI6mHDh5TWy7MnL4Gb1j2FLyjiwlW2kL9hEjaNS3yuwBrgGFDO02mu6xgKIksW116JdENJc-LHwJrD6xVznPNxTDoHMd9vmQl297cInbT5E4HQgZWd2bhdRXOxbk61Je-69rBL-EfrHUhVF8L7Zti2AEC4N7AQS6PEhzU9PPSSO_UIua_5rkQpzWCb5gpJn-3pnC6ny5LS5U7oUhVRWYxERRLe6y07x-PkamiMlFulutJT1-Z5uZ0sacBRy30CJvdrZ60odLsc";
   //api
   static final String apiUrlPlaylist =
       "https://api.spotify.com/v1/me/playlists";
@@ -53,6 +53,8 @@ class AppStrings {
       "https://api.spotify.com/v1/browse/new-releases";
   static final String apiUrlUserTopArtists =
       "https://api.spotify.com/v1/me/top/artists";
+        static final String apiCategoris =
+      "https://api.spotify.com/v1/browse/categories";
 
   //Premium Page
   static final String premium = "Premium";
@@ -120,4 +122,7 @@ class AppStrings {
   static final String planConditions4_1 =
       "Aynı adreste oturan en fazla 6 aile üyesi için.";
   static final String planConditions4_2 = " Koşullar geçerlidir.";
+
+  //Search View
+  static final String searchViewTitle = "Hepsine göz at";
 }

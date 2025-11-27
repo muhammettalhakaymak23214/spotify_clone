@@ -7,6 +7,7 @@ class AppPaddings {
   //symmetric
   static final EdgeInsets symmetricH20V10 = EdgeInsets.symmetric(vertical: 10, horizontal: 20);
   static final EdgeInsets symmetricH20V5 = EdgeInsets.symmetric(horizontal: 20, vertical: 5);
+ 
   //horizontal
   static final EdgeInsets horizontal10 = EdgeInsets.symmetric(horizontal: 10);
   static final EdgeInsets horizontal20 = EdgeInsets.symmetric(horizontal: 20);
@@ -25,6 +26,8 @@ class AppPaddings {
   //appBar
   static final EdgeInsets leadingPadding = EdgeInsets.only(left: 15, right: 5);
   static final EdgeInsets actionsPadding = EdgeInsets.only(right: 8);
+
+  
 
   
   
