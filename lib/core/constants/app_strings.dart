@@ -41,7 +41,7 @@ class AppStrings {
 
   //token
   static final String token =
-      "Bearer BQBxfkRaNFFwBU62bxLGhL5AxMiaB2c9M6sAd442bo8k0FR1tEMWBfCVY3K7gdFz6m68Zlpz6RAKl8ReL4sbYNSPt3R4mbzvcEsespum3bMGXUCjom7P1uWUX992d5xbuC8-r7aGHqTbfeacfWOyStq3JF2ifqlxyUd4WKuc1AjC-lLkJtMTGKM4GJFCepsD8aRaIjUBzM-aFDZ0zSrW_UY0F9z2hOqb86tDPNWUR_koEhGla9AMf3xLPfgJPcGzX9YhHme6A65fpS4Uv1bl5cSws3aJ8izirtwU-nfofJuoRsC9uiJ-2fD6vwIYde8dCpHNh1aNVsBAct4t0_biZFUE7ggyf9q3e2rJebpwlFjWG2eT_ww";
+      "Bearer BQD2S7dGtCdJF3bPp-lT8VXT7G9Y1ALVfEhjfNtCq_-sw19pBjh8SpT6pPS7AkAwbx14RL2WktLWo9Y72EsytO1TMn7XAriI7-E8JA2w67DiyScHQbL6-vBi1pUekaI6qUaqaKEWdk7NVC1VP87EwkhqRNlv-2LKSYazt6IiGetCdEetKuTxpp_OFpm3Zi6gZRqm36QUgntuvFJhtTp7b1f-U9h6CIMsZGyzwXKVeDYnuyjY_O0cVyMGIuB-FZ6DMxq4wijqljC6WqAxPH3mFR1FhNRWISA8o5forktPkuoFHHyfvvkcQOcveDjr4W7aymITzij77mvVxyWIrEHEmMGih1pu4t-DTPL-6bpmMWFLBYNONOU";
   //api
   static final String apiUrlPlaylist =
       "https://api.spotify.com/v1/me/playlists";
