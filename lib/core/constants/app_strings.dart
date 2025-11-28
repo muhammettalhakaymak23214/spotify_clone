@@ -41,7 +41,7 @@ class AppStrings {
 
   //token
   static final String token =
-      "Bearer BQBV-NNDqWjICkZF5cidpd6pQdfbhJez7Sp7DR1shdbptheKTqAcKg4wN9b9PwkTfPo1RfoCoQu7Dur3Dy1FL32En4hWAVNKSwL1AzNtXzI6mHDh5TWy7MnL4Gb1j2FLyjiwlW2kL9hEjaNS3yuwBrgGFDO02mu6xgKIksW116JdENJc-LHwJrD6xVznPNxTDoHMd9vmQl297cInbT5E4HQgZWd2bhdRXOxbk61Je-69rBL-EfrHUhVF8L7Zti2AEC4N7AQS6PEhzU9PPSSO_UIua_5rkQpzWCb5gpJn-3pnC6ny5LS5U7oUhVRWYxERRLe6y07x-PkamiMlFulutJT1-Z5uZ0sacBRy30CJvdrZ60odLsc";
+      "Bearer BQA6Ng1nOvZjrmw7Rwkwa3VT3KuZCDMLCcoQvgzS1pCPHRVIcz66JZv-NujA07kvm3SwNxv5vK0glGyQL_Uo9fvoM8WdME03DNeiqSccsZJ5QtaFaZjOR2QuDWQpTGxC96egpBEyE41bFM6VHZ2-pTQgS8sZshdlRy_9IK0cLiGMDOfWhrBg3-Db--Pgy2_ZhuOlxfW_pxKa_mRK5U_cpz7K0vkeo1gxV9LatxP0DC9jwAoSxuVWmLeRLuCXnQ1tWNxpZ-C936OQ0PmOx7AKYHceOauQWwOgtTCssEKCjotNLLyW0IR1JDi1VfnSe_taugI9ZbGn7EdBDkkEqXRLdsKw6q10oV8-dE1UtGMaGIdFABlH0Po";
   //api
   static final String apiUrlPlaylist =
       "https://api.spotify.com/v1/me/playlists";
@@ -53,12 +53,16 @@ class AppStrings {
       "https://api.spotify.com/v1/browse/new-releases";
   static final String apiUrlUserTopArtists =
       "https://api.spotify.com/v1/me/top/artists";
-        static final String apiCategoris =
+  static final String apiCategoris =
       "https://api.spotify.com/v1/browse/categories";
+
+  static final String apiRecentlyPlayed =
+      "https://api.spotify.com/v1/me/player/recently-played?";
+  static final String apiSearchResult = "https://api.spotify.com/v1/search?";
 
   //Premium Page
   static final String premium = "Premium";
-  static final String premiumButtonTitle ="Premium'u edin";
+  static final String premiumButtonTitle = "Premium'u edin";
   static final String premiumPageTitle =
       "Premium'a geri dön: Spotify'a üye olduğunda ilk 2 ay boyunca \u20BA45,00*";
   static final String premiumPageSubtitle = "Sınırlı süreli teklif";
@@ -68,7 +72,7 @@ class AppStrings {
   static final String getPremium2 = " Koşullar geçerlidir.";
   static final String getPremium3 =
       "\nTeklif 31 Aralık 2025 tarihinde sona erecek.";
-   static final String currentPlans =  "Mevcut Planlar";
+  static final String currentPlans = "Mevcut Planlar";
 
   static final String whyPremiumSection1 = "Neden Premium'a katılmalısın?";
   static final String whyPremiumSection2 = "Reklamsız müzik dinle";
@@ -125,4 +129,5 @@ class AppStrings {
 
   //Search View
   static final String searchViewTitle = "Hepsine göz at";
+  static final String searchBar = "Ne dinlemek istiyorsun?";
 }
