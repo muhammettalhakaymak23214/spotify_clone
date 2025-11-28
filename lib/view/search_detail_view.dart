@@ -18,7 +18,7 @@ class _SearchDetailViewState extends State<SearchDetailView> {
   @override
   void initState() {
     super.initState();
-    viewModel = SearchDetailViewModel(token: AppStrings.token);
+    viewModel = SearchDetailViewModel();
     viewModel.fetchRecentlyPlayed();
   }
 
@@ -82,9 +82,9 @@ class _SearchDetailViewState extends State<SearchDetailView> {
       return Center(child: CircularProgressIndicator());
     }
     return ListView.builder(
-      itemCount: viewModel.searchResults.length,
+      itemCount: viewModel.searchResults!.length,
       itemBuilder: (context, index) {
-        final item = viewModel.searchResults[index];
+        final item = viewModel.searchResults![index];
         return ListTile(
           leading: Image.network(item.imageUrl ?? ""),
           title: Text(

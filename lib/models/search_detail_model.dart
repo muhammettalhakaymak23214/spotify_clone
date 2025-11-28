@@ -1,16 +1,3 @@
-class RecentlyPlayedModel {
-  List<RecentlyPlayedItem>? recentlyPlayedItems;
-  RecentlyPlayedModel({this.recentlyPlayedItems});
-  RecentlyPlayedModel.fromJson(Map<String, dynamic> json) {
-    if (json['items'] != null) {
-      recentlyPlayedItems = <RecentlyPlayedItem>[];
-      json['items'].forEach((v) {
-        recentlyPlayedItems!.add(RecentlyPlayedItem.fromJson(v));
-      });
-    }
-  }
-}
-
 class RecentlyPlayedItem {
   String? name;
   String? artistName;
@@ -21,19 +8,6 @@ class RecentlyPlayedItem {
     imageUrl = json["track"]["album"]["images"][0]["url"];
     name = json["track"]["album"]["name"];
     artistName = json["track"]["album"]["artists"][0]["name"];
-  }
-}
-
-class SearchResultModel {
-  List<SearchResultItem>? searchResultItems;
-  SearchResultModel({this.searchResultItems});
-  SearchResultModel.fromJson(Map<String, dynamic> json) {
-    if (json['tracks']['items'] != null) {
-      searchResultItems = <SearchResultItem>[];
-      json['tracks']['items'].forEach((v) {
-        searchResultItems!.add(SearchResultItem.fromJson(v));
-      });
-    }
   }
 }
 

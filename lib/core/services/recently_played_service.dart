@@ -1,28 +1,34 @@
+import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:spotify_clone/core/services/base_service.dart';
 import 'package:spotify_clone/models/search_detail_model.dart';
 
+abstract class IRecentlyPlayedService {
+  Future<List<RecentlyPlayedItem>?> fetchRecentlyPlayed();
+}
 
-class RecentlyPlayedService {
-  final Dio dio = Dio();
+class RecentlyPlayedService extends BaseService
+    implements IRecentlyPlayedService {
+  RecentlyPlayedService() : super();
 
-  Future<RecentlyPlayedModel?> fetchRecentlyPlayed(String token, String apiUrl) async {
+  @override
+  Future<List<RecentlyPlayedItem>?> fetchRecentlyPlayed() async {
     try {
       final response = await dio.get(
-        apiUrl,
-        options: Options(
-          headers: {"Authorization": token, "Content-Type": "application/json"},
-        ),
+        "me/player/recently-played",
+        options: authHeader(),
       );
 
-      if (response.statusCode == 200) {
-        return RecentlyPlayedModel.fromJson(response.data);
-      } else {
-        print('API ERROR: ${response.statusCode}');
-        return null;
+      if (response.statusCode == HttpStatus.ok) {
+        final items = response.data['items'];
+        if (items != null && items is List) {
+          return items.map((e) => RecentlyPlayedItem.fromJson(e)).toList();
+        }
       }
-    } catch (e) {
-      print('Error fetching playlist: $e');
-      return null;
+    } on DioException catch (exception) {
+      logError(exception, "RecentlyPlayedService");
     }
+    return null;
   }
 }
+

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:spotify_clone/core/constants/app_strings.dart';
 import 'package:spotify_clone/core/services/home_service.dart';
@@ -31,7 +32,7 @@ class HomeViewModel {
         }
       });
     } catch (e) {
-      print("$e");
+     debugPrint("$e");
     } finally {}
   }
 
@@ -47,7 +48,7 @@ class HomeViewModel {
         }
       });
     } catch (e) {
-      print("$e");
+      debugPrint("$e");
     } finally {}
   }
 
@@ -63,7 +64,7 @@ class HomeViewModel {
         }
       });
     } catch (e) {
-      print("$e");
+      debugPrint("$e");
     } finally {}
   }
 }

@@ -25,11 +25,11 @@ class _MainTabViewState extends State<MainTabView>
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
-      key: _scaffoldKey,
+      key: scaffoldKey,
       extendBody: true,
-      body: tabBarView(tabController , _scaffoldKey),
+      body: tabBarView(tabController , scaffoldKey),
       bottomNavigationBar: CustomBottomAppBar(tabController: tabController),
       drawer: SizedBox(
         width: MediaQuery.of(context).size.width * 0.90,

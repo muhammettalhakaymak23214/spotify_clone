@@ -30,6 +30,10 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+
+    final String title1 = "Çalma Listelerin";
+    final String title2 = "Yeni Çıkanlar";
+    final String title3 = "Sevdiğin Sanatçılar";
     return Scaffold(
       appBar: CustomAppBar(
         leading: Image.asset(imagePath),
@@ -99,36 +103,33 @@ class _HomeViewState extends State<HomeView> {
       ),
       body: ListView(
         children: [
-           SizedBox(height: 500,),
           Observer(
             builder: (context) {
               return _HorizontalMediaSection<HomeItem>(
                 viewModel: viewModel,
                 items: viewModel.itemsPlaylist,
                 itemCount: viewModel.itemsPlaylist.length,
-                sectionTitle: "Çalma Listelerin",
+                sectionTitle: title1,
               );
             },
           ),
-          SizedBox(height: 10),
           Observer(
             builder: (context) {
               return _HorizontalMediaSection<HomeItem>(
                 viewModel: viewModel,
                 items: viewModel.itemsNewReleases,
                 itemCount: viewModel.itemsNewReleases.length,
-                sectionTitle: "Yeni Çıkanlar",
+                sectionTitle: title2,
               );
             },
           ),
-                    SizedBox(height: 10),
           Observer(
             builder: (context) {
               return _HorizontalMediaSection<HomeItem>(
                 viewModel: viewModel,
                 items: viewModel.itemsUserTopArtists,
                 itemCount: viewModel.itemsUserTopArtists.length,
-                sectionTitle: "Sevdiğin Sanatçılar",
+                sectionTitle: title3,
               );
             },
           ),
@@ -158,13 +159,13 @@ class _HorizontalMediaSection<T> extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 15),
+          padding:  AppPaddings.symmetricH20V5,
           child: Text(
             sectionTitle,
             style: TextStyle(
-              fontSize: 25,
+              fontSize: AppSizes.fontSize22,
               fontWeight: FontWeight.bold,
-              color: Colors.white,
+              color: AppColors.white,
             ),
           ),
         ),
@@ -183,7 +184,7 @@ class _HorizontalMediaSection<T> extends StatelessWidget {
               final subtitle = item.subTitle ?? "";
               final title = item.title ?? "";
               return Padding(
-                padding: const EdgeInsets.only(left: 15, top: 5),
+                padding: const EdgeInsets.only(left: 20, top: 5),
                 child: SizedBox(
                   width: 170,
                   child: Column(
@@ -201,14 +202,14 @@ class _HorizontalMediaSection<T> extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 10),
                         child: Text(
                           title,
-                          style: TextStyle(fontSize: 10, color: Colors.white),
+                          style: TextStyle(fontSize: AppSizes.fontSize, color: AppColors.white),
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 0),
                         child: Text(
                           subtitle,
-                          style: TextStyle(fontSize: 10, color: Colors.white),
+                          style: TextStyle(fontSize: AppSizes.fontSize, color: AppColors.white),
                         ),
                       ),
                     ],
@@ -222,5 +223,3 @@ class _HorizontalMediaSection<T> extends StatelessWidget {
     );
   }
 }
-
-

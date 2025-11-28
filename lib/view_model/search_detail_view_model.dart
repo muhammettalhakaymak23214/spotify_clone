@@ -1,7 +1,5 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
-import 'package:spotify_clone/core/constants/app_strings.dart';
 import 'package:spotify_clone/core/services/recently_played_service.dart';
 import 'package:spotify_clone/core/services/search_result_service.dart';
 import 'package:spotify_clone/models/search_detail_model.dart';
@@ -11,70 +9,54 @@ class SearchDetailViewModel {
   final RecentlyPlayedService recentlyPlayedService = RecentlyPlayedService();
   final SearchResultService searchResultService = SearchResultService();
   //items
-  final ObservableList<RecentlyPlayedItem> itemsRecentlyPlayed =
+  ObservableList<RecentlyPlayedItem> itemsRecentlyPlayed =
       ObservableList<RecentlyPlayedItem>();
-  final ObservableList<SearchResultItem> searchResults =
+  ObservableList<SearchResultItem>? searchResults =
       ObservableList<SearchResultItem>();
   final Observable<String> query = Observable("");
   final Observable<bool> isSearching = Observable(false);
-  //dio
-  final Dio dio = Dio();
-  //token
-  final String token;
 
-  SearchDetailViewModel({required this.token});
+  SearchDetailViewModel();
+
+  void _changeSearching(bool isSearchingTorF) {
+    runInAction(() {
+      isSearching.value = isSearchingTorF;
+    });
+  }
 
   Future<void> fetchRecentlyPlayed() async {
-    try {
-      final data = await recentlyPlayedService.fetchRecentlyPlayed(
-        token,
-        AppStrings.apiRecentlyPlayed,
-      );
-      runInAction(() {
-        if (data != null) {
-          itemsRecentlyPlayed
-            ..clear()
-            ..addAll(data.recentlyPlayedItems ?? []);
-        } else {
-          debugPrint("-- FetchRecentlyPlayed : data null --");
-        }
-      });
-    } catch (error, stack) {
-      debugPrint("fetchRecentlyPlayed error: $error");
-      debugPrint("Stack trace: $stack");
-    }
+    final data = await recentlyPlayedService.fetchRecentlyPlayed();
+    runInAction(() {
+      if (data != null) {
+        
+          itemsRecentlyPlayed.clear();
+  itemsRecentlyPlayed.addAll(data);
+      } else {
+        debugPrint("-- FetchRecentlyPlayed : data null --");
+      }
+    });
   }
 
   Future<void> search(String value) async {
     runInAction(() {
       query.value = value;
-      isSearching.value = true;
     });
+    _changeSearching(true);
     if (value.isEmpty) {
-      runInAction(() {
-        searchResults.clear();
-        isSearching.value = false;
-      });
+      _changeSearching(false);
       return;
     }
-    try {
-      final data = await searchResultService.fetchSearchResult(
-        token: token,
-        query: query.value,
-      );
+    var result = await searchResultService.fetchSearchResult(
+      "track",
+      10,
+      0,
+      query.value,
+    );
+    if (result != null) {
       runInAction(() {
-        if (data != null) {
-          searchResults
-            ..clear()
-            ..addAll(data.searchResultItems ?? []);
-        } else {
-          debugPrint("-- search : data null --");
-        }
-        isSearching.value = false;
+        searchResults = result.asObservable();
       });
-    } catch (error,stack) {
-      debugPrint("search error: $error");
-      debugPrint("Stack trace: $stack");
+      _changeSearching(false);
     }
   }
 }

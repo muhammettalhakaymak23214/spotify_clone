@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:spotify_clone/core/constants/app_strings.dart';
 import 'package:spotify_clone/core/services/artist_service.dart';
@@ -46,7 +47,7 @@ class LibraryViewModel {
         }
       });
     } catch (e) {
-      print("Error fetching playlists: $e");
+      debugPrint("Error fetching podcast: $e");
     } finally {
       runInAction(() {
         isLoadingPodcast.value = false;
@@ -69,7 +70,7 @@ class LibraryViewModel {
         }
       });
     } catch (e) {
-      print("Error fetching playlists: $e");
+      debugPrint("Error fetching playlists: $e");
     } finally {
       runInAction(() {
         isLoadingPlaylist.value = false;
@@ -92,7 +93,7 @@ class LibraryViewModel {
         }
       });
     } catch (e) {
-      print("Error fetching playlists: $e");
+      debugPrint("Error fetching artist: $e");
     } finally {
       runInAction(() {
         isLoadingArtist.value = false;
@@ -116,7 +117,7 @@ class LibraryViewModel {
         }
       });
     } catch (e) {
-      print("Error fetching playlists: $e");
+      debugPrint("Error fetching album: $e");
     } finally {
       runInAction(() {
         isLoadingAlbum.value = false;

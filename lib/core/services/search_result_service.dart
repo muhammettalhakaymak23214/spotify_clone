@@ -1,39 +1,57 @@
+import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
-import 'package:spotify_clone/core/constants/app_strings.dart';
+import 'package:spotify_clone/core/services/base_service.dart';
 import 'package:spotify_clone/models/search_detail_model.dart';
 
-class SearchResultService {
-  final Dio dio = Dio();
+abstract class ISearchResultService {
+  Future<List<SearchResultItem>?> fetchSearchResult(
+    String type,
+    int limit,
+    int offset,
+    String q,
+  );
+}
 
-  Future<SearchResultModel?> fetchSearchResult({
-    required String token,
-    required String query,
-    String type = "track",
-    int limit = 10,
-    int offset = 0,
-  }) async {
-    final encodedQuery = Uri.encodeComponent(query);
-    final apiQuery = "q=$encodedQuery&type=$type&limit=$limit&offset=$offset";
-    final apiUrl = AppStrings.apiSearchResult + apiQuery;
+class SearchResultService extends BaseService implements ISearchResultService {
+  SearchResultService() : super();
 
+  @override
+  Future<List<SearchResultItem>?> fetchSearchResult(
+    String type,
+    int limit,
+    int offset,
+    String q,
+  ) async {
+    final encodedQuery = Uri.encodeComponent(q);
     try {
       final response = await dio.get(
-        apiUrl,
-        options: Options(
-          headers: {"Authorization": token, "Content-Type": "application/json"},
-        ),
+        _SearchResultServicePaths.search.name,
+        queryParameters: {
+          _SearchResultQueryPaths.type.name: type,
+          _SearchResultQueryPaths.limit.name: limit,
+          _SearchResultQueryPaths.offset.name: offset,
+          _SearchResultQueryPaths.q.name: encodedQuery,
+        },
+        options: authHeader(),
       );
 
-      if (response.statusCode == 200) {
-        return SearchResultModel.fromJson(response.data);
-      } else {
-        debugPrint('SearchResultService : ${response.statusCode}');
-        return null;
+      if (response.statusCode == HttpStatus.ok) {
+
+        final tracks = response.data['tracks']['items'];
+        if (tracks != null && tracks is List) {
+          return tracks.map((e) => SearchResultItem.fromJson(e)).toList();
+        }
       }
-    } catch (error) {
-      debugPrint('SearchResultService : $error');
-      return null;
+    } on DioException catch (exception) {
+       logError(exception, "SearchResultService");
     }
+    return null;
   }
 }
+
+enum _SearchResultServicePaths { search }
+
+enum _SearchResultQueryPaths { q, type, limit, offset }
+
+  
+

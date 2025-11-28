@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:spotify_clone/core/constants/app_strings.dart';
 import 'package:spotify_clone/core/services/category_service.dart';
@@ -35,12 +36,12 @@ class SearchViewModel {
         }
       });
     } catch (e) {
-      print("$e");
+      debugPrint("$e");
     } finally {
           runInAction(() {
       isLoading.value = false;
     });
-;
+
     }
   }
 }

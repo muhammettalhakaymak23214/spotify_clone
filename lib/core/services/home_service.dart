@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:spotify_clone/models/home_model.dart';
 
 class HomeService {
@@ -16,11 +17,11 @@ class HomeService {
       if (response.statusCode == 200) {
         return HomeModel.fromUserTopArtists(response.data);
       } else {
-        print('API ERROR: ${response.statusCode}');
+        debugPrint('API ERROR: ${response.statusCode}');
         return null;
       }
     } catch (e) {
-      print('Error fetching playlist: $e');
+      debugPrint('Error fetching UserTopArtist: $e');
       return null;
     }
   }
@@ -37,11 +38,11 @@ class HomeService {
       if (response.statusCode == 200) {
         return HomeModel.fromNewReleases(response.data);
       } else {
-        print('API ERROR: ${response.statusCode}');
+        debugPrint('API ERROR: ${response.statusCode}');
         return null;
       }
     } catch (e) {
-      print('Error fetching playlist: $e');
+      debugPrint('Error fetching fetchNewReleases: $e');
       return null;
     }
   }
@@ -58,11 +59,11 @@ class HomeService {
       if (response.statusCode == 200) {
         return HomeModel.fromPlaylistJson(response.data);
       } else {
-        print('API ERROR: ${response.statusCode}');
+        debugPrint('API ERROR: ${response.statusCode}');
         return null;
       }
     } catch (e) {
-      print('Error fetching playlist: $e');
+      debugPrint('Error fetching playlist: $e');
       return null;
     }
   }
