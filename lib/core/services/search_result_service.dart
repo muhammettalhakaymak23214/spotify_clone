@@ -24,6 +24,7 @@ class SearchResultService extends BaseService implements ISearchResultService {
   ) async {
     final encodedQuery = Uri.encodeComponent(q);
     try {
+      final options = await authHeader(); 
       final response = await dio.get(
         _SearchResultServicePaths.search.name,
         queryParameters: {
@@ -32,7 +33,7 @@ class SearchResultService extends BaseService implements ISearchResultService {
           _SearchResultQueryPaths.offset.name: offset,
           _SearchResultQueryPaths.q.name: encodedQuery,
         },
-        options: authHeader(),
+       options: options,
       );
 
       if (response.statusCode == HttpStatus.ok) {

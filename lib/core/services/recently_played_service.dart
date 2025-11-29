@@ -14,9 +14,10 @@ class RecentlyPlayedService extends BaseService
   @override
   Future<List<RecentlyPlayedItem>?> fetchRecentlyPlayed() async {
     try {
+      final options = await authHeader();
       final response = await dio.get(
         "me/player/recently-played",
-        options: authHeader(),
+        options: options,
       );
 
       if (response.statusCode == HttpStatus.ok) {

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
+import 'package:spotify_clone/core/network/auth_service.dart';
 import 'package:spotify_clone/view/main_tab_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+void main() async {
+  await AuthService().refreshAccessToken();
   runApp(const MyApp());
 }
 
