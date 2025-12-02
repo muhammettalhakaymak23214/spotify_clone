@@ -1,36 +1,20 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
-import 'package:spotify_clone/core/constants/app_strings.dart';
-import 'package:spotify_clone/core/services/artist_service.dart';
-import 'package:spotify_clone/core/services/album_service.dart';
-import 'package:spotify_clone/core/services/playlist_service.dart';
-import 'package:spotify_clone/core/services/podcast_service.dart';
+import 'package:spotify_clone/core/services/library_service.dart';
 import 'package:spotify_clone/models/library_model.dart';
 
 class LibraryViewModel {
-
   //Services
-  final PodcastService podcastService = PodcastService();
-  final PlaylistService playlistService = PlaylistService();
-  final ArtistService artistService = ArtistService();
-  final AlbumService albumService = AlbumService();
+  final LibraryService libraryService = LibraryService();
   //items
   final ObservableList<LibraryItem> items = ObservableList<LibraryItem>();
-  //isLoading
+  //isLoadings
   final Observable<bool> isLoadingArtist = Observable(false);
   final Observable<bool> isLoadingPlaylist = Observable(false);
   final Observable<bool> isLoadingAlbum = Observable(false);
   final Observable<bool> isLoadingPodcast = Observable(false);
-  //dio
-  final Dio dio = Dio();
 
-
-  final String token;
-
-  LibraryViewModel({required this.token});
-
-   
+  LibraryViewModel();
 
   Future<void> fetchPodcast() async {
     if (isLoadingPodcast.value) {
@@ -39,20 +23,17 @@ class LibraryViewModel {
     runInAction(() {
       isLoadingPodcast.value = true;
     });
-    try {
-      final podcast = await podcastService.fetchPodcast(token, AppStrings.apiUrlPodcast);
-      runInAction(() {
-        if (podcast != null) {
-          items.addAll(podcast.librarItem ?? []);
-        }
-      });
-    } catch (e) {
-      debugPrint("Error fetching podcast: $e");
-    } finally {
-      runInAction(() {
-        isLoadingPodcast.value = false;
-      });
-    }
+    final data = await libraryService.fetchPodcast();
+    runInAction(() {
+      if (data != null) {
+        items.addAll(data);
+      } else {
+        debugPrint("-- fetchPodcast : data null --");
+      }
+    });
+    runInAction(() {
+      isLoadingPodcast.value = false;
+    });
   }
 
   Future<void> fetchPlaylist() async {
@@ -62,20 +43,17 @@ class LibraryViewModel {
     runInAction(() {
       isLoadingPlaylist.value = true;
     });
-    try {
-      final playlist = await playlistService.fetchPlaylists(token, AppStrings.apiUrlPlaylist);
-      runInAction(() {
-        if (playlist != null) {
-          items.addAll(playlist.librarItem ?? []);
-        }
-      });
-    } catch (e) {
-      debugPrint("Error fetching playlists: $e");
-    } finally {
-      runInAction(() {
-        isLoadingPlaylist.value = false;
-      });
-    }
+    final data = await libraryService.fetchPlaylists();
+    runInAction(() {
+      if (data != null) {
+        items.addAll(data);
+      } else {
+        debugPrint("-- fetchPlaylist : data null --");
+      }
+    });
+    runInAction(() {
+      isLoadingPlaylist.value = false;
+    });
   }
 
   Future<void> fetchArtist() async {
@@ -85,20 +63,17 @@ class LibraryViewModel {
     runInAction(() {
       isLoadingArtist.value = true;
     });
-    try {
-      final artist = await artistService.fetchArtist(token,AppStrings.apiUrlArtist);
-      runInAction(() {
-        if (artist != null) {
-          items.addAll(artist.librarItem ?? []);
-        }
-      });
-    } catch (e) {
-      debugPrint("Error fetching artist: $e");
-    } finally {
-      runInAction(() {
-        isLoadingArtist.value = false;
-      });
-    }
+    final data = await libraryService.fetchArtist();
+    runInAction(() {
+      if (data != null) {
+        items.addAll(data);
+      } else {
+        debugPrint("-- fetchArtis : data null --");
+      }
+    });
+    runInAction(() {
+      isLoadingArtist.value = false;
+    });
   }
 
   Future<void> fetchAlbum() async {
@@ -108,20 +83,16 @@ class LibraryViewModel {
     runInAction(() {
       isLoadingAlbum.value = true;
     });
-    try {
-      final albums = await albumService.fetchAlbum(token, AppStrings.apiUrlAlbum);
-
-      runInAction(() {
-        if (albums != null) {
-          items.addAll(albums.librarItem ?? []);
-        }
-      });
-    } catch (e) {
-      debugPrint("Error fetching album: $e");
-    } finally {
-      runInAction(() {
-        isLoadingAlbum.value = false;
-      });
-    }
+    final data = await libraryService.fetchAlbum();
+    runInAction(() {
+      if (data != null) {
+        items.addAll(data);
+      } else {
+        debugPrint("-- fetchAlbum : data null --");
+      }
+    });
+    runInAction(() {
+      isLoadingAlbum.value = false;
+    });
   }
 }

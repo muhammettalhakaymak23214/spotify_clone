@@ -20,7 +20,7 @@ class _LibraryViewState extends State<LibraryView> {
   @override
   void initState() {
     super.initState();
-    viewModel = LibraryViewModel(token: AppStrings.token);
+    viewModel = LibraryViewModel();
     viewModel.fetchAlbum();
     viewModel.fetchArtist();
     viewModel.fetchPlaylist();

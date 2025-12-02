@@ -1,47 +1,35 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
-import 'package:spotify_clone/core/constants/app_strings.dart';
-import 'package:spotify_clone/core/services/category_service.dart';
+import 'package:spotify_clone/core/services/search_service.dart';
 import 'package:spotify_clone/models/catogory_model.dart';
 
 class SearchViewModel {
   //Services
-  final CategoryService categoryService = CategoryService();
+  final SearchService categoryService = SearchService();
   //items
-  final ObservableList<CategoryItem> itemsCategory =
-      ObservableList<CategoryItem>();
+  ObservableList<CategoryItem> itemsCategory = ObservableList<CategoryItem>();
+  //isLoading
   final Observable<bool> isLoading = Observable(false);
-  //dio
-  final Dio dio = Dio();
-  //token
-  final String token;
 
-  SearchViewModel({required this.token});
+  SearchViewModel();
+
+  void _changeLoading(bool isSearchingTorF) {
+    runInAction(() {
+      isLoading.value = isSearchingTorF;
+    });
+  }
 
   Future<void> fetchCategory() async {
+    _changeLoading(true);
+    final data = await categoryService.fetchCategory();
     runInAction(() {
-      isLoading.value = true;
+      if (data != null) {
+        itemsCategory.clear();
+        itemsCategory.addAll(data);
+      } else {
+        debugPrint("-- fetchCategory : data null --");
+      }
+      _changeLoading(false);
     });
-
-
-    try {
-      final category = await categoryService.fetchCategory(
-        token,
-        AppStrings.apiCategoris,
-      );
-      runInAction(() {
-        if (category != null) {
-          itemsCategory.addAll(category.categories ?? []);
-        }
-      });
-    } catch (e) {
-      debugPrint("$e");
-    } finally {
-          runInAction(() {
-      isLoading.value = false;
-    });
-
-    }
   }
 }

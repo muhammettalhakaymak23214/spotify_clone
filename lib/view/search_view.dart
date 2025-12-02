@@ -29,7 +29,7 @@ class _SearchViewState extends State<SearchView> {
   @override
   void initState() {
     super.initState();
-    viewModel = SearchViewModel(token: AppStrings.token);
+    viewModel = SearchViewModel();
     viewModel.fetchCategory();
   }
 

@@ -1,70 +1,66 @@
+import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
+import 'package:spotify_clone/core/constants/api_endpoints.dart';
+import 'package:spotify_clone/core/services/base_service.dart';
 import 'package:spotify_clone/models/home_model.dart';
 
-class HomeService {
-  final Dio dio = Dio();
+abstract class IHomeService {
+  Future<List<UserTopArtistsItem>?> fetchUserTopArtists();
+  Future<List<NewReleasesItem>?> fetchNewReleases();
+  Future<List<PlaylistItem>?> fetchPlaylist();
+}
 
-    Future<HomeModel?> fetchUserTopArtists(String token, String apiUrl) async {
+class HomeService extends BaseService implements IHomeService {
+  HomeService() : super();
+
+  @override
+  Future<List<UserTopArtistsItem>?> fetchUserTopArtists() async {
     try {
-      final response = await dio.get(
-        apiUrl,
-        options: Options(
-          headers: {"Authorization": token, "Content-Type": "application/json"},
-        ),
-      );
+      final response = await dio.get(Endpoint.userTopArtists.path);
 
-      if (response.statusCode == 200) {
-        return HomeModel.fromUserTopArtists(response.data);
-      } else {
-        debugPrint('API ERROR: ${response.statusCode}');
-        return null;
+      if (response.statusCode == HttpStatus.ok) {
+        final items = response.data['items'];
+        if (items is List) {
+          return items.map((e) => UserTopArtistsItem.fromJson(e)).toList();
+        }
       }
-    } catch (e) {
-      debugPrint('Error fetching UserTopArtist: $e');
-      return null;
+    } on DioException catch (exception) {
+      logError(exception, "fetchUserTopArtists");
     }
+    return null;
   }
 
-  Future<HomeModel?> fetchNewReleases(String token, String apiUrl) async {
+  @override
+  Future<List<NewReleasesItem>?> fetchNewReleases() async {
     try {
-      final response = await dio.get(
-        apiUrl,
-        options: Options(
-          headers: {"Authorization": token, "Content-Type": "application/json"},
-        ),
-      );
+      final response = await dio.get(Endpoint.newReleases.path);
 
-      if (response.statusCode == 200) {
-        return HomeModel.fromNewReleases(response.data);
-      } else {
-        debugPrint('API ERROR: ${response.statusCode}');
-        return null;
+      if (response.statusCode == HttpStatus.ok) {
+        final items = response.data['albums']['items'];
+        if (items is List) {
+          return items.map((e) => NewReleasesItem.fromJson(e)).toList();
+        }
       }
-    } catch (e) {
-      debugPrint('Error fetching fetchNewReleases: $e');
-      return null;
+    } on DioException catch (exception) {
+      logError(exception, "fetchNewReleasesItem");
     }
+    return null;
   }
 
-  Future<HomeModel?> fetchPlaylists(String token, String apiUrl) async {
+  @override
+  Future<List<PlaylistItem>?> fetchPlaylist() async {
     try {
-      final response = await dio.get(
-        apiUrl,
-        options: Options(
-          headers: {"Authorization": token, "Content-Type": "application/json"},
-        ),
-      );
+      final response = await dio.get(Endpoint.playlist.path);
 
-      if (response.statusCode == 200) {
-        return HomeModel.fromPlaylistJson(response.data);
-      } else {
-        debugPrint('API ERROR: ${response.statusCode}');
-        return null;
+      if (response.statusCode == HttpStatus.ok) {
+        final items = response.data['items'];
+        if (items is List) {
+          return items.map((e) => PlaylistItem.fromJson(e)).toList();
+        }
       }
-    } catch (e) {
-      debugPrint('Error fetching playlist: $e');
-      return null;
+    } on DioException catch (exception) {
+      logError(exception, "fetchPlaylist");
     }
+    return null;
   }
 }

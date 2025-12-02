@@ -1,0 +1,1 @@
+enum SearchResultQueryPaths { q, type, limit, offset }

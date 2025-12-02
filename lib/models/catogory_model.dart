@@ -1,15 +1,3 @@
-class CategoryModel {
-  List<CategoryItem>? categories;
-  CategoryModel({this.categories});
-  CategoryModel.fromJson(Map<String, dynamic> json) {
-    if (json['categories'] != null) {
-      categories = <CategoryItem>[];
-      json['categories']['items'].forEach((v) {
-        categories!.add(CategoryItem.fromJson(v));
-      });
-    }
-  }
-}
 
 class CategoryItem {
   String? name;

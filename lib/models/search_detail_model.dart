@@ -23,3 +23,4 @@ class SearchResultItem {
     artistName = json["album"]["artists"][0]["name"];
   }
 }
+

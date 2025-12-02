@@ -22,7 +22,7 @@ class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     super.initState();
-    viewModel = HomeViewModel(token: AppStrings.token);
+    viewModel = HomeViewModel();
     viewModel.fetchPlaylist();
     viewModel.fetchNewReleases();
     viewModel.fetchUserTopArtists();
@@ -30,7 +30,6 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-
     final String title1 = "Çalma Listelerin";
     final String title2 = "Yeni Çıkanlar";
     final String title3 = "Sevdiğin Sanatçılar";
@@ -105,7 +104,7 @@ class _HomeViewState extends State<HomeView> {
         children: [
           Observer(
             builder: (context) {
-              return _HorizontalMediaSection<HomeItem>(
+              return _HorizontalMediaSection<PlaylistItem>(
                 viewModel: viewModel,
                 items: viewModel.itemsPlaylist,
                 itemCount: viewModel.itemsPlaylist.length,
@@ -115,7 +114,7 @@ class _HomeViewState extends State<HomeView> {
           ),
           Observer(
             builder: (context) {
-              return _HorizontalMediaSection<HomeItem>(
+              return _HorizontalMediaSection<NewReleasesItem>(
                 viewModel: viewModel,
                 items: viewModel.itemsNewReleases,
                 itemCount: viewModel.itemsNewReleases.length,
@@ -125,7 +124,7 @@ class _HomeViewState extends State<HomeView> {
           ),
           Observer(
             builder: (context) {
-              return _HorizontalMediaSection<HomeItem>(
+              return _HorizontalMediaSection<UserTopArtistsItem>(
                 viewModel: viewModel,
                 items: viewModel.itemsUserTopArtists,
                 itemCount: viewModel.itemsUserTopArtists.length,
@@ -159,7 +158,7 @@ class _HorizontalMediaSection<T> extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding:  AppPaddings.symmetricH20V5,
+          padding: AppPaddings.symmetricH20V5,
           child: Text(
             sectionTitle,
             style: TextStyle(
@@ -202,14 +201,20 @@ class _HorizontalMediaSection<T> extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 10),
                         child: Text(
                           title,
-                          style: TextStyle(fontSize: AppSizes.fontSize, color: AppColors.white),
+                          style: TextStyle(
+                            fontSize: AppSizes.fontSize,
+                            color: AppColors.white,
+                          ),
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 0),
                         child: Text(
                           subtitle,
-                          style: TextStyle(fontSize: AppSizes.fontSize, color: AppColors.white),
+                          style: TextStyle(
+                            fontSize: AppSizes.fontSize,
+                            color: AppColors.white,
+                          ),
                         ),
                       ),
                     ],
