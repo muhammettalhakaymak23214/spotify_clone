@@ -5,6 +5,7 @@ import 'package:spotify_clone/core/constants/app_colors.dart';
 import 'package:spotify_clone/core/constants/app_paddings.dart';
 import 'package:spotify_clone/core/constants/app_sizes.dart';
 import 'package:spotify_clone/core/constants/app_strings.dart';
+import 'package:spotify_clone/core/network/token_manager.dart';
 import 'package:spotify_clone/models/catogory_model.dart';
 import 'package:spotify_clone/view/search_detail_view.dart';
 import 'package:spotify_clone/view_model/search_view_model.dart';
@@ -194,7 +195,13 @@ class _SliverAppBar extends StatelessWidget {
       leading: Padding(
         padding: AppPaddings.leadingPadding,
         child: GestureDetector(
-          onTap: () {
+          onTap: () async{
+            TokenManager().invalidateToken();
+            print("-------------------------------------------");
+            final token = await TokenManager().getToken();
+print("Token: $token");
+            print("-------------------------------------------");
+            //---------------------------------------------------------------------------------------------------------
             widget.scaffoldKey.currentState!.openDrawer();
           },
           child: Container(
