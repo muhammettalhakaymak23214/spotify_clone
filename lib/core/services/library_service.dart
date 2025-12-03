@@ -4,33 +4,6 @@ import 'package:spotify_clone/core/constants/api_endpoints.dart';
 import 'package:spotify_clone/core/services/base_service.dart';
 import 'package:spotify_clone/models/library_model.dart';
 
-/*
-class AlbumService {
-  final Dio dio = Dio();
-
-  Future<LibraryModel?> fetchAlbum(String token, String apiUrl) async {
-    try {
-      final response = await dio.get(
-        apiUrl,
-        options: Options(
-          headers: {"Authorization": token, "Content-Type": "application/json"},
-        ),
-      );
-
-      if (response.statusCode == 200) {
-        return LibraryModel.fromAlbumsJson(response.data);
-      } else {
-        debugPrint('API ERROR: ${response.statusCode}');
-        return null;
-      }
-    } catch (e) {
-      debugPrint('Error fetching Album: $e');
-      return null;
-    }
-  }
-}
-*/
-
 abstract class ILibraryService {
   Future<List<AlbumItem>?> fetchAlbum();
   Future<List<ArtistItem>?> fetchArtist();

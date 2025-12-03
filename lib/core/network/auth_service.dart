@@ -13,6 +13,7 @@ class AuthService {
   Future<String?> refreshAccessToken() async {
     final String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$_clientId:$_clientSecret'));
+        print(basicAuth);
 
     try {
       final response = await _dio.post(
@@ -29,6 +30,9 @@ class AuthService {
       if (response.statusCode == 200) {
         final data = response.data;
         final newAccessToken = data['access_token'];
+        print("sssssssssssss");
+        print(newAccessToken);
+        print("sssssssssssss");
         TokenManager().saveToken(newAccessToken);
         return newAccessToken;
       } else {

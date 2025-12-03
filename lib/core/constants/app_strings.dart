@@ -39,27 +39,6 @@ class AppStrings {
   static final String notifications = "Güncellemelerin";
   static final String settingsPrivacy = "Ayarlar ve gizlilik";
 
-  //token
-  static final String token =
-      "Bearer BQD2S7dGtCdJF3bPp-lT8VXT7G9Y1ALVfEhjfNtCq_-sw19pBjh8SpT6pPS7AkAwbx14RL2WktLWo9Y72EsytO1TMn7XAriI7-E8JA2w67DiyScHQbL6-vBi1pUekaI6qUaqaKEWdk7NVC1VP87EwkhqRNlv-2LKSYazt6IiGetCdEetKuTxpp_OFpm3Zi6gZRqm36QUgntuvFJhtTp7b1f-U9h6CIMsZGyzwXKVeDYnuyjY_O0cVyMGIuB-FZ6DMxq4wijqljC6WqAxPH3mFR1FhNRWISA8o5forktPkuoFHHyfvvkcQOcveDjr4W7aymITzij77mvVxyWIrEHEmMGih1pu4t-DTPL-6bpmMWFLBYNONOU";
-  //api
-  static final String apiUrlPlaylist =
-      "https://api.spotify.com/v1/me/playlists";
-  static final String apiUrlAlbum = "https://api.spotify.com/v1/me/albums";
-  static final String apiUrlArtist =
-      "https://api.spotify.com/v1/me/following?type=artist";
-  static final String apiUrlPodcast = "https://api.spotify.com/v1/me/shows";
-  static final String apiUrlNewReleases =
-      "https://api.spotify.com/v1/browse/new-releases";
-  static final String apiUrlUserTopArtists =
-      "https://api.spotify.com/v1/me/top/artists";
-  static final String apiCategoris =
-      "https://api.spotify.com/v1/browse/categories";
-
-  static final String apiRecentlyPlayed =
-      "https://api.spotify.com/v1/me/player/recently-played?";
-  static final String apiSearchResult = "https://api.spotify.com/v1/search?";
-
   //Premium Page
   static final String premium = "Premium";
   static final String premiumButtonTitle = "Premium'u edin";

@@ -1,4 +1,3 @@
-
 class CategoryItem {
   String? name;
   String? imageUrl;
