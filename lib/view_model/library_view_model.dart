@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:spotify_clone/core/services/library_service.dart';
+import 'package:spotify_clone/core/services/player_service.dart';
 import 'package:spotify_clone/models/library_model.dart';
+import 'package:spotify_clone/models/player_model.dart';
+
 
 class LibraryViewModel {
   //Services
   final LibraryService libraryService = LibraryService();
+  final PlayerService playerService = PlayerService();//-------------
   //items
   final ObservableList<LibraryItem> items = ObservableList<LibraryItem>();
   //isLoadings
@@ -15,7 +19,6 @@ class LibraryViewModel {
   final Observable<bool> isLoadingPodcast = Observable(false);
 
   LibraryViewModel();
-
   Future<void> fetchPodcast() async {
     if (isLoadingPodcast.value) {
       return;

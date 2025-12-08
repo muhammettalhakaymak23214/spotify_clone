@@ -109,4 +109,8 @@ class AppStrings {
   //Search View
   static final String searchViewTitle = "Hepsine göz at";
   static final String searchBar = "Ne dinlemek istiyorsun?";
+
+
+  //Track List View
+  static final String emtyListMessage = "Liste boş!";
 }

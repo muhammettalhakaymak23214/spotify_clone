@@ -3,12 +3,21 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
 import 'package:spotify_clone/core/constants/app_strings.dart';
+import 'package:spotify_clone/core/services/player_service.dart';
+import 'package:spotify_clone/models/player_model.dart';
+import 'package:spotify_clone/view/player_view.dart';
+import 'package:spotify_clone/view/track_list_view.dart';
 import 'package:spotify_clone/view_model/library_view_model.dart';
+
 import 'package:spotify_clone/widgets/custom_app_bar.dart';
 import 'package:spotify_clone/widgets/custom_bottom_sheet.dart';
 
 class LibraryView extends StatefulWidget {
-  const LibraryView({super.key});
+
+  const LibraryView({
+    super.key,
+
+  });
 
   @override
   State<LibraryView> createState() => _LibraryViewState();
@@ -136,12 +145,36 @@ class _LibraryViewState extends State<LibraryView> {
                       ),
                 title: Text(item.title ?? "No Title"),
                 subtitle: Text(subtitle),
+                onTap: () async {
+                   //PlayTrackItem track = await viewModel.getTrackWithPreview(item);
+                  
+                  //Navigator.push(
+                 //   context,
+                 //   MaterialPageRoute(builder: (_) => PlayerView(track: item)),
+                 // );
+                  
+
+        
+                  
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => TrackListView(
+                        id: item.id ?? "",
+                        type: item.type,
+                        title: item.title ?? "",
+                        imageUrl: item.imagesUrl,
+
+
+                      ),
+                    ),
+                  );
+                },
               );
             },
           );
         },
       ),
-
     );
   }
 }
