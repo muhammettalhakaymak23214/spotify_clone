@@ -4,6 +4,7 @@ import 'package:spotify_clone/core/constants/app_colors.dart';
 import 'package:spotify_clone/core/constants/app_paddings.dart';
 import 'package:spotify_clone/core/constants/app_sizes.dart';
 import 'package:spotify_clone/core/constants/app_strings.dart';
+import 'package:spotify_clone/widgets/custom_point.dart';
 
 class PremiumView extends StatefulWidget {
   const PremiumView({super.key});
@@ -246,7 +247,7 @@ class _PremiumViewState extends State<PremiumView> {
 }
 
 class _WhyPremiumSection extends StatelessWidget {
-  const _WhyPremiumSection({super.key});
+  const _WhyPremiumSection();
 
   @override
   Widget build(BuildContext context) {
@@ -309,7 +310,6 @@ class _WhyPremiumSection extends StatelessWidget {
 
 class _PlanSention extends StatelessWidget {
   const _PlanSention({
-    super.key,
     this.title,
     required this.subtitle,
     required this.price,
@@ -415,7 +415,7 @@ class _PlanSention extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _point(),
+                Point(paddingValue: 8),
                 Expanded(
                   child: Text(detail, style: TextStyle(color: AppColors.white)),
                 ),
@@ -523,26 +523,10 @@ class _PlanSention extends StatelessWidget {
       child: Divider(color: AppColors.dividerColor),
     );
   }
-
-  Padding _point() {
-    return Padding(
-      padding: AppPaddings.right8,
-      child: Container(
-        margin: AppPaddings.top8,
-        height: AppSizes.size4,
-        width: AppSizes.size4,
-        decoration: BoxDecoration(
-          color: AppColors.white,
-          shape: BoxShape.circle,
-        ),
-      ),
-    );
-  }
 }
 
 class _ConditionsSection extends StatelessWidget {
   const _ConditionsSection({
-    super.key,
     required this.conditions1,
     required this.conditions2,
     required this.conditions3,
@@ -586,7 +570,6 @@ class _ConditionsSection extends StatelessWidget {
 
 class _IconWithTextSection extends StatelessWidget {
   const _IconWithTextSection({
-    super.key,
     required this.text,
     required this.icon,
   });
