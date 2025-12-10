@@ -1,17 +1,29 @@
+import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:audio_session/audio_session.dart';
+import 'package:spotify_clone/core/constants/app_colors.dart';
 import 'package:spotify_clone/core/constants/app_sizes.dart';
+import 'package:spotify_clone/core/enums/media_type.dart';
 import 'package:spotify_clone/models/player_model.dart';
+
 import 'package:spotify_clone/view_model/player_view_model.dart';
 import 'package:spotify_clone/widgets/custom_icon.dart';
 import 'package:spotify_clone/widgets/custom_text.dart';
 
 class PlayerView extends StatefulWidget {
+  final String title;
+  //final String type;
   final PlayTrackItem track;
+ final MediaType type;
 
-  const PlayerView({super.key, required this.track});
+  const PlayerView({
+    super.key,
+    required this.track,
+    required this.title,
+    required this.type,
+  });
 
   @override
   State<PlayerView> createState() => _PlayerViewState();
@@ -47,7 +59,6 @@ class _PlayerViewState extends State<PlayerView> {
 
   @override
   void dispose() {
-  
     _player.dispose();
     super.dispose();
   }
@@ -64,9 +75,23 @@ class _PlayerViewState extends State<PlayerView> {
         child: Observer(
           builder: (context) {
             return AppBar(
+              centerTitle: true,
               backgroundColor: viewModel.bgColor.value.withValues(alpha: 0.8),
-              title: Text(track.trackName ?? "No Data"));
-          }
+              title: Column(
+                children: [
+                  CustomText(data: widget.type.title),
+                  CustomText(
+                    data: widget.title,
+                    fontWeight: FontWeight.bold,
+                    fontSize: AppSizes.fontSize16,
+                  ),
+                ],
+              ), //Text(track.trackName ?? "No Data"),
+              leadingWidth: 80,
+              actionsPadding: EdgeInsets.only(right: 20),
+              actions: [CustomIcon(iconData: Icons.more_vert_outlined)],
+            );
+          },
         ),
       ),
       body: Observer(
@@ -86,11 +111,12 @@ class _PlayerViewState extends State<PlayerView> {
               ),
             ),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+
                 Padding(
-                  padding: EdgeInsets.only(top: 50, left: leftPadding),
+                  padding: EdgeInsets.only( left: leftPadding),
                   child: ClipRRect(
                     borderRadius: BorderRadiusGeometry.circular(10),
                     child:
@@ -113,36 +139,140 @@ class _PlayerViewState extends State<PlayerView> {
                           ),
                   ),
                 ),
-
-                const SizedBox(height: 30),
+SizedBox(height: 50),
+                const SizedBox(height: 20),
 
                 Padding(
-                  padding: EdgeInsets.only(left: leftPadding),
-                  child: CustomText(
-                    data: track.trackName,
-                    fontSize: AppSizes.fontSize22,
-                    fontWeight: FontWeight.bold,
-                    padding: EdgeInsets.all(0),
+                  padding: EdgeInsets.symmetric(horizontal: leftPadding),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomText(
+                            data: track.trackName,
+                            fontSize: AppSizes.fontSize22,
+                            fontWeight: FontWeight.bold,
+                            padding: EdgeInsets.all(0),
+                          ),
+                          CustomText(
+                            data: track.artistName,
+                            fontSize: AppSizes.fontSize16,
+                            fontWeight: FontWeight.normal,
+                            padding: EdgeInsets.all(0),
+                          ),
+                        ],
+                      ),
+                      CustomIcon(
+                        iconData: Icons.add_circle_outline,
+                        iconSize: 30,
+                      ),
+                    ],
                   ),
                 ),
 
-                Padding(
-                  padding: EdgeInsets.only(left: leftPadding),
-                  child: CustomText(
-                    data: track.artistName,
-                    fontSize: AppSizes.fontSize16,
-                    fontWeight: FontWeight.normal,
-                    padding: EdgeInsets.all(0),
-                  ),
+                SizedBox(height: 20),
+
+                StreamBuilder<Duration?>(
+                  stream: _player.durationStream,
+                  builder: (context, snapshotDuration) {
+                    final duration = snapshotDuration.data ?? Duration.zero;
+
+                    return StreamBuilder<Duration>(
+                      stream: _player.positionStream,
+                      builder: (context, snapshotPosition) {
+                        final position = snapshotPosition.data ?? Duration.zero;
+
+                        return Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: leftPadding,
+                          ),
+                          child: ProgressBar(
+                            progress: position,
+                            total: duration,
+                            barHeight: 5,
+                            baseBarColor: Colors.grey,
+                            progressBarColor: AppColors.white,
+                            thumbColor: AppColors.white,
+                            thumbRadius: 5,
+                            timeLabelPadding: 10.0,
+                            timeLabelTextStyle: TextStyle(
+                              color: AppColors.grey,
+                              fontSize: AppSizes.fontSize,
+                            ),
+                            onSeek: (newPosition) => _player.seek(newPosition),
+                          ),
+                        );
+                      },
+                    );
+                  },
                 ),
 
-                SizedBox(height: 90),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: leftPadding),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CustomIcon(iconData: Icons.shuffle),
+                      CustomIcon(iconData: Icons.skip_previous, iconSize: 40),
+                      StreamBuilder<PlayerState>(
+                        stream: _player.playerStateStream,
+                        builder: (context, snapshot) {
+                          final state = snapshot.data;
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CustomIcon(iconData: Icons.pause_circle , iconSize: 60,)
-                  ],
+                          final isPlaying = state?.playing ?? false;
+                          final isLoading =
+                              state?.processingState ==
+                                  ProcessingState.loading ||
+                              state?.processingState ==
+                                  ProcessingState.buffering;
+
+                          if (isLoading) {
+                            return const CircularProgressIndicator();
+                          }
+
+                          return IconButton(
+                            iconSize: 70,
+                            icon: Icon(
+                              isPlaying
+                                  ? Icons.pause_circle
+                                  : Icons.play_circle,
+                              color: AppColors.white,
+                            ),
+                            onPressed: () {
+                              if (isPlaying) {
+                                _player.pause();
+                              } else {
+                                _player.play();
+                              }
+                            },
+                          );
+                        },
+                      ),
+                      CustomIcon(iconData: Icons.skip_next, iconSize: 40),
+                      CustomIcon(iconData: Icons.repeat),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 20),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: leftPadding),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        // color: Colors.amber,
+                        width: 250,
+                        child: CustomIcon(iconData: Icons.devices),
+                      ),
+
+                      CustomIcon(iconData: Icons.share),
+                      CustomIcon(iconData: Icons.queue_music),
+                    ],
+                  ),
                 ),
               ],
             ),

@@ -4,6 +4,7 @@ import 'package:spotify_clone/core/constants/app_colors.dart';
 import 'package:spotify_clone/core/constants/app_paddings.dart';
 import 'package:spotify_clone/core/constants/app_sizes.dart';
 import 'package:spotify_clone/core/constants/app_strings.dart';
+import 'package:spotify_clone/core/enums/media_type.dart';
 import 'package:spotify_clone/models/track_list_model.dart';
 import 'package:spotify_clone/models/user_model.dart';
 import 'package:spotify_clone/view/player_view.dart';
@@ -16,7 +17,7 @@ import 'package:spotify_clone/widgets/custom_text.dart';
 
 class TrackListView extends StatefulWidget {
   final String id;
-  final String? type;
+  final MediaType type;
   final String title;
   final String? imageUrl;
 
@@ -50,7 +51,7 @@ class _TrackListViewState extends State<TrackListView> {
     });
     viewModel = TrackListViewModel();
     viewModel.updateBackground(widget.imageUrl ?? "");
-    viewModel.loadDataForType(widget.type ?? "", widget.id);
+    viewModel.loadDataForType(widget.type , widget.id);
   }
 
   @override
@@ -177,6 +178,8 @@ class _TrackListViewState extends State<TrackListView> {
                       child: _CustomListTile(
                         track: track,
                         viewModel: viewModel,
+                        title: widget.title,
+                        type: widget.type ,
                       ),
                     );
                   },
@@ -191,8 +194,9 @@ class _TrackListViewState extends State<TrackListView> {
 }
 
 class _CustomListTile extends StatelessWidget {
-  _CustomListTile({required this.track, required this.viewModel});
-
+  _CustomListTile({required this.track, required this.viewModel, required this.title, required this.type});
+  final String title;
+  final MediaType type;
   final TrackItem track;
   final TrackListViewModel viewModel;
   final double imageSize = 50;
@@ -228,9 +232,9 @@ class _CustomListTile extends StatelessWidget {
       onTap: () async {
         final playTrack = await viewModel.getTrackWithPreview(track);
 
-        Navigator.push(
+        Navigator.push( 
           context,
-          MaterialPageRoute(builder: (_) => PlayerView(track: playTrack)),
+          MaterialPageRoute(builder: (_) => PlayerView(track: playTrack , title:title , type: type,)),
         );
       },
     );

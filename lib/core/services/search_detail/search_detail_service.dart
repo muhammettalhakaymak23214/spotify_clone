@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:spotify_clone/core/constants/api_endpoints.dart';
+import 'package:spotify_clone/core/enums/endpoint.dart';
 import 'package:spotify_clone/core/services/base_service.dart';
 import 'package:spotify_clone/core/services/search_detail/search_query_params.dart';
 import 'package:spotify_clone/models/search_detail_model.dart';

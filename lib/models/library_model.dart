@@ -1,7 +1,9 @@
+import 'package:spotify_clone/core/enums/media_type.dart';
+
 class LibraryItem {
   String? title; 
   String? subTitle; 
-  String? type;
+  MediaType? type;
   String? id; 
   String? imagesUrl;
 }
@@ -12,7 +14,7 @@ class AlbumItem extends LibraryItem {
     imagesUrl = json["album"]?["images"][0]["url"];
     title = json["album"]?["name"];
     subTitle = json["album"]?["artists"][0]["name"];
-    type = json["album"]?["type"];
+    type = MediaTypeText.fromString(json["album"]?["type"]);
   }
 }
 class ArtistItem extends LibraryItem {
@@ -22,7 +24,7 @@ class ArtistItem extends LibraryItem {
     imagesUrl = json["images"][0]["url"];
     title = json["name"];
     subTitle = "";
-    type = json["type"];
+    type =  MediaTypeText.fromString(json["type"]);
   }
 }
 class PlaylistItem extends LibraryItem {
@@ -32,7 +34,7 @@ class PlaylistItem extends LibraryItem {
     imagesUrl = json["images"][0]["url"];
     title = json["name"];
     subTitle = json["owner"]["display_name"];
-    type = json["type"];
+    type = MediaTypeText.fromString(json["type"]);;
   }
 }
 
@@ -43,7 +45,7 @@ class PodcastItem extends LibraryItem {
     imagesUrl = json["show"]["images"][0]["url"];
     title = json["show"]["name"];
     subTitle = "";
-    type = json["show"]["type"];
+    type = MediaTypeText.fromString(json["show"]["type"]);
   }
 }
 

@@ -3,8 +3,10 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
 import 'package:spotify_clone/core/constants/app_strings.dart';
+import 'package:spotify_clone/core/enums/media_type.dart';
 import 'package:spotify_clone/core/services/player_service.dart';
 import 'package:spotify_clone/models/player_model.dart';
+
 import 'package:spotify_clone/view/player_view.dart';
 import 'package:spotify_clone/view/track_list_view.dart';
 import 'package:spotify_clone/view_model/library_view_model.dart';
@@ -161,7 +163,7 @@ class _LibraryViewState extends State<LibraryView> {
                     MaterialPageRoute(
                       builder: (_) => TrackListView(
                         id: item.id ?? "",
-                        type: item.type,
+                        type: item.type ?? MediaType.show ,
                         title: item.title ?? "",
                         imageUrl: item.imagesUrl,
 

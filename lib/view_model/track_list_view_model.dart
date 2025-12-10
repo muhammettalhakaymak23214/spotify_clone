@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
+import 'package:spotify_clone/core/enums/media_type.dart';
 import 'package:spotify_clone/core/helpers/palette_helper.dart';
 import 'package:spotify_clone/core/services/player_service.dart';
 import 'package:spotify_clone/core/services/track_list_service.dart';
@@ -27,21 +28,21 @@ class TrackListViewModel {
     });
   }
 
-  void loadDataForType(String type, String id) {
+  void loadDataForType(MediaType type, String id) {
     switch (type) {
-      case 'album':
+      case MediaType.album:
         loadAlbumTracks(id);
         loadDetail(id, "albums");
         break;
-      case 'playlist':
+      case MediaType.playlist:
         loadPlaylistTracks(id);
         loadDetail(id, "playlists");
         break;
-      case 'artist':
+      case MediaType.artist:
         loadArtistTopTracks(id, market: "TR");
         loadUser(id, "artists");
         break;
-      case 'podcast':
+      case MediaType.show:
         loadPodcastEpisodes(id);
         break;
       default:

@@ -44,7 +44,8 @@ dependencies:
   #audio
   just_audio: ^0.10.5
   audio_session: ^0.2.2
-
+  audio_video_progress_bar: ^2.0.3
+  #bgColor
   palette_generator_master: ^1.0.1
 
   # The following adds the Cupertino Icons font to your application.
