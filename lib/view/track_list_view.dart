@@ -2,15 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
 import 'package:spotify_clone/core/constants/app_paddings.dart';
-import 'package:spotify_clone/core/constants/app_sizes.dart';
 import 'package:spotify_clone/core/constants/app_strings.dart';
 import 'package:spotify_clone/core/enums/media_type.dart';
 import 'package:spotify_clone/models/track_list_model.dart';
 import 'package:spotify_clone/models/user_model.dart';
 import 'package:spotify_clone/view/player_view.dart';
-
 import 'package:spotify_clone/view_model/track_list_view_model.dart';
-
 import 'package:spotify_clone/widgets/custom_icon.dart';
 import 'package:spotify_clone/widgets/custom_point.dart';
 import 'package:spotify_clone/widgets/custom_text.dart';
@@ -51,7 +48,7 @@ class _TrackListViewState extends State<TrackListView> {
     });
     viewModel = TrackListViewModel();
     viewModel.updateBackground(widget.imageUrl ?? "");
-    viewModel.loadDataForType(widget.type , widget.id);
+    viewModel.loadDataForType(widget.type, widget.id);
   }
 
   @override
@@ -95,13 +92,13 @@ class _TrackListViewState extends State<TrackListView> {
                           alignment: Alignment.bottomLeft,
                           child: CustomText(
                             data: widget.title,
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
+                            textSize: TextSize.extraLarge,
+                            textWeight: TextWeight.bold,
                             padding: EdgeInsetsGeometry.only(left: 20),
                           ),
                         ),
                       ),
-                      widget.type != "artist"
+                      widget.type != MediaType.artist
                           ? Observer(
                               builder: (_) {
                                 return _Row2(user: viewModel.user.value);
@@ -115,7 +112,7 @@ class _TrackListViewState extends State<TrackListView> {
                                 );
                               },
                             ),
-                      widget.type == "playlist"
+                      widget.type == MediaType.playlist
                           ? Observer(
                               builder: (_) {
                                 final int? total =
@@ -129,7 +126,7 @@ class _TrackListViewState extends State<TrackListView> {
                                 );
                               },
                             )
-                          : widget.type == "album"
+                          : widget.type == MediaType.album
                           ? Observer(
                               builder: (_) {
                                 final String? releaseDate =
@@ -161,7 +158,7 @@ class _TrackListViewState extends State<TrackListView> {
                   child: Center(
                     child: CustomText(
                       data: AppStrings.emtyListMessage,
-                      fontSize: AppSizes.fontSize22,
+                      textSize: TextSize.extraLarge,
                       padding: AppPaddings.all10,
                     ),
                   ),
@@ -179,7 +176,7 @@ class _TrackListViewState extends State<TrackListView> {
                         track: track,
                         viewModel: viewModel,
                         title: widget.title,
-                        type: widget.type ,
+                        type: widget.type,
                       ),
                     );
                   },
@@ -194,7 +191,12 @@ class _TrackListViewState extends State<TrackListView> {
 }
 
 class _CustomListTile extends StatelessWidget {
-  _CustomListTile({required this.track, required this.viewModel, required this.title, required this.type});
+  _CustomListTile({
+    required this.track,
+    required this.viewModel,
+    required this.title,
+    required this.type,
+  });
   final String title;
   final MediaType type;
   final TrackItem track;
@@ -216,13 +218,13 @@ class _CustomListTile extends StatelessWidget {
 
       title: CustomText(
         data: track.name,
-        fontSize: AppSizes.fontSize16,
+        textSize: TextSize.large,
         padding: padding,
       ),
 
       subtitle: CustomText(
         data: track.artistsName?.join(", "),
-        fontSize: AppSizes.fontSize,
+        textSize: TextSize.small,
         color: AppColors.grey,
         padding: padding,
       ),
@@ -232,9 +234,12 @@ class _CustomListTile extends StatelessWidget {
       onTap: () async {
         final playTrack = await viewModel.getTrackWithPreview(track);
 
-        Navigator.push( 
+        Navigator.push(
           context,
-          MaterialPageRoute(builder: (_) => PlayerView(track: playTrack , title:title , type: type,)),
+          MaterialPageRoute(
+            builder: (_) =>
+                PlayerView(track: playTrack, title: title, type: type),
+          ),
         );
       },
     );
@@ -374,13 +379,13 @@ class _Row2 extends StatelessWidget {
             isImage
                 ? CustomText(
                     data: user?.displayName ?? "",
-                    fontSize: AppSizes.fontSize16,
-                    fontWeight: FontWeight.w600,
+                    textSize: TextSize.large,
+                    textWeight: TextWeight.bold,
                   )
                 : CustomText(
                     data: "Toplam dinleyici : ${user?.total}",
-                    fontSize: AppSizes.fontSize,
-                    fontWeight: FontWeight.normal,
+                    textSize: TextSize.small,
+                    textWeight: TextWeight.normal,
                     color: AppColors.grey,
                     padding: EdgeInsets.only(left: 20, bottom: 5),
                   ),
@@ -496,7 +501,7 @@ class _RowButtons extends StatelessWidget {
                 child: CustomIcon(
                   color: AppColors.black,
                   iconData: Icons.play_arrow,
-                  iconSize: 30,
+                  iconSize: IconSize.large,
                 ),
               ),
             ),

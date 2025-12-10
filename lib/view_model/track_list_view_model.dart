@@ -182,7 +182,7 @@ class TrackListViewModel {
     final track = PlayTrackItem(
       id: spotifyTrack.id,
       trackName: spotifyTrack.name,
-      artistName: spotifyTrack.artistsName.toString(),
+      artistName: spotifyTrack.artistsName?.join(", "),
       albumImage: spotifyTrack.albumImage ??  previewUrl?.last , 
       previewUrl: previewUrl?.first ?? "",
     );

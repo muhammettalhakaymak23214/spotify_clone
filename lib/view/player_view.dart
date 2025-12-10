@@ -7,16 +7,14 @@ import 'package:spotify_clone/core/constants/app_colors.dart';
 import 'package:spotify_clone/core/constants/app_sizes.dart';
 import 'package:spotify_clone/core/enums/media_type.dart';
 import 'package:spotify_clone/models/player_model.dart';
-
 import 'package:spotify_clone/view_model/player_view_model.dart';
 import 'package:spotify_clone/widgets/custom_icon.dart';
 import 'package:spotify_clone/widgets/custom_text.dart';
 
 class PlayerView extends StatefulWidget {
   final String title;
-  //final String type;
   final PlayTrackItem track;
- final MediaType type;
+  final MediaType type;
 
   const PlayerView({
     super.key,
@@ -74,28 +72,14 @@ class _PlayerViewState extends State<PlayerView> {
         preferredSize: Size.fromHeight(kToolbarHeight),
         child: Observer(
           builder: (context) {
-            return AppBar(
-              centerTitle: true,
-              backgroundColor: viewModel.bgColor.value.withValues(alpha: 0.8),
-              title: Column(
-                children: [
-                  CustomText(data: widget.type.title),
-                  CustomText(
-                    data: widget.title,
-                    fontWeight: FontWeight.bold,
-                    fontSize: AppSizes.fontSize16,
-                  ),
-                ],
-              ), //Text(track.trackName ?? "No Data"),
-              leadingWidth: 80,
-              actionsPadding: EdgeInsets.only(right: 20),
-              actions: [CustomIcon(iconData: Icons.more_vert_outlined)],
-            );
+            final color = viewModel.bgColor;
+            return _CustomAppBar(backgroundColor: color.value, widget: widget);
           },
         ),
       ),
       body: Observer(
         builder: (context) {
+          final backgroundColor = viewModel.bgColor.value;
           return Container(
             width: screenWidth,
             height: screenHeight,
@@ -104,8 +88,8 @@ class _PlayerViewState extends State<PlayerView> {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  viewModel.bgColor.value.withValues(alpha: 1),
-                  Colors.black.withValues(alpha: 0.5),
+                  backgroundColor.withValues(alpha: 1),
+                  AppColors.black.withValues(alpha: 0.5),
                 ],
                 stops: [0.3, 0.9],
               ),
@@ -114,67 +98,10 @@ class _PlayerViewState extends State<PlayerView> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
-                Padding(
-                  padding: EdgeInsets.only( left: leftPadding),
-                  child: ClipRRect(
-                    borderRadius: BorderRadiusGeometry.circular(10),
-                    child:
-                        track.albumImage != null && track.albumImage!.isNotEmpty
-                        ? Image.network(
-                            track.albumImage!,
-                            width: 350,
-                            height: 350,
-                            fit: BoxFit.cover,
-                          )
-                        : Container(
-                            width: 250,
-                            height: 250,
-                            color: Colors.grey,
-                            child: const Icon(
-                              Icons.music_note,
-                              size: 100,
-                              color: Colors.white,
-                            ),
-                          ),
-                  ),
-                ),
-SizedBox(height: 50),
-                const SizedBox(height: 20),
-
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: leftPadding),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          CustomText(
-                            data: track.trackName,
-                            fontSize: AppSizes.fontSize22,
-                            fontWeight: FontWeight.bold,
-                            padding: EdgeInsets.all(0),
-                          ),
-                          CustomText(
-                            data: track.artistName,
-                            fontSize: AppSizes.fontSize16,
-                            fontWeight: FontWeight.normal,
-                            padding: EdgeInsets.all(0),
-                          ),
-                        ],
-                      ),
-                      CustomIcon(
-                        iconData: Icons.add_circle_outline,
-                        iconSize: 30,
-                      ),
-                    ],
-                  ),
-                ),
-
+                _CoverImage(leftPadding: leftPadding, track: track),
+                const SizedBox(height: 70),
+                _Row1(leftPadding: leftPadding, track: track),
                 SizedBox(height: 20),
-
                 StreamBuilder<Duration?>(
                   stream: _player.durationStream,
                   builder: (context, snapshotDuration) {
@@ -209,76 +136,202 @@ SizedBox(height: 50),
                     );
                   },
                 ),
-
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: leftPadding),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      CustomIcon(iconData: Icons.shuffle),
-                      CustomIcon(iconData: Icons.skip_previous, iconSize: 40),
-                      StreamBuilder<PlayerState>(
-                        stream: _player.playerStateStream,
-                        builder: (context, snapshot) {
-                          final state = snapshot.data;
-
-                          final isPlaying = state?.playing ?? false;
-                          final isLoading =
-                              state?.processingState ==
-                                  ProcessingState.loading ||
-                              state?.processingState ==
-                                  ProcessingState.buffering;
-
-                          if (isLoading) {
-                            return const CircularProgressIndicator();
-                          }
-
-                          return IconButton(
-                            iconSize: 70,
-                            icon: Icon(
-                              isPlaying
-                                  ? Icons.pause_circle
-                                  : Icons.play_circle,
-                              color: AppColors.white,
-                            ),
-                            onPressed: () {
-                              if (isPlaying) {
-                                _player.pause();
-                              } else {
-                                _player.play();
-                              }
-                            },
-                          );
-                        },
-                      ),
-                      CustomIcon(iconData: Icons.skip_next, iconSize: 40),
-                      CustomIcon(iconData: Icons.repeat),
-                    ],
-                  ),
-                ),
+                _Row2(leftPadding: leftPadding, player: _player),
                 SizedBox(height: 20),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: leftPadding),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        // color: Colors.amber,
-                        width: 250,
-                        child: CustomIcon(iconData: Icons.devices),
-                      ),
-
-                      CustomIcon(iconData: Icons.share),
-                      CustomIcon(iconData: Icons.queue_music),
-                    ],
-                  ),
-                ),
+                _Row3(leftPadding: leftPadding),
               ],
             ),
           );
         },
       ),
+    );
+  }
+}
+
+class _Row3 extends StatelessWidget {
+  const _Row3({super.key, required this.leftPadding});
+
+  final double leftPadding;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: leftPadding),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            alignment: Alignment.centerLeft,
+            width: 250,
+            child: CustomIcon(iconData: Icons.devices),
+          ),
+
+          CustomIcon(iconData: Icons.share),
+          CustomIcon(iconData: Icons.queue_music),
+        ],
+      ),
+    );
+  }
+}
+
+class _Row2 extends StatelessWidget {
+  const _Row2({
+    super.key,
+    required this.leftPadding,
+    required AudioPlayer player,
+  }) : _player = player;
+
+  final double leftPadding;
+  final AudioPlayer _player;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: leftPadding),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          CustomIcon(iconData: Icons.shuffle),
+          CustomIcon(
+            iconData: Icons.skip_previous,
+            iconSize: IconSize.extraLarge,
+          ),
+          StreamBuilder<PlayerState>(
+            stream: _player.playerStateStream,
+            builder: (context, snapshot) {
+              final state = snapshot.data;
+              final isPlaying = state?.playing ?? false;
+              final isLoading =
+                  state?.processingState == ProcessingState.loading ||
+                  state?.processingState == ProcessingState.buffering;
+              if (isLoading) {
+                return const CircularProgressIndicator();
+              }
+              return IconButton(
+                icon: CustomIcon(
+                  iconData: isPlaying ? Icons.pause_circle : Icons.play_circle,
+                  iconSize: IconSize.mega,
+                ),
+                onPressed: () {
+                  if (isPlaying) {
+                    _player.pause();
+                  } else {
+                    _player.play();
+                  }
+                },
+              );
+            },
+          ),
+          CustomIcon(iconData: Icons.skip_next, iconSize: IconSize.extraLarge),
+          CustomIcon(iconData: Icons.repeat),
+        ],
+      ),
+    );
+  }
+}
+
+class _Row1 extends StatelessWidget {
+  const _Row1({required this.leftPadding, required this.track});
+
+  final double leftPadding;
+  final PlayTrackItem track;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: leftPadding),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CustomText(
+                data: track.trackName,
+                textSize: TextSize.extraLarge,
+                textWeight: TextWeight.bold,
+              ),
+              CustomText(
+                data: track.artistName,
+                textSize: TextSize.large,
+                textWeight: TextWeight.normal,
+              ),
+            ],
+          ),
+          CustomIcon(
+            iconData: Icons.add_circle_outline,
+            iconSize: IconSize.extraLarge,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _CoverImage extends StatelessWidget {
+  const _CoverImage({required this.leftPadding, required this.track});
+
+  final double leftPadding;
+  final PlayTrackItem track;
+  final double size = 350;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(left: leftPadding),
+      child: ClipRRect(
+        borderRadius: BorderRadiusGeometry.circular(10),
+        child: track.albumImage != null && track.albumImage!.isNotEmpty
+            ? Image.network(
+                track.albumImage!,
+                width: size,
+                height: size,
+                fit: BoxFit.cover,
+              )
+            : Container(
+                width: size,
+                height: size,
+                color: AppColors.grey,
+                child: CustomIcon(
+                  iconData: Icons.music_note,
+                  iconSize: IconSize.extraLarge,
+                ),
+              ),
+      ),
+    );
+  }
+}
+
+class _CustomAppBar extends StatelessWidget {
+  _CustomAppBar({required this.widget, required this.backgroundColor});
+
+  final Color backgroundColor;
+  final PlayerView widget;
+  final EdgeInsetsGeometry actionPadding = EdgeInsets.only(right: 20);
+  final double leadingWidth = 80;
+  final double backgroundColorAlphaValue = 0.8;
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      centerTitle: true,
+      backgroundColor: backgroundColor.withValues(
+        alpha: backgroundColorAlphaValue,
+      ),
+      title: Column(
+        children: [
+          CustomText(data: widget.type.title, textWeight: TextWeight.light),
+          CustomText(
+            data: widget.title,
+            textWeight: TextWeight.normal,
+            textSize: TextSize.medium,
+          ),
+        ],
+      ),
+      leadingWidth: leadingWidth,
+      actionsPadding: actionPadding,
+      actions: [CustomIcon(iconData: Icons.more_vert_outlined)],
     );
   }
 }
