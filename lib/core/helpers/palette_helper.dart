@@ -1,14 +1,30 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:palette_generator_master/palette_generator_master.dart';
 
 class PaletteHelper {
-  static Future<Color> getBackgroundColor(String imageUrl) async {
+  static Future<Color> getBackgroundColor(
+    String imageUrl, {
+    bool isPath = false,
+  }) async {
     try {
-      final palette = await PaletteGeneratorMaster.fromImageProvider(
-        NetworkImage(imageUrl),
-        maximumColorCount: 100,
-      );
 
+      late PaletteGeneratorMaster  palette;
+      if (isPath == false) {
+        palette = await PaletteGeneratorMaster.fromImageProvider(
+          // NetworkImage(imageUrl),
+          FileImage(File(imageUrl)),
+          maximumColorCount: 100,
+        );
+      } else {
+        palette = await PaletteGeneratorMaster.fromImageProvider(
+           NetworkImage(imageUrl),
+          //FileImage(File(imageUrl)),
+          maximumColorCount: 100,
+        );
+      }
+          
       final colors = palette.paletteColors;
 
       if (colors.isEmpty) return Colors.black;

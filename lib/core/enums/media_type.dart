@@ -1,4 +1,4 @@
-enum MediaType { playlist, album, artist ,show }
+enum MediaType { playlist, album, artist ,show , downloaded }
 
 extension MediaTypeText on MediaType {
   String get title {
@@ -11,6 +11,8 @@ extension MediaTypeText on MediaType {
         return "SANATÇILARDAN ÇALINIYOR";
       case MediaType.show:
         return "PODCAST'TEN ÇALINIYOR";
+      case MediaType.downloaded:
+        return "İNDİRİLENLERDEN ÇALINIYOR";
     }
   }
 

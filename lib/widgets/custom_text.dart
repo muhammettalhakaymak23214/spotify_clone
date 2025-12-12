@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
-import 'package:spotify_clone/core/constants/app_paddings.dart';
 
 class CustomText extends StatelessWidget {
   const CustomText({super.key, 
@@ -8,26 +7,23 @@ class CustomText extends StatelessWidget {
     this.color = AppColors.white,
     this.textSize = TextSize.small,
     this.textWeight = TextWeight.normal,
-    this.padding, this.textAlign = TextAlign.start,
+ this.textAlign = TextAlign.start,
   });
   final Color color;
   final String? data;
   final TextSize textSize;
   final TextWeight textWeight;
   final TextAlign textAlign;
-  final EdgeInsetsGeometry? padding;
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: padding ?? EdgeInsets.all(0),
-      child: Text(
-        textAlign: textAlign,
-        data ?? "No data",
-        style: TextStyle(
-          color: color,
-          fontSize: textSize.value,
-          fontWeight: textWeight.value,
-        ),
+    return Text(
+      textAlign: textAlign,
+      data ?? "No data",
+      style: TextStyle(
+        color: color,
+        fontSize: textSize.value,
+        fontWeight: textWeight.value,
       ),
     );
   }

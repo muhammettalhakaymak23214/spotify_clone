@@ -1,15 +1,18 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:spotify_clone/core/helpers/song_data_manager.dart';
 import 'package:spotify_clone/core/services/library_service.dart';
 import 'package:spotify_clone/core/services/player_service.dart';
 import 'package:spotify_clone/models/library_model.dart';
 import 'package:spotify_clone/models/player_model.dart';
 
-
 class LibraryViewModel {
   //Services
   final LibraryService libraryService = LibraryService();
-  final PlayerService playerService = PlayerService();//-------------
+  final PlayerService playerService = PlayerService(); //-------------
   //items
   final ObservableList<LibraryItem> items = ObservableList<LibraryItem>();
   //isLoadings
@@ -17,8 +20,48 @@ class LibraryViewModel {
   final Observable<bool> isLoadingPlaylist = Observable(false);
   final Observable<bool> isLoadingAlbum = Observable(false);
   final Observable<bool> isLoadingPodcast = Observable(false);
+  final Observable<bool> isDownloaded = Observable(false);
+
+
+
+  ObservableList<Map<String, dynamic>> songs =
+      ObservableList<Map<String, dynamic>>();
 
   LibraryViewModel();
+
+  Future<void> delete(var id) async {
+    debugPrint("[delete] : Start");
+    await SongDataManager().deleteSongById(id);
+    songs.clear();
+    songs.addAll(await SongDataManager().loadSongsFromPrefs());
+    runInAction(() {});
+    debugPrint("[delete] : End");
+  }
+
+  Future<void> loadSongs() async {
+    debugPrint("[loadSongs] : Start");
+    runInAction(() {
+      isDownloaded.value = true;
+    });
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? jsonString = prefs.getString('downloaded_songs');
+
+    if (jsonString != null) {
+      List<dynamic> jsonData = jsonDecode(jsonString);
+
+      runInAction(() {
+        //isDownloaded.value = true;
+        songs.clear();
+        songs.addAll(
+          jsonData.map((e) => Map<String, dynamic>.from(e)).toList(),
+        );
+      });
+      debugPrint("[loadSongs] : End");
+    }
+  }
+
+  //******************************** */
   Future<void> fetchPodcast() async {
     if (isLoadingPodcast.value) {
       return;
@@ -35,6 +78,7 @@ class LibraryViewModel {
       }
     });
     runInAction(() {
+      isDownloaded.value = false;
       isLoadingPodcast.value = false;
     });
   }
@@ -55,6 +99,7 @@ class LibraryViewModel {
       }
     });
     runInAction(() {
+      isDownloaded.value = false;
       isLoadingPlaylist.value = false;
     });
   }
@@ -75,6 +120,7 @@ class LibraryViewModel {
       }
     });
     runInAction(() {
+      isDownloaded.value = false;
       isLoadingArtist.value = false;
     });
   }
@@ -95,6 +141,7 @@ class LibraryViewModel {
       }
     });
     runInAction(() {
+      isDownloaded.value = false;
       isLoadingAlbum.value = false;
     });
   }

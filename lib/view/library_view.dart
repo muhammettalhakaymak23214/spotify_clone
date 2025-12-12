@@ -1,25 +1,22 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
 import 'package:spotify_clone/core/constants/app_strings.dart';
 import 'package:spotify_clone/core/enums/media_type.dart';
-import 'package:spotify_clone/core/services/player_service.dart';
 import 'package:spotify_clone/models/player_model.dart';
-
 import 'package:spotify_clone/view/player_view.dart';
 import 'package:spotify_clone/view/track_list_view.dart';
 import 'package:spotify_clone/view_model/library_view_model.dart';
-
 import 'package:spotify_clone/widgets/custom_app_bar.dart';
 import 'package:spotify_clone/widgets/custom_bottom_sheet.dart';
+import 'package:spotify_clone/widgets/custom_icon.dart';
+import 'package:spotify_clone/widgets/custom_text.dart';
 
 class LibraryView extends StatefulWidget {
-
-  const LibraryView({
-    super.key,
-
-  });
+  const LibraryView({super.key});
 
   @override
   State<LibraryView> createState() => _LibraryViewState();
@@ -37,21 +34,26 @@ class _LibraryViewState extends State<LibraryView> {
     viewModel.fetchPlaylist();
     viewModel.fetchPodcast();
   }
+  int selectedIndex = 10; 
 
   @override
   Widget build(BuildContext context) {
     final double appBarHeight = 110;
     return Scaffold(
       appBar: CustomAppBar(
+        selectedIndex: selectedIndex ,
         viewModel: viewModel,
         actionButtonsData: [
           AppBarButtonData(
+            index: 10,
             icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
+
             onPressed: () {
               // viewModel.addItem();
             },
           ),
           AppBarButtonData(
+            index: 10,
             icon: FaIcon(FontAwesomeIcons.plus),
             onPressed: () {
               CustomBottomSheet().customShowModalBottom(context);
@@ -60,43 +62,85 @@ class _LibraryViewState extends State<LibraryView> {
         ],
         bottomButtonsData: [
           AppBarButtonData(
+            index: 0,
             type: "playlist",
             text: AppStrings.playlist,
             onPressed: () {
+             
               if (!viewModel.isLoadingPlaylist.value) {
+              selectedIndex = 0;
+              //viewModel.items.clear();
+              setState(() {
+                
+              });
                 viewModel.items.clear();
                 viewModel.fetchPlaylist();
               }
             },
           ),
           AppBarButtonData(
+            index: 1,
             type: "podcasts",
             text: AppStrings.podcasts,
             onPressed: () {
+          
               if (!viewModel.isLoadingPodcast.value) {
+                selectedIndex = 1;
+              //viewModel.items.clear();
+              setState(() {
+                
+              });
                 viewModel.items.clear();
                 viewModel.fetchPodcast();
               }
             },
           ),
           AppBarButtonData(
+            index: 2,
             type: "user",
             text: AppStrings.albums,
             onPressed: () {
               if (!viewModel.isLoadingAlbum.value) {
+           selectedIndex = 2;
+              //viewModel.items.clear();
+              setState(() {
+                
+              });
                 viewModel.items.clear();
                 viewModel.fetchAlbum();
               }
             },
           ),
           AppBarButtonData(
+            index: 3,
             type: "artists",
             text: AppStrings.artists,
             onPressed: () {
               if (!viewModel.isLoadingArtist.value) {
+     selectedIndex = 3;
+              //viewModel.items.clear();
+              setState(() {
+                
+              });
                 viewModel.items.clear();
                 viewModel.fetchArtist();
               }
+            },
+          ),
+
+          //burayı düzletmem lazım
+          AppBarButtonData(
+            type: "indirilenler",
+            text: "İndirilenler",
+            index: 4,
+            onPressed: () {
+       
+              selectedIndex = 4;
+              //viewModel.items.clear();
+              setState(() {
+                
+              });
+              viewModel.loadSongs();
             },
           ),
         ],
@@ -110,71 +154,137 @@ class _LibraryViewState extends State<LibraryView> {
         ),
         appBarHeight: appBarHeight,
       ),
+
       body: Observer(
-        builder: (_) {
-          if (viewModel.isLoadingAlbum.value &&
-              viewModel.isLoadingArtist.value &&
-              viewModel.isLoadingPlaylist.value &&
-              viewModel.isLoadingPodcast.value) {
-            return Center(child: CircularProgressIndicator());
-          }
-          if (viewModel.items.isEmpty) {
-            return Center(child: Text("No playlists found"));
-          }
-          return ListView.builder(
-            itemCount: viewModel.items.length,
-            itemBuilder: (context, index) {
-              final item = viewModel.items[index];
-              final imageUrl =
-                  item.imagesUrl != null && item.imagesUrl!.isNotEmpty
-                  ? item.imagesUrl
-                  : null;
-              final subtitle = item.subTitle ?? "";
+        builder: (context) {
+          return !viewModel.isDownloaded.value
+              ? Observer(
+                  builder: (_) {
+                    if (viewModel.isLoadingAlbum.value &&
+                        viewModel.isLoadingArtist.value &&
+                        viewModel.isLoadingPlaylist.value &&
+                        viewModel.isLoadingPodcast.value) {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                    if (viewModel.items.isEmpty) {
+                      return Center(child: Text("No playlists found"));
+                    }
+                    return ListView.builder(
+                      itemCount: viewModel.items.length,
+                      itemBuilder: (context, index) {
+                        final item = viewModel.items[index];
+                        final imageUrl =
+                            item.imagesUrl != null && item.imagesUrl!.isNotEmpty
+                            ? item.imagesUrl
+                            : null;
+                        final subtitle = item.subTitle ?? "";
 
-              return ListTile(
-                leading: imageUrl != null
-                    ? Image.network(
-                        imageUrl,
-                        width: 50,
-                        height: 50,
-                        fit: BoxFit.cover,
-                      )
-                    : Container(
-                        width: 50,
-                        height: 50,
-                        color: Colors.grey,
-                        child: Icon(Icons.music_note),
-                      ),
-                title: Text(item.title ?? "No Title"),
-                subtitle: Text(subtitle),
-                onTap: () async {
-                   //PlayTrackItem track = await viewModel.getTrackWithPreview(item);
-                  
-                  //Navigator.push(
-                 //   context,
-                 //   MaterialPageRoute(builder: (_) => PlayerView(track: item)),
-                 // );
-                  
-
-        
-                  
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => TrackListView(
-                        id: item.id ?? "",
-                        type: item.type ?? MediaType.show ,
-                        title: item.title ?? "",
-                        imageUrl: item.imagesUrl,
-
-
-                      ),
-                    ),
-                  );
-                },
-              );
-            },
-          );
+                        return ListTile(
+                          leading: imageUrl != null
+                              ? Image.network(
+                                  imageUrl,
+                                  width: 50,
+                                  height: 50,
+                                  fit: BoxFit.cover,
+                                )
+                              : Container(
+                                  width: 50,
+                                  height: 50,
+                                  color: Colors.grey,
+                                  child: Icon(Icons.music_note),
+                                ),
+                          title: Text(item.title ?? "No Title"),
+                          subtitle: Text(subtitle),
+                          onTap: () async {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => TrackListView(
+                                  id: item.id ?? "",
+                                  type: item.type ?? MediaType.show,
+                                  title: item.title ?? "",
+                                  imageUrl: item.imagesUrl,
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    );
+                  },
+                )
+              : Observer(
+                  builder: (context) {
+                    return viewModel.songs.isEmpty
+                        ? Center(
+                            child: CustomText(
+                              data: AppStrings.emtyDownloadedList,
+                              color: AppColors.grey,
+                              textSize: TextSize.large,
+                            ),
+                          )
+                        : ListView.builder(
+                            itemCount: viewModel.songs.length,
+                            itemBuilder: (context, index) {
+                              final song = viewModel.songs[index];
+                              return ListTile(
+                                onTap: () async {
+                                  await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => PlayerView(
+                                        track: PlayTrackItem(
+                                          previewUrl: "",
+                                          id: song['id'],
+                                          trackName: song['title'],
+                                          artistName: song['artist'],
+                                          albumImage: "",
+                                          albumImagePath:
+                                              song['albumCoverPath'],
+                                          previewPath: song['filePath'],
+                                        ),
+                                        title: "İndirilenler",
+                                        type: MediaType.downloaded,
+                                      ),
+                                    ),
+                                  );
+                                  await viewModel.loadSongs();
+                                },
+                                leading: ClipRRect(
+                                  borderRadius: BorderRadiusGeometry.circular(
+                                    10,
+                                  ),
+                                  child:
+                                      File(song['albumCoverPath']).existsSync()
+                                      ? Image.file(
+                                          File(song['albumCoverPath'] ?? ""),
+                                          fit: BoxFit.cover,
+                                        )
+                                      : const Text("Resim bulunamadı"),
+                                ),
+                                title: CustomText(
+                                  data: song['title'],
+                                  textSize: TextSize.medium,
+                                ),
+                                subtitle: CustomText(
+                                  data: song['artist'],
+                                  textSize: TextSize.small,
+                                  color: AppColors.grey,
+                                ),
+                                trailing: IconButton(
+                                  icon: CustomIcon(
+                                    iconData: Icons.delete,
+                                    color: AppColors.white,
+                                  ),
+                                  onPressed: () {
+                                    viewModel.delete(song['id']);
+                                  },
+                                ),
+                              );
+                            },
+                          );
+                  },
+                );
         },
       ),
     );

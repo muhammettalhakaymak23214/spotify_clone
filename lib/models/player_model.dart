@@ -1,14 +1,18 @@
 class PlayTrackItem {
-  String? id;
-  String? trackName;
-  String? artistName;
-  String? albumImage;
-  String? previewUrl;
+  final String? id;
+  final String? trackName;
+  final String? artistName;
+  final String? albumImage;
+  final String? previewUrl;
+  final String? previewPath;
+  final String? albumImagePath;
   PlayTrackItem({
     required this.previewUrl,
     required this.id,
     required this.trackName,
     required this.artistName,
     required this.albumImage,
+    this.previewPath,
+    this.albumImagePath,
   });
 }

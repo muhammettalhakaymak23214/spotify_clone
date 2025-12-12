@@ -35,6 +35,7 @@ class _HomeViewState extends State<HomeView> {
     final String title3 = "Sevdiğin Sanatçılar";
     return Scaffold(
       appBar: CustomAppBar(
+        selectedIndex: 10,
         leading: Image.asset(imagePath),
         onTap: () => Scaffold.of(context).openDrawer(),
         title: Row(

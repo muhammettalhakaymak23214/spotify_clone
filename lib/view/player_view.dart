@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -6,14 +7,16 @@ import 'package:audio_session/audio_session.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
 import 'package:spotify_clone/core/constants/app_sizes.dart';
 import 'package:spotify_clone/core/enums/media_type.dart';
+import 'package:spotify_clone/core/helpers/song_data_manager.dart';
 import 'package:spotify_clone/models/player_model.dart';
 import 'package:spotify_clone/view_model/player_view_model.dart';
 import 'package:spotify_clone/widgets/custom_icon.dart';
 import 'package:spotify_clone/widgets/custom_text.dart';
+import 'package:spotify_clone/widgets/song_bottom_sheet.dart';
 
 class PlayerView extends StatefulWidget {
   final String title;
-  final PlayTrackItem track;
+  final  PlayTrackItem track;
   final MediaType type;
 
   const PlayerView({
@@ -35,22 +38,39 @@ class _PlayerViewState extends State<PlayerView> {
   void initState() {
     super.initState();
     viewModel = PlayerViewModel();
-    viewModel.updateBackground(widget.track.albumImage ?? "");
+    if (widget.type == MediaType.downloaded) {
+      viewModel.updateBackground(widget.track.albumImagePath ?? "");
+    } else {
+      viewModel.updateBackground(widget.track.albumImage ?? "", isPath: true);
+    }
+
     _player = AudioPlayer();
-    _setupAudio();
+    _setupAudio(widget.type);
     _player.play();
   }
 
-  Future<void> _setupAudio() async {
+  Future<void> _setupAudio(MediaType type) async {
     final session = await AudioSession.instance;
     await session.configure(const AudioSessionConfiguration.music());
-
-    if (widget.track.previewUrl != null &&
-        widget.track.previewUrl!.isNotEmpty) {
-      try {
-        await _player.setUrl(widget.track.previewUrl!);
-      } catch (e) {
-        debugPrint("[setupAudio] : $e");
+    if (type == MediaType.downloaded) {
+      if (widget.track.previewPath != null &&
+          widget.track.previewPath!.isNotEmpty) {
+        try {
+          //await _player.setUrl(widget.track.previewUrl!);
+          await _player.setFilePath(widget.track.previewPath!);
+        } catch (e) {
+          debugPrint("[setupAudio] : $e");
+        }
+      }
+    } else {
+      if (widget.track.previewUrl != null &&
+          widget.track.previewUrl!.isNotEmpty) {
+        try {
+          await _player.setUrl(widget.track.previewUrl!);
+          //_player.setFilePath();
+        } catch (e) {
+          debugPrint("[setupAudio] : $e");
+        }
       }
     }
   }
@@ -73,7 +93,12 @@ class _PlayerViewState extends State<PlayerView> {
         child: Observer(
           builder: (context) {
             final color = viewModel.bgColor;
-            return _CustomAppBar(backgroundColor: color.value, widget: widget);
+            return _CustomAppBar(
+              backgroundColor: color.value,
+              widget: widget,
+              track: track,
+              title: widget.title,
+            );
           },
         ),
       ),
@@ -98,7 +123,11 @@ class _PlayerViewState extends State<PlayerView> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _CoverImage(leftPadding: leftPadding, track: track),
+                _CoverImage(
+                  leftPadding: leftPadding,
+                  track: track,
+                  type: widget.type,
+                ),
                 const SizedBox(height: 70),
                 _Row1(leftPadding: leftPadding, track: track),
                 SizedBox(height: 20),
@@ -270,8 +299,13 @@ class _Row1 extends StatelessWidget {
 }
 
 class _CoverImage extends StatelessWidget {
-  const _CoverImage({required this.leftPadding, required this.track});
+  const _CoverImage({
+    required this.leftPadding,
+    required this.track,
+    required this.type,
+  });
 
+  final MediaType type;
   final double leftPadding;
   final PlayTrackItem track;
   final double size = 350;
@@ -280,37 +314,65 @@ class _CoverImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(left: leftPadding),
-      child: ClipRRect(
-        borderRadius: BorderRadiusGeometry.circular(10),
-        child: track.albumImage != null && track.albumImage!.isNotEmpty
-            ? Image.network(
-                track.albumImage!,
-                width: size,
-                height: size,
-                fit: BoxFit.cover,
-              )
-            : Container(
-                width: size,
-                height: size,
-                color: AppColors.grey,
-                child: CustomIcon(
-                  iconData: Icons.music_note,
-                  iconSize: IconSize.extraLarge,
-                ),
-              ),
-      ),
+      child: type != MediaType.downloaded
+          ? ClipRRect(
+              borderRadius: BorderRadiusGeometry.circular(10),
+              child: track.albumImage != null && track.albumImage!.isNotEmpty
+                  ? Image.network(
+                      track.albumImage!,
+                      width: size,
+                      height: size,
+                      fit: BoxFit.cover,
+                    )
+                  : Container(
+                      width: size,
+                      height: size,
+                      color: AppColors.grey,
+                      child: CustomIcon(
+                        iconData: Icons.music_note,
+                        iconSize: IconSize.extraLarge,
+                      ),
+                    ),
+            )
+          : ClipRRect(
+              borderRadius: BorderRadiusGeometry.circular(10),
+              child:
+                  track.albumImagePath != null &&
+                      track.albumImagePath!.isNotEmpty
+                  ? Image.file(
+                      File(track.albumImagePath!),
+                      width: size,
+                      height: size,
+                      fit: BoxFit.cover,
+                    )
+                  : Container(
+                      width: size,
+                      height: size,
+                      color: AppColors.grey,
+                      child: CustomIcon(
+                        iconData: Icons.music_note,
+                        iconSize: IconSize.extraLarge,
+                      ),
+                    ),
+            ),
     );
   }
 }
 
 class _CustomAppBar extends StatelessWidget {
-  _CustomAppBar({required this.widget, required this.backgroundColor});
-
+  _CustomAppBar({
+    required this.widget,
+    required this.backgroundColor,
+    required this.track,
+    required this.title,
+  });
+  final PlayTrackItem track;
   final Color backgroundColor;
   final PlayerView widget;
   final EdgeInsetsGeometry actionPadding = EdgeInsets.only(right: 20);
   final double leadingWidth = 80;
   final double backgroundColorAlphaValue = 0.8;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -331,7 +393,23 @@ class _CustomAppBar extends StatelessWidget {
       ),
       leadingWidth: leadingWidth,
       actionsPadding: actionPadding,
-      actions: [CustomIcon(iconData: Icons.more_vert_outlined)],
+      actions: [
+        IconButton(
+          onPressed: () async {
+            final bool isDowloaded = await SongDataManager()
+                .songExistsByFilePath(track.id ?? "No Id");
+            //
+            SongBottomSheet().songShowModalBottom(
+              context,
+              track,
+              title,
+              widget.type,
+              isDowloaded,
+            );
+          },
+          icon: CustomIcon(iconData: Icons.more_vert_outlined),
+        ),
+      ],
     );
   }
 }

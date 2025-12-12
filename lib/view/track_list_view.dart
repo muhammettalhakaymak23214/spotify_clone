@@ -72,6 +72,7 @@ class _TrackListViewState extends State<TrackListView> {
           ),
           SliverToBoxAdapter(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
                   width: double.infinity,
@@ -87,14 +88,13 @@ class _TrackListViewState extends State<TrackListView> {
                       ),
                       _CoverImage(imageUrl: widget.imageUrl!, size: size),
                       Padding(
-                        padding: const EdgeInsets.only(bottom: 120),
+                        padding: const EdgeInsets.only(bottom: 115, left: 20),
                         child: Container(
                           alignment: Alignment.bottomLeft,
                           child: CustomText(
                             data: widget.title,
                             textSize: TextSize.extraLarge,
                             textWeight: TextWeight.bold,
-                            padding: EdgeInsetsGeometry.only(left: 20),
                           ),
                         ),
                       ),
@@ -159,7 +159,6 @@ class _TrackListViewState extends State<TrackListView> {
                     child: CustomText(
                       data: AppStrings.emtyListMessage,
                       textSize: TextSize.extraLarge,
-                      padding: AppPaddings.all10,
                     ),
                   ),
                 );
@@ -216,20 +215,21 @@ class _CustomListTile extends StatelessWidget {
             )
           : null,
 
-      title: CustomText(
-        data: track.name,
-        textSize: TextSize.large,
-        padding: padding,
-      ),
+      title: CustomText(data: track.name, textSize: TextSize.large),
 
       subtitle: CustomText(
         data: track.artistsName?.join(", "),
         textSize: TextSize.small,
         color: AppColors.grey,
-        padding: padding,
       ),
 
-      trailing: CustomIcon(iconData: Icons.more_vert_outlined),
+      trailing: Padding(
+        padding: const EdgeInsets.only(right: 5),
+        child: CustomIcon(
+          iconData: Icons.more_vert_outlined,
+          iconSize: IconSize.large,
+        ),
+      ),
 
       onTap: () async {
         final playTrack = await viewModel.getTrackWithPreview(track);
@@ -343,10 +343,7 @@ class _Row2 extends StatelessWidget {
   final String defaultProfileImage = "assets/png/default_profile_image.png";
   final double imageSize = 20;
   final bool isImage;
-  final EdgeInsetsGeometry padding = const EdgeInsets.only(
-    //left: 20,
-    bottom: 90,
-  );
+  final EdgeInsetsGeometry padding = const EdgeInsets.only(bottom: 90);
 
   @override
   Widget build(BuildContext context) {
@@ -377,17 +374,22 @@ class _Row2 extends StatelessWidget {
                   )
                 : SizedBox.shrink(),
             isImage
-                ? CustomText(
-                    data: user?.displayName ?? "",
-                    textSize: TextSize.large,
-                    textWeight: TextWeight.bold,
+                ? Padding(
+                    padding: const EdgeInsets.only(left: 5),
+                    child: CustomText(
+                      data: user?.displayName ?? "",
+                      textSize: TextSize.medium,
+                      textWeight: TextWeight.normal,
+                    ),
                   )
-                : CustomText(
-                    data: "Toplam dinleyici : ${user?.total}",
-                    textSize: TextSize.small,
-                    textWeight: TextWeight.normal,
-                    color: AppColors.grey,
-                    padding: EdgeInsets.only(left: 20, bottom: 5),
+                : Padding(
+                    padding: const EdgeInsets.only(left: 5),
+                    child: CustomText(
+                      data: "Toplam dinleyici : ${user?.total}",
+                      textSize: TextSize.small,
+                      textWeight: TextWeight.normal,
+                      color: AppColors.grey,
+                    ),
                   ),
           ],
         ),
@@ -411,9 +413,19 @@ class _RowPlaylist extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            CustomIcon(iconData: Icons.public_outlined, color: AppColors.grey),
-            CustomText(data: total, color: AppColors.grey),
-            Point(color: AppColors.grey),
+            CustomIcon(
+              iconData: Icons.public_outlined,
+              color: AppColors.grey,
+              iconSize: IconSize.medium,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 5),
+              child: CustomText(data: total, color: AppColors.grey),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5),
+              child: Point(color: AppColors.grey),
+            ),
             CustomText(data: duration, color: AppColors.grey),
           ],
         ),
@@ -437,7 +449,10 @@ class _RowAlbum extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             CustomText(data: "Album", color: AppColors.grey),
-            Point(color: AppColors.grey),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5.0),
+              child: Point(color: AppColors.grey),
+            ),
             CustomText(data: releaseDate, color: AppColors.grey),
           ],
         ),
@@ -480,11 +495,20 @@ class _RowButtons extends StatelessWidget {
                       child: Image.network(imageUrl, fit: BoxFit.cover),
                     ),
                   ),
-                  CustomIcon(iconData: Icons.check_circle, color: Colors.green),
-                  CustomIcon(iconData: Icons.download, color: Colors.grey),
+                  CustomIcon(
+                    iconData: Icons.check_circle,
+                    color: Colors.green,
+                    iconSize: IconSize.large,
+                  ),
+                  CustomIcon(
+                    iconData: Icons.download,
+                    color: Colors.grey,
+                    iconSize: IconSize.large,
+                  ),
                   CustomIcon(
                     iconData: Icons.more_vert_outlined,
                     color: Colors.grey,
+                    iconSize: IconSize.large,
                   ),
                 ],
               ),
@@ -501,7 +525,7 @@ class _RowButtons extends StatelessWidget {
                 child: CustomIcon(
                   color: AppColors.black,
                   iconData: Icons.play_arrow,
-                  iconSize: IconSize.large,
+                  iconSize: IconSize.extraLarge,
                 ),
               ),
             ),

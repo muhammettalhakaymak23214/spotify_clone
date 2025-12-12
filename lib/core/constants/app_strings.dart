@@ -110,7 +110,25 @@ class AppStrings {
   static final String searchViewTitle = "Hepsine göz at";
   static final String searchBar = "Ne dinlemek istiyorsun?";
 
-
   //Track List View
   static final String emtyListMessage = "Liste boş!";
+
+  //Player View / Song Bottom Sheet
+  static final String download = "İndir";
+  static final String share = "Paylaş";
+  static final String addPlaylist = "Başka bir çalma listesine ekle";
+  static final String hideAlbum = "Bu albümde gizle";
+  static final String adFree = "Müzikleri reklamsız dinle";
+  static final String addQueue = "Sıraya Ekle";
+  static final String goQueue = "Çalma Sırasına git";
+  static final String goAlbum = "Albüme git";
+  static final String goArtist = "Sanatçıya git";
+  static final String startJam = "Jam başlat";
+  static final String excludeTaste = "Parçayı müzik zevki profilinden hariç tut";
+  static final String sleepTimer = "Otomatik kapatma";
+  static final String songRadio = "Şarkı radyosuna git";
+  static final String contributors = "Şarkıya katkıda bulunanları görüntüle";
+  static final String spotifyCode = "Spotify kodunu göster";
+
+  static final String emtyDownloadedList = "Henüz şarkı indirmedin";
 }
