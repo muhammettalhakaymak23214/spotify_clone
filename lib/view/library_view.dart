@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -24,6 +23,7 @@ class LibraryView extends StatefulWidget {
 
 class _LibraryViewState extends State<LibraryView> {
   late LibraryViewModel viewModel;
+  List<PlayTrackItem> playlist = [];
 
   @override
   void initState() {
@@ -34,23 +34,21 @@ class _LibraryViewState extends State<LibraryView> {
     viewModel.fetchPlaylist();
     viewModel.fetchPodcast();
   }
-  int selectedIndex = 10; 
+
+  int selectedIndex = 10;
 
   @override
   Widget build(BuildContext context) {
     final double appBarHeight = 110;
     return Scaffold(
       appBar: CustomAppBar(
-        selectedIndex: selectedIndex ,
+        selectedIndex: selectedIndex,
         viewModel: viewModel,
         actionButtonsData: [
           AppBarButtonData(
             index: 10,
             icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
-
-            onPressed: () {
-              // viewModel.addItem();
-            },
+            onPressed: () {},
           ),
           AppBarButtonData(
             index: 10,
@@ -66,13 +64,9 @@ class _LibraryViewState extends State<LibraryView> {
             type: "playlist",
             text: AppStrings.playlist,
             onPressed: () {
-             
               if (!viewModel.isLoadingPlaylist.value) {
-              selectedIndex = 0;
-              //viewModel.items.clear();
-              setState(() {
-                
-              });
+                selectedIndex = 0;
+                setState(() {});
                 viewModel.items.clear();
                 viewModel.fetchPlaylist();
               }
@@ -83,13 +77,9 @@ class _LibraryViewState extends State<LibraryView> {
             type: "podcasts",
             text: AppStrings.podcasts,
             onPressed: () {
-          
               if (!viewModel.isLoadingPodcast.value) {
                 selectedIndex = 1;
-              //viewModel.items.clear();
-              setState(() {
-                
-              });
+                setState(() {});
                 viewModel.items.clear();
                 viewModel.fetchPodcast();
               }
@@ -101,11 +91,8 @@ class _LibraryViewState extends State<LibraryView> {
             text: AppStrings.albums,
             onPressed: () {
               if (!viewModel.isLoadingAlbum.value) {
-           selectedIndex = 2;
-              //viewModel.items.clear();
-              setState(() {
-                
-              });
+                selectedIndex = 2;
+                setState(() {});
                 viewModel.items.clear();
                 viewModel.fetchAlbum();
               }
@@ -117,11 +104,8 @@ class _LibraryViewState extends State<LibraryView> {
             text: AppStrings.artists,
             onPressed: () {
               if (!viewModel.isLoadingArtist.value) {
-     selectedIndex = 3;
-              //viewModel.items.clear();
-              setState(() {
-                
-              });
+                selectedIndex = 3;
+                setState(() {});
                 viewModel.items.clear();
                 viewModel.fetchArtist();
               }
@@ -134,12 +118,8 @@ class _LibraryViewState extends State<LibraryView> {
             text: "İndirilenler",
             index: 4,
             onPressed: () {
-       
               selectedIndex = 4;
-              //viewModel.items.clear();
-              setState(() {
-                
-              });
+              setState(() {});
               viewModel.loadSongs();
             },
           ),
@@ -167,7 +147,7 @@ class _LibraryViewState extends State<LibraryView> {
                       return Center(child: CircularProgressIndicator());
                     }
                     if (viewModel.items.isEmpty) {
-                      return Center(child: Text("No playlists found"));
+                      return Center(child: Text("Sonuç bulunamadi"));
                     }
                     return ListView.builder(
                       itemCount: viewModel.items.length,
@@ -229,22 +209,38 @@ class _LibraryViewState extends State<LibraryView> {
                               final song = viewModel.songs[index];
                               return ListTile(
                                 onTap: () async {
+                                  int i = 0;
+                                  playlist.clear();
+                                  while (i <= viewModel.songs.length - 1) {
+                                    playlist.add(
+                                      PlayTrackItem(
+                                        previewUrl: "",
+                                        id: viewModel.songs[i]['id'],
+                                        trackName: viewModel.songs[i]['title'],
+                                        artistName:
+                                            viewModel.songs[i]['artist'],
+                                        albumImage: "",
+                                        albumImagePath: viewModel
+                                            .songs[i]['albumCoverPath'],
+                                        previewPath:
+                                            viewModel.songs[i]['filePath'],
+                                      ),
+                                      /*
+                                      await viewModel.getTrackWithPreview(
+                                        viewModel.songs[i],
+                                      ),*/
+                                    );
+                                    i++;
+                                  }
+
                                   await Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                       builder: (_) => PlayerView(
-                                        track: PlayTrackItem(
-                                          previewUrl: "",
-                                          id: song['id'],
-                                          trackName: song['title'],
-                                          artistName: song['artist'],
-                                          albumImage: "",
-                                          albumImagePath:
-                                              song['albumCoverPath'],
-                                          previewPath: song['filePath'],
-                                        ),
+                                        playlist: playlist,
                                         title: "İndirilenler",
                                         type: MediaType.downloaded,
+                                        currentIndex: index,
                                       ),
                                     ),
                                   );

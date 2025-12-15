@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spotify_clone/view/downloaded_songs_view.dart';
 import 'package:spotify_clone/view/home_view.dart';
 import 'package:spotify_clone/view/library_view.dart';
 import 'package:spotify_clone/view/premium_view.dart';
@@ -8,7 +7,9 @@ import 'package:spotify_clone/widgets/custom_bottom_app_bar.dart';
 import 'package:spotify_clone/widgets/custom_drawer.dart';
 
 class MainTabView extends StatefulWidget {
-  const MainTabView({super.key});
+  const MainTabView({super.key,  this.initialIndex = 0});
+
+  final int initialIndex;
 
   @override
   State<MainTabView> createState() => _MainTabViewState();
@@ -21,7 +22,7 @@ class _MainTabViewState extends State<MainTabView>
   @override
   void initState() {
     super.initState();
-    tabController = TabController(length: 4, vsync: this);
+    tabController = TabController(length: 4, vsync: this , initialIndex: widget.initialIndex,);
   }
 
   @override

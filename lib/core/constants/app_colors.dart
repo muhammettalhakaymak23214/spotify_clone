@@ -17,6 +17,10 @@ class AppColors {
   static const Color yellowColor = Color.fromARGB(255, 254, 201, 99);
   static const Color blueColor = Color.fromARGB(255, 165, 187, 210);
 
+  //Bottom Sheet
+  static const Color dragColor = Color.fromARGB(143, 255, 255, 255);
+  static const Color bottomSheetBgColor = Color.fromARGB(255, 18, 18, 18);
+
   
 
 }

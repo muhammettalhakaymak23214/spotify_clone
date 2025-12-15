@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:spotify_clone/core/enums/media_type.dart';
 import 'package:spotify_clone/core/helpers/palette_helper.dart';
+import 'package:spotify_clone/core/helpers/song_data_manager.dart';
+import 'package:spotify_clone/core/services/file_manager_service.dart';
 import 'package:spotify_clone/core/services/player_service.dart';
 import 'package:spotify_clone/core/services/track_list_service.dart';
 import 'package:spotify_clone/models/player_model.dart';
@@ -61,11 +63,9 @@ class TrackListViewModel {
       });
       if (type == "playlists") {
         loadUser(data.ownerId, "users");
-      }
-      else if(type == "albums"){
+      } else if (type == "albums") {
         loadUser(data.ownerId, "artists");
-      }
-      else if (type == "artists"){
+      } else if (type == "artists") {
         loadUser(data.ownerId, "artists");
       }
     } catch (e) {
@@ -183,7 +183,7 @@ class TrackListViewModel {
       id: spotifyTrack.id,
       trackName: spotifyTrack.name,
       artistName: spotifyTrack.artistsName?.join(", "),
-      albumImage: spotifyTrack.albumImage ??  previewUrl?.last , 
+      albumImage: spotifyTrack.albumImage ?? previewUrl?.last,
       previewUrl: previewUrl?.first ?? "",
     );
 
@@ -206,5 +206,69 @@ class TrackListViewModel {
     } else {
       duration.value = "$minutes dk";
     }
+  }
+
+  Future<void> fullDownload() async {
+    debugPrint("[fullDownload] : Start");
+    final songManager = SongDataManager();
+    final fileManager = FileManagerService();
+
+    final futures = tracks.map((t) async {
+      final id = t.id;
+      if (id == null) return null;
+
+      final isDownloaded = await songManager.songExistsByFilePath(id);
+
+      if (isDownloaded) {
+        return null;
+      }
+
+      final track = await getTrackWithPreview(t);
+
+      if (track.previewUrl == null || track.previewUrl!.isEmpty) {
+        return null;
+      }
+
+      return track;
+    });
+
+    final List<PlayTrackItem> playlist = (await Future.wait(
+      futures,
+    )).whereType<PlayTrackItem>().toList();
+
+    if (playlist.isEmpty) {
+      debugPrint("Playlist is empty");
+      return;
+    }
+
+    for (final track in playlist) {
+      final mp3Url = track.previewUrl!;
+      final coverUrl = track.albumImage ?? "";
+
+      final mp3FileName = "${track.id}.mp3";
+      final coverFileName = "${track.id}.jpg";
+
+      final mp3Path = await fileManager.downloadFile(mp3Url, mp3FileName);
+
+      if (mp3Path == null) {
+        debugPrint("MP3 is not downloaded : ${track.id}");
+        continue;
+      }
+
+      final coverPath = await fileManager.downloadFile(coverUrl, coverFileName);
+
+      final songs = await songManager.loadSongsFromPrefs();
+
+      songs.add({
+        "id": track.id,
+        "title": track.trackName ?? "",
+        "artist": track.artistName ?? "",
+        "albumCoverPath": coverPath ?? "",
+        "filePath": mp3Path,
+      });
+
+      await songManager.saveSongsToPrefs(songs);
+    }
+    debugPrint("[fullDownload] : End");
   }
 }

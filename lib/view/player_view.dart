@@ -2,28 +2,28 @@ import 'dart:io';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:just_audio/just_audio.dart';
-import 'package:audio_session/audio_session.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
 import 'package:spotify_clone/core/constants/app_sizes.dart';
 import 'package:spotify_clone/core/enums/media_type.dart';
-import 'package:spotify_clone/core/helpers/song_data_manager.dart';
 import 'package:spotify_clone/models/player_model.dart';
 import 'package:spotify_clone/view_model/player_view_model.dart';
 import 'package:spotify_clone/widgets/custom_icon.dart';
 import 'package:spotify_clone/widgets/custom_text.dart';
+import 'package:spotify_clone/widgets/listen_mode_bottom_sheet.dart';
 import 'package:spotify_clone/widgets/song_bottom_sheet.dart';
 
 class PlayerView extends StatefulWidget {
   final String title;
-  final  PlayTrackItem track;
+  final List<PlayTrackItem> playlist;
+  final int currentIndex;
   final MediaType type;
 
   const PlayerView({
     super.key,
-    required this.track,
     required this.title,
     required this.type,
+    required this.playlist,
+    required this.currentIndex,
   });
 
   @override
@@ -31,69 +31,44 @@ class PlayerView extends StatefulWidget {
 }
 
 class _PlayerViewState extends State<PlayerView> {
-  late AudioPlayer _player;
   late PlayerViewModel viewModel;
 
   @override
   void initState() {
     super.initState();
     viewModel = PlayerViewModel();
-    if (widget.type == MediaType.downloaded) {
-      viewModel.updateBackground(widget.track.albumImagePath ?? "");
-    } else {
-      viewModel.updateBackground(widget.track.albumImage ?? "", isPath: true);
-    }
-
-    _player = AudioPlayer();
-    _setupAudio(widget.type);
-    _player.play();
-  }
-
-  Future<void> _setupAudio(MediaType type) async {
-    final session = await AudioSession.instance;
-    await session.configure(const AudioSessionConfiguration.music());
-    if (type == MediaType.downloaded) {
-      if (widget.track.previewPath != null &&
-          widget.track.previewPath!.isNotEmpty) {
-        try {
-          //await _player.setUrl(widget.track.previewUrl!);
-          await _player.setFilePath(widget.track.previewPath!);
-        } catch (e) {
-          debugPrint("[setupAudio] : $e");
-        }
-      }
-    } else {
-      if (widget.track.previewUrl != null &&
-          widget.track.previewUrl!.isNotEmpty) {
-        try {
-          await _player.setUrl(widget.track.previewUrl!);
-          //_player.setFilePath();
-        } catch (e) {
-          debugPrint("[setupAudio] : $e");
-        }
-      }
-    }
+    viewModel.currentType = widget.type;
+    viewModel.initPlayer();
+    viewModel.playlist.addAll(widget.playlist);
+    viewModel.currentIndex.value = widget.currentIndex;
+    viewModel.selectAlbumUrlOrPath(widget.type);
+    viewModel.startSong(widget.type);
   }
 
   @override
   void dispose() {
-    _player.dispose();
+    viewModel.stopSong();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final track = widget.track;
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     double leftPadding = (screenWidth - 350) / 2;
+
+    final double sizedBoxHeightOne = 70;
+    final double sizedBoxHeightTwo = 20;
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
         child: Observer(
           builder: (context) {
+            final track = viewModel.playlist[viewModel.currentIndex.value];
             final color = viewModel.bgColor;
             return _CustomAppBar(
+              viewModel: viewModel,
               backgroundColor: color.value,
               widget: widget,
               track: track,
@@ -104,21 +79,15 @@ class _PlayerViewState extends State<PlayerView> {
       ),
       body: Observer(
         builder: (context) {
+          final track = viewModel.playlist[viewModel.currentIndex.value];
+          final otoNextValue = viewModel.otoNext.value;
+          final otoLoopValue = viewModel.otoLoop.value;
           final backgroundColor = viewModel.bgColor.value;
+
           return Container(
             width: screenWidth,
             height: screenHeight,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  backgroundColor.withValues(alpha: 1),
-                  AppColors.black.withValues(alpha: 0.5),
-                ],
-                stops: [0.3, 0.9],
-              ),
-            ),
+            decoration: _boxDecoration(backgroundColor),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -128,44 +97,16 @@ class _PlayerViewState extends State<PlayerView> {
                   track: track,
                   type: widget.type,
                 ),
-                const SizedBox(height: 70),
+                SizedBox(height: sizedBoxHeightOne),
                 _Row1(leftPadding: leftPadding, track: track),
-                SizedBox(height: 20),
-                StreamBuilder<Duration?>(
-                  stream: _player.durationStream,
-                  builder: (context, snapshotDuration) {
-                    final duration = snapshotDuration.data ?? Duration.zero;
-
-                    return StreamBuilder<Duration>(
-                      stream: _player.positionStream,
-                      builder: (context, snapshotPosition) {
-                        final position = snapshotPosition.data ?? Duration.zero;
-
-                        return Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: leftPadding,
-                          ),
-                          child: ProgressBar(
-                            progress: position,
-                            total: duration,
-                            barHeight: 5,
-                            baseBarColor: Colors.grey,
-                            progressBarColor: AppColors.white,
-                            thumbColor: AppColors.white,
-                            thumbRadius: 5,
-                            timeLabelPadding: 10.0,
-                            timeLabelTextStyle: TextStyle(
-                              color: AppColors.grey,
-                              fontSize: AppSizes.fontSize,
-                            ),
-                            onSeek: (newPosition) => _player.seek(newPosition),
-                          ),
-                        );
-                      },
-                    );
-                  },
+                SizedBox(height: sizedBoxHeightTwo),
+                _ProgresBar(viewModel: viewModel, leftPadding: leftPadding),
+                _Row2(
+                  leftPadding: leftPadding,
+                  viewModel: viewModel,
+                  otoNextValue: otoNextValue,
+                  otoLoopValue: otoLoopValue,
                 ),
-                _Row2(leftPadding: leftPadding, player: _player),
                 SizedBox(height: 20),
                 _Row3(leftPadding: leftPadding),
               ],
@@ -175,12 +116,74 @@ class _PlayerViewState extends State<PlayerView> {
       ),
     );
   }
+
+  BoxDecoration _boxDecoration(Color backgroundColor) {
+    return BoxDecoration(
+      gradient: LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [
+          backgroundColor.withValues(alpha: 1),
+          AppColors.black.withValues(alpha: 0.5),
+        ],
+        stops: [0.3, 0.9],
+      ),
+    );
+  }
+}
+
+class _ProgresBar extends StatelessWidget {
+  const _ProgresBar({required this.viewModel, required this.leftPadding});
+
+  final PlayerViewModel viewModel;
+  final double leftPadding;
+
+  @override
+  Widget build(BuildContext context) {
+    final double barHeight = 5;
+    final double thumbRadius = 5;
+    final double timeLabelPadding = 10;
+
+    return StreamBuilder<Duration?>(
+      stream: viewModel.durationStream,
+      builder: (context, snapshotDuration) {
+        final duration = snapshotDuration.data ?? Duration.zero;
+
+        return StreamBuilder<Duration>(
+          stream: viewModel.positionStream,
+          builder: (context, snapshotPosition) {
+            final position = snapshotPosition.data ?? Duration.zero;
+
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: leftPadding),
+              child: ProgressBar(
+                progress: position,
+                total: duration,
+                barHeight: barHeight,
+                baseBarColor: AppColors.grey,
+                progressBarColor: AppColors.white,
+                thumbColor: AppColors.white,
+                thumbRadius: thumbRadius,
+                timeLabelPadding: timeLabelPadding,
+                timeLabelTextStyle: TextStyle(
+                  color: AppColors.grey,
+                  fontSize: AppSizes.fontSize,
+                ),
+                onSeek: (newPosition) => viewModel.seek(newPosition),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
 }
 
 class _Row3 extends StatelessWidget {
-  const _Row3({super.key, required this.leftPadding});
+  const _Row3({required this.leftPadding});
 
   final double leftPadding;
+  final double containerWidth = 250;
 
   @override
   Widget build(BuildContext context) {
@@ -191,10 +194,9 @@ class _Row3 extends StatelessWidget {
         children: [
           Container(
             alignment: Alignment.centerLeft,
-            width: 250,
+            width: containerWidth,
             child: CustomIcon(iconData: Icons.devices),
           ),
-
           CustomIcon(iconData: Icons.share),
           CustomIcon(iconData: Icons.queue_music),
         ],
@@ -204,14 +206,27 @@ class _Row3 extends StatelessWidget {
 }
 
 class _Row2 extends StatelessWidget {
-  const _Row2({
-    super.key,
+  _Row2({
     required this.leftPadding,
-    required AudioPlayer player,
-  }) : _player = player;
+    required this.viewModel,
+    required this.otoNextValue,
+    required this.otoLoopValue,
+  });
 
   final double leftPadding;
-  final AudioPlayer _player;
+  final PlayerViewModel viewModel;
+  final bool otoNextValue;
+  final bool otoLoopValue;
+
+  final String activeSuffleIconPath = "assets/png/active_suffle.png";
+  final String suffleIconPath = "assets/png/suffle.png";
+  final String activeLoopIconPath = "assets/png/active_loop.png";
+  final String loopIconPath = "assets/png/loop.png";
+
+  final double smallContainerSize = 40;
+  final double mediumContainerSize = 50;
+  final BorderRadiusGeometry borderRadius = BorderRadius.circular(50);
+  final double smallSpaceWidth = 5;
 
   @override
   Widget build(BuildContext context) {
@@ -220,22 +235,50 @@ class _Row2 extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          CustomIcon(iconData: Icons.shuffle),
-          CustomIcon(
-            iconData: Icons.skip_previous,
-            iconSize: IconSize.extraLarge,
+          Container(
+            height: smallContainerSize,
+            width: smallContainerSize,
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              borderRadius: borderRadius,
+            ),
+            child: IconButton(
+              icon: SizedBox(
+                height: 30,
+                child: otoNextValue
+                    ? Image.asset(activeSuffleIconPath)
+                    : Image.asset(suffleIconPath),
+              ),
+              onPressed: () {
+                ListenModeBottomSheet.show(context, viewModel);
+              },
+            ),
           ),
-          StreamBuilder<PlayerState>(
-            stream: _player.playerStateStream,
+          SizedBox(width: smallSpaceWidth),
+          Container(
+            height: mediumContainerSize,
+            width: mediumContainerSize,
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              borderRadius: borderRadius,
+            ),
+            child: IconButton(
+              onPressed: () {
+                viewModel.indexPrevious();
+              },
+              icon: CustomIcon(
+                color: AppColors.black,
+                iconData: Icons.skip_previous,
+                iconSize: IconSize.extraLarge,
+              ),
+            ),
+          ),
+
+          StreamBuilder<bool>(
+            stream: viewModel.playingStream,
             builder: (context, snapshot) {
-              final state = snapshot.data;
-              final isPlaying = state?.playing ?? false;
-              final isLoading =
-                  state?.processingState == ProcessingState.loading ||
-                  state?.processingState == ProcessingState.buffering;
-              if (isLoading) {
-                return const CircularProgressIndicator();
-              }
+              final isPlaying = snapshot.data ?? false;
+
               return IconButton(
                 icon: CustomIcon(
                   iconData: isPlaying ? Icons.pause_circle : Icons.play_circle,
@@ -243,16 +286,51 @@ class _Row2 extends StatelessWidget {
                 ),
                 onPressed: () {
                   if (isPlaying) {
-                    _player.pause();
+                    viewModel.playerPause();
                   } else {
-                    _player.play();
+                    viewModel.playerPlay();
                   }
                 },
               );
             },
           ),
-          CustomIcon(iconData: Icons.skip_next, iconSize: IconSize.extraLarge),
-          CustomIcon(iconData: Icons.repeat),
+          Container(
+            height: mediumContainerSize,
+            width: mediumContainerSize,
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              borderRadius: borderRadius,
+            ),
+            child: IconButton(
+              onPressed: () {
+                viewModel.indexNext();
+              },
+              icon: CustomIcon(
+                color: AppColors.black,
+                iconData: Icons.skip_next,
+                iconSize: IconSize.extraLarge,
+              ),
+            ),
+          ),
+          SizedBox(width: smallSpaceWidth),
+          Container(
+            height: smallContainerSize,
+            width: smallContainerSize,
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              borderRadius: borderRadius,
+            ),
+            child: IconButton(
+              icon: SizedBox(
+                child: viewModel.otoLoop.value
+                    ? Image.asset(activeLoopIconPath)
+                    : Image.asset(loopIconPath),
+              ),
+              onPressed: () {
+                viewModel.setOtoLoop();
+              },
+            ),
+          ),
         ],
       ),
     );
@@ -278,7 +356,7 @@ class _Row1 extends StatelessWidget {
             children: [
               CustomText(
                 data: track.trackName,
-                textSize: TextSize.extraLarge,
+                textSize: TextSize.large,
                 textWeight: TextWeight.bold,
               ),
               CustomText(
@@ -365,7 +443,9 @@ class _CustomAppBar extends StatelessWidget {
     required this.backgroundColor,
     required this.track,
     required this.title,
+    required this.viewModel,
   });
+  final PlayerViewModel viewModel;
   final PlayTrackItem track;
   final Color backgroundColor;
   final PlayerView widget;
@@ -396,11 +476,13 @@ class _CustomAppBar extends StatelessWidget {
       actions: [
         IconButton(
           onPressed: () async {
-            final bool isDowloaded = await SongDataManager()
-                .songExistsByFilePath(track.id ?? "No Id");
-            //
-            SongBottomSheet().songShowModalBottom(
+            final bool isDowloaded = await viewModel.isDownloaded(
+              track.id ?? "no id",
+            );
+
+            SongBottomSheet.show(
               context,
+              viewModel,
               track,
               title,
               widget.type,

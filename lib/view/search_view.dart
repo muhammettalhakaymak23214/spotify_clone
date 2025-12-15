@@ -174,7 +174,6 @@ final Map<String, Color> categoryColors = {
 
 class _SliverAppBar extends StatelessWidget {
   const _SliverAppBar({
-    super.key,
     required this.expandedHeight,
     required this.widget,
     required this.paddingH10V5,

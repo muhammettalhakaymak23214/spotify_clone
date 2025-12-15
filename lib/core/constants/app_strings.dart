@@ -115,6 +115,7 @@ class AppStrings {
 
   //Player View / Song Bottom Sheet
   static final String download = "İndir";
+  static final String delete = "İndirilenlerden Kaldır";
   static final String share = "Paylaş";
   static final String addPlaylist = "Başka bir çalma listesine ekle";
   static final String hideAlbum = "Bu albümde gizle";
@@ -131,4 +132,12 @@ class AppStrings {
   static final String spotifyCode = "Spotify kodunu göster";
 
   static final String emtyDownloadedList = "Henüz şarkı indirmedin";
+
+
+
+  //Bottom Sheet
+  static final String bsListenModes = "Dinleme modları";
+  static const String bsAutoNext = "Otomatik oynatma";
+  static final String bsMixPlay = "Karışık çal";
+  static final String bsPlayInOrder = "Sırayla çal";
 }

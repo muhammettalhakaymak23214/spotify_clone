@@ -21,7 +21,7 @@ class SongDataManager {
   Future<void> clearSongsFromPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('downloaded_songs');
-    debugPrint("İndirilen şarkılar listesi silindi.");
+    debugPrint("İndirilen şarkilar listesi silindi.");
     FileManagerService().clearAllFiles();
   }
 
@@ -36,7 +36,7 @@ class SongDataManager {
     final index = songs.indexWhere((song) => song["id"] == id);
 
     if (index == -1) {
-      debugPrint("Silinecek şarkı bulunamadı. ID: $id");
+      debugPrint("Silinecek şarki bulunamadi. ID: $id");
       return;
     }
 
@@ -53,7 +53,6 @@ class SongDataManager {
 
     await prefs.setString("downloaded_songs", jsonEncode(songs));
 
-    debugPrint("Şarkı başarıyla silindi → $id");
   }
 
   Future<bool> songExistsByFilePath(String id) async {
@@ -63,9 +62,7 @@ class SongDataManager {
     if (jsonString == null) return false;
 
     final songs = List<Map<String, dynamic>>.from(jsonDecode(jsonString));
-    debugPrint("_________________________________");
     debugPrint(id);
-    debugPrint("_________________________________");
     return songs.any((song) => "${song["id"]}" == id);
   }
 }

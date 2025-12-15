@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:lottie/lottie.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
-import 'package:spotify_clone/core/constants/app_paddings.dart';
 import 'package:spotify_clone/core/constants/app_strings.dart';
 import 'package:spotify_clone/core/enums/media_type.dart';
+import 'package:spotify_clone/models/player_model.dart';
 import 'package:spotify_clone/models/track_list_model.dart';
 import 'package:spotify_clone/models/user_model.dart';
 import 'package:spotify_clone/view/player_view.dart';
@@ -37,9 +38,12 @@ class _TrackListViewState extends State<TrackListView> {
   double maxSize = 230;
   double minSize = 80;
 
+  List<PlayTrackItem> playlist = [];
+
   @override
   void initState() {
     super.initState();
+
     scrollController = ScrollController();
     scrollController.addListener(() {
       setState(() {
@@ -139,7 +143,10 @@ class _TrackListViewState extends State<TrackListView> {
                           : widget.type == "artist"
                           ? SizedBox.shrink()
                           : SizedBox.shrink(),
-                      _RowButtons(imageUrl: widget.imageUrl ?? ""),
+                      _RowButtons(
+                        imageUrl: widget.imageUrl ?? "",
+                        viewModel: viewModel,
+                      ),
                     ],
                   ),
                 ),
@@ -176,6 +183,7 @@ class _TrackListViewState extends State<TrackListView> {
                         viewModel: viewModel,
                         title: widget.title,
                         type: widget.type,
+                        index: index,
                       ),
                     );
                   },
@@ -195,6 +203,7 @@ class _CustomListTile extends StatelessWidget {
     required this.viewModel,
     required this.title,
     required this.type,
+    required this.index,
   });
   final String title;
   final MediaType type;
@@ -202,6 +211,9 @@ class _CustomListTile extends StatelessWidget {
   final TrackListViewModel viewModel;
   final double imageSize = 50;
   final EdgeInsetsGeometry padding = EdgeInsets.all(0);
+  final int index;
+
+  List<PlayTrackItem> playlist = [];
 
   @override
   Widget build(BuildContext context) {
@@ -232,13 +244,25 @@ class _CustomListTile extends StatelessWidget {
       ),
 
       onTap: () async {
-        final playTrack = await viewModel.getTrackWithPreview(track);
-
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (_) => const Center(child: CircularProgressIndicator()),
+        );
+        final futures = viewModel.tracks.map(
+          (t) => viewModel.getTrackWithPreview(t),
+        );
+        Navigator.pop(context);
+        final playlist = await Future.wait(futures);
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (_) =>
-                PlayerView(track: playTrack, title: title, type: type),
+            builder: (_) => PlayerView(
+              playlist: playlist,
+              title: title,
+              type: type,
+              currentIndex: index,
+            ),
           ),
         );
       },
@@ -462,7 +486,8 @@ class _RowAlbum extends StatelessWidget {
 }
 
 class _RowButtons extends StatelessWidget {
-  const _RowButtons({required this.imageUrl});
+  const _RowButtons({required this.imageUrl, required this.viewModel});
+  final TrackListViewModel viewModel;
 
   final String imageUrl;
 
@@ -476,8 +501,7 @@ class _RowButtons extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              // color: Colors.amber,
+            SizedBox(
               height: 50,
               width: 200,
               child: Row(
@@ -500,10 +524,39 @@ class _RowButtons extends StatelessWidget {
                     color: Colors.green,
                     iconSize: IconSize.large,
                   ),
-                  CustomIcon(
-                    iconData: Icons.download,
-                    color: Colors.grey,
-                    iconSize: IconSize.large,
+                  IconButton(
+                    icon: CustomIcon(
+                      iconData: Icons.download,
+                      iconSize: IconSize.large,
+                    ),
+                    onPressed: () async {
+                      showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (_) => Center(
+                          child: SizedBox(
+                            child: Lottie.asset(
+                              'assets/lottie/lottie_loading.json',fit: BoxFit.contain,
+                            ),
+                          ),
+                        ),
+                      );
+                      await viewModel.fullDownload();
+                      Navigator.pop(context);
+                      showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (_) => Center(
+                          child: SizedBox(
+                            child: Lottie.asset(
+                              'assets/lottie/lottie_success.json',fit: BoxFit.contain,
+                            ),
+                          ),
+                        ),
+                      );
+                      await Future.delayed(const Duration(milliseconds: 3400));
+                      Navigator.pop(context);
+                    },
                   ),
                   CustomIcon(
                     iconData: Icons.more_vert_outlined,

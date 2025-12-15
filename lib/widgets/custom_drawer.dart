@@ -46,9 +46,7 @@ class CustomDrawer extends StatelessWidget {
 }
 
 class _AccountHeaderListTile extends StatelessWidget {
-  const _AccountHeaderListTile({
-    super.key,
-  });
+  const _AccountHeaderListTile();
 
   @override
   Widget build(BuildContext context) {
@@ -70,14 +68,14 @@ class _AccountHeaderListTile extends StatelessWidget {
           ),
         ),
       ),
-      title: Text(AppStrings.accountHeader , style: TextStyle(fontSize: 20),),
-      subtitle: Text(AppStrings.profileView, style: TextStyle(fontSize: 13),),
+      title: Text(AppStrings.accountHeader, style: TextStyle(fontSize: 20)),
+      subtitle: Text(AppStrings.profileView, style: TextStyle(fontSize: 13)),
     );
   }
 }
 
 class _CustomListTile extends StatelessWidget {
-  const _CustomListTile({super.key, required this.title, required this.icon});
+  const _CustomListTile({required this.title, required this.icon});
   final String title;
   final Icon icon;
 

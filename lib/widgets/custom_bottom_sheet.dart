@@ -47,7 +47,6 @@ class CustomBottomSheet {
 
 class _CustomListTile extends StatelessWidget {
   const _CustomListTile({
-    super.key,
     required this.title,
     required this.subTitle,
     required this.icon,
