@@ -23,7 +23,7 @@ class TrackListViewModel {
   Observable<Color> bgColor = Observable<Color>(Colors.black);
 
   Future<void> updateBackground(String imageUrl) async {
-    final color = await PaletteHelper.getBackgroundColor(imageUrl);
+    final color = await PaletteHelper.getBackgroundColor(imageUrl , isPath: true  );
 
     runInAction(() {
       bgColor.value = color;
