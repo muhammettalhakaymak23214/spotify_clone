@@ -118,16 +118,12 @@ class _CreatePlaylistViewState extends State<CreatePlaylistView> {
                       success = await viewModel.createPlaylist(_defaultName);
                     }
                     if (success) {
-                      
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                           builder: (context) => UpdatePlaylistView(
-                            playlistName: playlistName,
-                            playlistId:  viewModel.playlistId,
-                         
-                            /////////////////////////////////////////////
-                          ), 
+                            playlistId: viewModel.playlistId,
+                          ),
                         ),
                       );
                     }

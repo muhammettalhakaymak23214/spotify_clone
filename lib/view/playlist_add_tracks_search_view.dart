@@ -22,7 +22,7 @@ class _PlaylistAddTracksSearchViewState
   //ViewModel
   late PlaylistAddTracksSearchViewModel viewModel;
   late UpdatePlaylistViewModel viewModel2;
-  
+
   @override
   void initState() {
     super.initState();
@@ -31,10 +31,21 @@ class _PlaylistAddTracksSearchViewState
     viewModel.fetchRecentlyPlayed();
   }
 
+  int count = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+          ), // Buraya istediğiniz ikonu verebilirsiniz
+          onPressed: () {
+            // Geri gitmek için Navigator.pop veya başka bir işlem
+            Navigator.pop(context, count);
+          },
+        ),
         title: TextField(
           controller: _controller,
           autofocus: true,
@@ -82,11 +93,19 @@ class _PlaylistAddTracksSearchViewState
               List<String> trackUris = [];
               debugPrint(items.id);
               trackUris.add("spotify:track:${items.id}");
-              await viewModel2.addTracksToPlaylist(
-                playlistId: widget.playlistId,
-                trackUris: trackUris,
+              await viewModel2.getPlaylistTracks(playlistId: widget.playlistId);
+              final bool any = viewModel2.playlistInTracks.any(
+                (track) => track.id == items.id,
               );
-              viewModel.itemsRecentlyPlayed.removeAt(index);
+              if (!any) {
+                await viewModel2.addTracksToPlaylist(
+                  playlistId: widget.playlistId,
+                  trackUris: trackUris,
+                );
+                viewModel.itemsRecentlyPlayed.removeAt(index);
+                count++;
+                debugPrint(" count : ${count}");
+              }
             },
             icon: Padding(
               padding: const EdgeInsets.only(left: 10),
@@ -122,14 +141,22 @@ class _PlaylistAddTracksSearchViewState
               List<String> trackUris = [];
               debugPrint(item.id);
               trackUris.add("spotify:track:${item.id}");
-              await viewModel2.addTracksToPlaylist(
-                playlistId: widget.playlistId,
-                trackUris: trackUris,
+              await viewModel2.getPlaylistTracks(playlistId: widget.playlistId);
+              final bool any = viewModel2.playlistInTracks.any(
+                (track) => track.id == item.id,
               );
-              viewModel.searchResults?.removeAt(index);
-              viewModel.offSet++;
-              debugPrint("${viewModel.offSet}");
-              await viewModel.search(_controller.text, 1);
+
+              if (!any) {
+                await viewModel2.addTracksToPlaylist(
+                  playlistId: widget.playlistId,
+                  trackUris: trackUris,
+                );
+                viewModel.searchResults?.removeAt(index);
+                viewModel.offSet++;
+                debugPrint("${viewModel.offSet}");
+                await viewModel.search(_controller.text, 1);
+                count++;
+              }
             },
             icon: Padding(
               padding: const EdgeInsets.only(left: 10),

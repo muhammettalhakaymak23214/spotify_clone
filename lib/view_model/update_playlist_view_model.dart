@@ -21,6 +21,9 @@ class UpdatePlaylistViewModel {
   bool isPressedAdd = false;
   bool isPressedRemove = false;
   int offset = 0;
+  int count = 0;
+
+  final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
 
   Future<void> deletePlaylist({required String playlistId}) async {
     runInAction(() {
@@ -87,6 +90,8 @@ class UpdatePlaylistViewModel {
       isLoading.value = true;
     });
     try {
+     
+      
       await _updatePlaylistService.deleteTracksToPlaylist(
         playlistId: playlistId,
         trackUri: trackUri,
@@ -108,6 +113,8 @@ class UpdatePlaylistViewModel {
       isLoading.value = true;
     });
     try {
+
+      
       await _updatePlaylistService.addTracksToPlaylist(
         playlistId: playlistId,
         trackUris: trackUris,

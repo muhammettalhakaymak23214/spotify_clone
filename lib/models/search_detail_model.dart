@@ -19,7 +19,7 @@ class SearchResultItem {
   SearchResultItem.fromJson(Map<String, dynamic> json) {
     id = json["id"];
     imageUrl = json["album"]["images"][0]["url"];
-    name = json["album"]["name"];
+    name = json["name"];
     artistName = json["album"]["artists"][0]["name"];
   }
 }
