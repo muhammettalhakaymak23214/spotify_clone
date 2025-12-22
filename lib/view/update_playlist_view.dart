@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
 import 'package:spotify_clone/core/constants/app_strings.dart';
+import 'package:spotify_clone/core/enums/media_type.dart';
 import 'package:spotify_clone/view/main_tab_view.dart';
 import 'package:spotify_clone/view/playlist_add_tracks_search_view.dart';
+import 'package:spotify_clone/view/track_list_view.dart';
 import 'package:spotify_clone/view_model/update_playlist_view_model.dart';
 import 'package:spotify_clone/widgets/custom_widgets/custom_icon.dart';
 import 'package:spotify_clone/widgets/custom_widgets/custom_text.dart';
@@ -27,7 +29,6 @@ class _UpdatePlaylistViewState extends State<UpdatePlaylistView> {
   //Variables
   final String _profilePhotoPath = "assets/png/profile_photo.png";
   late UpdatePlaylistViewModel viewModel;
-  final double appBarTitleFontSize = 24;
   final double topContainerHeight = 250;
   final double height1 = 150;
   final EdgeInsetsGeometry padding1 = EdgeInsets.symmetric(horizontal: 20);
@@ -61,13 +62,14 @@ class _UpdatePlaylistViewState extends State<UpdatePlaylistView> {
     //MediaQuery
     double screenWidth = MediaQuery.of(context).size.width;
     //BoxDecoration
-    const boxDecoration = BoxDecoration(
+    /*const boxDecsoration = BoxDecoration(
       gradient: LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
         colors: [AppColors.planSectionColor, AppColors.darkToneInk],
       ),
-    );
+    );*/
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
@@ -79,9 +81,16 @@ class _UpdatePlaylistViewState extends State<UpdatePlaylistView> {
           },
         ),
         centerTitle: true,
-        title: _AppBarTitleSection(
-          widget: widget,
-          appBarTitleFontSize: appBarTitleFontSize,
+        title: Observer(
+          builder: (context) {
+            final String playlistName = viewModel.playlistName.value;
+            return SizedBox(
+              width: 200,
+              child: _AppBarTitleSection(
+                playlistName: playlistName,
+              ),
+            );
+          },
         ),
       ),
       body: SingleChildScrollView(
@@ -89,7 +98,13 @@ class _UpdatePlaylistViewState extends State<UpdatePlaylistView> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
-              decoration: boxDecoration,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [AppColors.planSectionColor, AppColors.darkToneInk],
+                ),
+              ),
               height: topContainerHeight,
               width: double.infinity,
               child: Column(
@@ -148,107 +163,66 @@ class _UpdatePlaylistViewState extends State<UpdatePlaylistView> {
                       ),
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Container(
+                      height: 50,
+                      width: double.infinity,
+                      //  color: AppColors.green,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          IconButton(
+                            padding: EdgeInsets.only(left: 20),
+                            onPressed: () {},
+                            icon: CustomIcon(
+                              iconData: Icons.public_outlined,
+                              color: AppColors.grey,
+                              iconSize: IconSize.medium,
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: CustomIcon(
+                              iconData: Icons.more_vert_outlined,
+                              color: AppColors.grey,
+                              iconSize: IconSize.medium,
+                            ),
+                          ),
+                          Observer(
+                            builder: (context) {
+                              return AnimatedSwitcher(
+                                duration: const Duration(milliseconds: 350),
+                                switchInCurve: Curves.easeOutCubic,
+                                switchOutCurve: Curves.easeInCubic,
+                                transitionBuilder: (child, animation) {
+                                  // Girerken: sağdan → ortaya
+                                  final inAnimation = Tween<Offset>(
+                                    begin: const Offset(1.5, 0),
+                                    end: Offset.zero,
+                                  ).animate(animation);
 
-                  Observer(
-                    builder: (context) {
-                      return viewModel.playlistInTracks.isEmpty
-                          ? IconButton(
-                              padding: EdgeInsets.only(left: 20),
-                              onPressed: () {},
-                              icon: CustomIcon(
-                                iconData: Icons.public_outlined,
-                                color: AppColors.grey,
-                                iconSize: IconSize.medium,
-                              ),
-                            )
-                          : SizedBox.shrink();
-                    },
-                  ),
-                  Observer(
-                    builder: (context) {
-                      return viewModel.playlistInTracks.isEmpty
-                          ? IconButton(
-                              padding: EdgeInsets.only(left: 20),
-                              onPressed: () {},
-                              icon: CustomIcon(
-                                iconData: Icons.more_vert_outlined,
-                                color: AppColors.grey,
-                                iconSize: IconSize.medium,
-                              ),
-                            )
-                          : SizedBox.shrink();
-                    },
-                  ),
-                  Observer(
-                    builder: (context) {
-                      return viewModel.playlistInTracks.isNotEmpty
-                          ? Padding(
-                              padding: const EdgeInsets.only(top: 10),
-                              child: Container(
-                                height: 50,
-                                width: double.infinity,
-                                //  color: AppColors.green,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    IconButton(
-                                      padding: EdgeInsets.only(left: 20),
-                                      onPressed: () {},
-                                      icon: CustomIcon(
-                                        iconData: Icons.public_outlined,
-                                        color: AppColors.grey,
-                                        iconSize: IconSize.medium,
-                                      ),
+                                  return FadeTransition(
+                                    opacity: animation,
+                                    child: SlideTransition(
+                                      position: inAnimation,
+                                      child: child,
                                     ),
-                                    IconButton(
-                                      onPressed: () {},
-                                      icon: CustomIcon(
-                                        iconData: Icons.more_vert_outlined,
-                                        color: AppColors.grey,
-                                        iconSize: IconSize.medium,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 30,
-                                      width: 100,
-                                      child: ElevatedButton.icon(
-                                        onPressed: () async {
-                                          //PlaylistAddTracksSearchView
-                                          await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (_) =>
-                                                  PlaylistAddTracksSearchView(
-                                                    playlistId:
-                                                        widget.playlistId,
-                                                  ),
-                                            ),
-                                          );
-                                          await viewModel.getPlaylistDetail(
-                                            playlistId: widget.playlistId,
-                                          );
-                                          await viewModel.getPlaylistTracks(
-                                            playlistId: widget.playlistId,
-                                          );
-                                        },
-                                        icon: CustomIcon(
-                                          iconData: Icons.add,
-                                          color: AppColors.black,
-                                        ),
-                                        label: CustomText(
-                                          data: "Ekle",
-                                          color: AppColors.black,
-                                          textSize: TextSize.small,
-                                          textWeight: TextWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            )
-                          : SizedBox.shrink();
-                    },
+                                  );
+                                },
+                                child: viewModel.playlistInTracks.isNotEmpty
+                                    ? _ListNotEmptySection(
+                                        key: const ValueKey('visible'),
+                                        widget: widget,
+                                        viewModel: viewModel,
+                                      )
+                                    : const SizedBox(key: ValueKey('hidden')),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -256,12 +230,39 @@ class _UpdatePlaylistViewState extends State<UpdatePlaylistView> {
             SizedBox(height: 5),
             Observer(
               builder: (context) {
-                return viewModel.playlistInTracks.isEmpty
-                    ? SizedBox.shrink()
-                    : _PlaylistAddedTracks(
-                        viewModel: viewModel,
-                        widget: widget,
-                      );
+                return AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 350),
+                  switchInCurve: Curves.easeOutCubic,
+                  switchOutCurve: Curves.easeInCubic,
+                  transitionBuilder: (child, animation) {
+                    // Girerken: sağdan → ortaya
+                    final inAnimation = Tween<Offset>(
+                      begin: const Offset(-1.5, 0),
+                      end: Offset.zero,
+                    ).animate(animation);
+
+                    return FadeTransition(
+                      opacity: animation,
+                      child: SlideTransition(
+                        position: inAnimation,
+                        child: child,
+                      ),
+                    );
+                  },
+                  child: viewModel.playlistInTracks.isEmpty
+                      ? SizedBox(
+                          width: 200,
+                          child: _Deneme(
+                            screenWidth: screenWidth,
+                            widget: widget,
+                            viewModel: viewModel,
+                          ),
+                        )
+                      : _PlaylistAddedTracks(
+                          viewModel: viewModel,
+                          widget: widget,
+                        ),
+                );
               },
             ),
             SizedBox(
@@ -271,50 +272,14 @@ class _UpdatePlaylistViewState extends State<UpdatePlaylistView> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  /*
                   Observer(
                     builder: (context) {
                       return viewModel.playlistInTracks.isEmpty
-                          ? Padding(
-                              padding: EdgeInsets.only(
-                                left: screenWidth / 2 - (100),
-                              ),
-                              child: SizedBox(
-                                width: 200,
-                                child: ElevatedButton.icon(
-                                  onPressed: () async {
-                                    //PlaylistAddTracksSearchView
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (_) =>
-                                            PlaylistAddTracksSearchView(
-                                              playlistId: widget.playlistId,
-                                            ),
-                                      ),
-                                    );
-                                    await viewModel.getPlaylistDetail(
-                                      playlistId: widget.playlistId,
-                                    );
-                                    await viewModel.getPlaylistTracks(
-                                      playlistId: widget.playlistId,
-                                    );
-                                  },
-                                  icon: CustomIcon(
-                                    iconData: Icons.add,
-                                    color: AppColors.black,
-                                  ),
-                                  label: CustomText(
-                                    data: AppStrings.thisPlaylistAdd,
-                                    color: AppColors.black,
-                                    textSize: TextSize.small,
-                                    textWeight: TextWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            )
+                          ? _Deneme(screenWidth: screenWidth, widget: widget, viewModel: viewModel)
                           : SizedBox.shrink();
                     },
-                  ),
+                  ),*/
                   Observer(
                     builder: (context) {
                       final double topPadding =
@@ -356,6 +321,122 @@ class _UpdatePlaylistViewState extends State<UpdatePlaylistView> {
       context,
       MaterialPageRoute(builder: (_) => const MainTabView(initialIndex: 0)),
       (route) => false,
+    );
+  }
+}
+
+class _Deneme extends StatelessWidget {
+  const _Deneme({
+    super.key,
+    required this.screenWidth,
+    required this.widget,
+    required this.viewModel,
+  });
+
+  final double screenWidth;
+  final UpdatePlaylistView widget;
+  final UpdatePlaylistViewModel viewModel;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton.icon(
+      onPressed: () async {
+        //PlaylistAddTracksSearchView
+        await Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) =>
+                PlaylistAddTracksSearchView(playlistId: widget.playlistId),
+          ),
+        );
+        await viewModel.getPlaylistDetail(playlistId: widget.playlistId);
+        await viewModel.getPlaylistTracks(playlistId: widget.playlistId);
+      },
+      icon: CustomIcon(iconData: Icons.add, color: AppColors.black),
+      label: CustomText(
+        data: AppStrings.thisPlaylistAdd,
+        color: AppColors.black,
+        textSize: TextSize.small,
+        textWeight: TextWeight.bold,
+      ),
+    );
+  }
+}
+
+class _ListNotEmptySection extends StatelessWidget {
+  const _ListNotEmptySection({
+    super.key,
+    required this.widget,
+    required this.viewModel,
+  });
+
+  final UpdatePlaylistView widget;
+  final UpdatePlaylistViewModel viewModel;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 50,
+      child: Row(
+        children: [
+          SizedBox(
+            height: 30,
+            width: 100,
+            child: ElevatedButton.icon(
+              onPressed: () async {
+                //PlaylistAddTracksSearchView
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => PlaylistAddTracksSearchView(
+                      playlistId: widget.playlistId,
+                    ),
+                  ),
+                );
+                await viewModel.getPlaylistDetail(
+                  playlistId: widget.playlistId,
+                );
+                await viewModel.getPlaylistTracks(
+                  playlistId: widget.playlistId,
+                );
+              },
+              icon: CustomIcon(iconData: Icons.add, color: AppColors.black),
+              label: CustomText(
+                data: "Ekle",
+                color: AppColors.black,
+                textSize: TextSize.small,
+                textWeight: TextWeight.bold,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: SizedBox(
+              height: 30,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.green,
+                ),
+                onPressed: () {
+                  //TrackListView
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => TrackListView(
+                        id: widget.playlistId,
+                        title: viewModel.playlistName.value,
+                        type: MediaType.playlist,
+                        imageUrl: viewModel.playlistCoverImage.value,
+                      ),
+                    ),
+                  );
+                },
+                child: CustomText(data: "Çalma listesine git"),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -634,24 +715,29 @@ class _PlaylistCoverImageSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(right: 20),
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppColors.grey,
-          borderRadius: BorderRadius.circular(10),
+      child: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 1200),
+        switchInCurve: Curves.easeOut,
+        switchOutCurve: Curves.easeIn,
+        child: Container(
+          key: ValueKey(playlistCoverImage),
+          decoration: BoxDecoration(
+            color: AppColors.grey,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          height: 150,
+          width: 150,
+          child: playlistCoverImage.isEmpty
+              ? CustomIcon(
+                  iconData: Icons.music_note,
+                  iconSize: IconSize.mega,
+                  color: AppColors.planSectionColor,
+                )
+              : ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.network(playlistCoverImage, fit: BoxFit.cover),
+                ),
         ),
-        height: 150,
-        width: 150,
-
-        child: playlistCoverImage.isEmpty
-            ? CustomIcon(
-                iconData: Icons.music_note,
-                iconSize: IconSize.mega,
-                color: AppColors.planSectionColor,
-              )
-            : ClipRRect(
-                borderRadius: BorderRadiusGeometry.circular(10),
-                child: Image.network(playlistCoverImage, fit: BoxFit.cover),
-              ),
       ),
     );
   }
@@ -659,25 +745,21 @@ class _PlaylistCoverImageSection extends StatelessWidget {
 
 class _AppBarTitleSection extends StatelessWidget {
   const _AppBarTitleSection({
-    required this.widget,
-    required this.appBarTitleFontSize,
+    required this.playlistName,
   });
 
-  final UpdatePlaylistView widget;
-  final double appBarTitleFontSize;
-  final double sizedBoxWidth = 200;
+  final String playlistName;
+  final double appBarTitleFontSize = 24;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: sizedBoxWidth,
-      child: Text(
-        widget.playlistName,
-        overflow: TextOverflow.fade,
-        style: TextStyle(
-          fontSize: appBarTitleFontSize,
-          fontWeight: FontWeight.bold,
-        ),
+    return Text(
+      textAlign: TextAlign.center,
+      playlistName,
+      overflow: TextOverflow.fade,
+      style: TextStyle(
+        fontSize: appBarTitleFontSize,
+        fontWeight: FontWeight.bold,
       ),
     );
   }
