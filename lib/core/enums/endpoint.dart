@@ -8,6 +8,8 @@ enum Endpoint {
   artist,
   album,
   search,
+  me,
+  
 }
 
 extension SpotifyEndpointPath on Endpoint {
@@ -31,6 +33,8 @@ extension SpotifyEndpointPath on Endpoint {
         return "me/albums";
       case Endpoint.search:
         return "search";
+      case Endpoint.me:
+        return "me";
     }
   }
 }

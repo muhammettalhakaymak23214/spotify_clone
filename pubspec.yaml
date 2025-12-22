@@ -54,6 +54,10 @@ dependencies:
 
   lottie: ^3.3.2
 
+  flutter_staggered_animations: ^1.1.1
+
+  image_picker: ^1.2.1
+
   
 
   # The following adds the Cupertino Icons font to your application.

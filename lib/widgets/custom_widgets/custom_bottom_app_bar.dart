@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
 import 'package:spotify_clone/core/constants/app_sizes.dart';
-import 'package:spotify_clone/widgets/custom_bottom_sheet.dart';
+import 'package:spotify_clone/widgets/bottom_sheet/create_bottom_sheet.dart';
 
 class CustomBottomAppBar extends StatelessWidget {
   const CustomBottomAppBar({super.key, required this.tabController});
@@ -17,7 +17,7 @@ class CustomBottomAppBar extends StatelessWidget {
         children: _MainTab.values.map((tab) {
           if (tab == _MainTab.create) {
             return GestureDetector(
-              onTap: () => CustomBottomSheet().customShowModalBottom(context),
+              onTap: () => CreateBottomSheet().customShowModalBottom(context),
               child: Column(
                 children: [
                   tab.icon,

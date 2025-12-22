@@ -4,9 +4,9 @@ import 'package:spotify_clone/core/constants/app_colors.dart';
 import 'package:spotify_clone/core/constants/app_paddings.dart';
 import 'package:spotify_clone/core/constants/app_strings.dart';
 import 'package:spotify_clone/view_model/player_view_model.dart';
-import 'package:spotify_clone/widgets/custom_drag_handle.dart';
-import 'package:spotify_clone/widgets/custom_icon.dart';
-import 'package:spotify_clone/widgets/custom_text.dart';
+import 'package:spotify_clone/widgets/custom_widgets/custom_drag_handle.dart';
+import 'package:spotify_clone/widgets/custom_widgets/custom_icon.dart';
+import 'package:spotify_clone/widgets/custom_widgets/custom_text.dart';
 
 class ListenModeBottomSheet extends StatelessWidget {
   final PlayerViewModel viewModel;

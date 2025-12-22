@@ -11,6 +11,8 @@ class AppColors {
   static const Color grey = Color.fromARGB(143, 255, 255, 255);
   static const Color dividerColor = Color.fromARGB(143, 255, 255, 255);
   static const Color planSectionColor =Color.fromARGB(136, 44, 42, 42);
+  static const Color green = Colors.green;
+
 
   static const Color pinkColor = Color.fromARGB(255, 255, 210, 215);
   static const Color purpleColor = Color.fromARGB(255, 197, 177, 212);
@@ -20,6 +22,8 @@ class AppColors {
   //Bottom Sheet
   static const Color dragColor = Color.fromARGB(143, 255, 255, 255);
   static const Color bottomSheetBgColor = Color.fromARGB(255, 18, 18, 18);
+  //TextField
+  static const Color textFiledEnabledLineColor = Colors.white54;
 
   
 

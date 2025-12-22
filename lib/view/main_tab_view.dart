@@ -3,8 +3,8 @@ import 'package:spotify_clone/view/home_view.dart';
 import 'package:spotify_clone/view/library_view.dart';
 import 'package:spotify_clone/view/premium_view.dart';
 import 'package:spotify_clone/view/search_view.dart';
-import 'package:spotify_clone/widgets/custom_bottom_app_bar.dart';
-import 'package:spotify_clone/widgets/custom_drawer.dart';
+import 'package:spotify_clone/widgets/custom_widgets/custom_bottom_app_bar.dart';
+import 'package:spotify_clone/widgets/custom_widgets/custom_drawer.dart';
 
 class MainTabView extends StatefulWidget {
   const MainTabView({super.key,  this.initialIndex = 0});

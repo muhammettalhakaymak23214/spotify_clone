@@ -4,7 +4,7 @@ import 'package:spotify_clone/core/constants/app_colors.dart';
 import 'package:spotify_clone/core/constants/app_paddings.dart';
 import 'package:spotify_clone/core/constants/app_sizes.dart';
 import 'package:spotify_clone/core/constants/app_strings.dart';
-import 'package:spotify_clone/widgets/custom_point.dart';
+import 'package:spotify_clone/widgets/custom_widgets/custom_point.dart';
 
 class PremiumView extends StatefulWidget {
   const PremiumView({super.key});

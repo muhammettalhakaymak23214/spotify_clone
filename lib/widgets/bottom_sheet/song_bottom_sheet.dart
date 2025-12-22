@@ -8,10 +8,10 @@ import 'package:spotify_clone/core/services/file_manager_service.dart';
 import 'package:spotify_clone/models/player_model.dart';
 import 'package:spotify_clone/view/main_tab_view.dart';
 import 'package:spotify_clone/view_model/player_view_model.dart';
-import 'package:spotify_clone/widgets/custom_drag_handle.dart';
-import 'package:spotify_clone/widgets/custom_icon.dart';
-import 'package:spotify_clone/widgets/custom_point.dart';
-import 'package:spotify_clone/widgets/custom_text.dart';
+import 'package:spotify_clone/widgets/custom_widgets/custom_drag_handle.dart';
+import 'package:spotify_clone/widgets/custom_widgets/custom_icon.dart';
+import 'package:spotify_clone/widgets/custom_widgets/custom_point.dart';
+import 'package:spotify_clone/widgets/custom_widgets/custom_text.dart';
 
 class SongBottomSheet extends StatelessWidget {
   final PlayerViewModel viewModel;

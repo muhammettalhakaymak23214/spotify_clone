@@ -9,10 +9,10 @@ import 'package:spotify_clone/models/player_model.dart';
 import 'package:spotify_clone/view/player_view.dart';
 import 'package:spotify_clone/view/track_list_view.dart';
 import 'package:spotify_clone/view_model/library_view_model.dart';
-import 'package:spotify_clone/widgets/custom_app_bar.dart';
-import 'package:spotify_clone/widgets/custom_bottom_sheet.dart';
-import 'package:spotify_clone/widgets/custom_icon.dart';
-import 'package:spotify_clone/widgets/custom_text.dart';
+import 'package:spotify_clone/widgets/custom_widgets/custom_app_bar.dart';
+import 'package:spotify_clone/widgets/bottom_sheet/create_bottom_sheet.dart';
+import 'package:spotify_clone/widgets/custom_widgets/custom_icon.dart';
+import 'package:spotify_clone/widgets/custom_widgets/custom_text.dart';
 
 class LibraryView extends StatefulWidget {
   const LibraryView({super.key});
@@ -54,7 +54,7 @@ class _LibraryViewState extends State<LibraryView> {
             index: 10,
             icon: FaIcon(FontAwesomeIcons.plus),
             onPressed: () {
-              CustomBottomSheet().customShowModalBottom(context);
+              CreateBottomSheet().customShowModalBottom(context);
             },
           ),
         ],
@@ -183,7 +183,7 @@ class _LibraryViewState extends State<LibraryView> {
                                   id: item.id ?? "",
                                   type: item.type ?? MediaType.show,
                                   title: item.title ?? "",
-                                  imageUrl: item.imagesUrl,
+                                  imageUrl: item.imagesUrl ?? "",
                                 ),
                               ),
                             );

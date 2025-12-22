@@ -9,9 +9,9 @@ import 'package:spotify_clone/models/track_list_model.dart';
 import 'package:spotify_clone/models/user_model.dart';
 import 'package:spotify_clone/view/player_view.dart';
 import 'package:spotify_clone/view_model/track_list_view_model.dart';
-import 'package:spotify_clone/widgets/custom_icon.dart';
-import 'package:spotify_clone/widgets/custom_point.dart';
-import 'package:spotify_clone/widgets/custom_text.dart';
+import 'package:spotify_clone/widgets/custom_widgets/custom_icon.dart';
+import 'package:spotify_clone/widgets/custom_widgets/custom_point.dart';
+import 'package:spotify_clone/widgets/custom_widgets/custom_text.dart';
 
 class TrackListView extends StatefulWidget {
   final String id;
@@ -348,12 +348,14 @@ class _CoverImage extends StatelessWidget {
         alignment: Alignment.bottomCenter,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
-          child: Image.network(
-            imageUrl,
-            width: size,
-            height: size,
-            fit: BoxFit.cover,
-          ),
+          child: imageUrl.isEmpty
+              ? CustomIcon(iconData: Icons.add_ic_call_outlined)
+              : Image.network(
+                  imageUrl,
+                  width: size,
+                  height: size,
+                  fit: BoxFit.cover,
+                ),
         ),
       ),
     );
@@ -536,7 +538,8 @@ class _RowButtons extends StatelessWidget {
                         builder: (_) => Center(
                           child: SizedBox(
                             child: Lottie.asset(
-                              'assets/lottie/lottie_loading.json',fit: BoxFit.contain,
+                              'assets/lottie/lottie_loading.json',
+                              fit: BoxFit.contain,
                             ),
                           ),
                         ),
@@ -549,7 +552,8 @@ class _RowButtons extends StatelessWidget {
                         builder: (_) => Center(
                           child: SizedBox(
                             child: Lottie.asset(
-                              'assets/lottie/lottie_success.json',fit: BoxFit.contain,
+                              'assets/lottie/lottie_success.json',
+                              fit: BoxFit.contain,
                             ),
                           ),
                         ),

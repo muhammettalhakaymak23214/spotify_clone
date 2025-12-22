@@ -1,15 +1,6 @@
 class AppStrings {
   static final String emty = "";
-  //BottomSheet
-  static final String title1 = "Çalma listesi";
-  static final String title2 = "Ortak çalma listesi";
-  static final String title3 = "Blend";
-  static final String subtitle1 =
-      "Şarkı veya bölüm içeren bir çalma listesi oluştur";
-  static final String subtitle2 =
-      "Arkadaşlarınla birlikte çalma listesi oluştur";
-  static final String subtitle3 =
-      "Arkadaşlarının zevklerini bir çalma listesinde buluştur";
+
   //CustomAppBar
   static final String artists = "Sanatçılar";
   static final String albums = "Albümler";
@@ -125,7 +116,8 @@ class AppStrings {
   static final String goAlbum = "Albüme git";
   static final String goArtist = "Sanatçıya git";
   static final String startJam = "Jam başlat";
-  static final String excludeTaste = "Parçayı müzik zevki profilinden hariç tut";
+  static final String excludeTaste =
+      "Parçayı müzik zevki profilinden hariç tut";
   static final String sleepTimer = "Otomatik kapatma";
   static final String songRadio = "Şarkı radyosuna git";
   static final String contributors = "Şarkıya katkıda bulunanları görüntüle";
@@ -133,11 +125,47 @@ class AppStrings {
 
   static final String emtyDownloadedList = "Henüz şarkı indirmedin";
 
-
-
   //Bottom Sheet
   static final String bsListenModes = "Dinleme modları";
   static const String bsAutoNext = "Otomatik oynatma";
   static final String bsMixPlay = "Karışık çal";
   static final String bsPlayInOrder = "Sırayla çal";
+
+  //Create BottomSheet
+  static final String title1 = "Çalma listesi";
+  static final String title2 = "Ortak çalma listesi";
+  static final String title3 = "Blend";
+  static final String subtitle1 =
+      "Şarkı veya bölüm içeren bir çalma listesi oluştur";
+  static final String subtitle2 =
+      "Arkadaşlarınla birlikte çalma listesi oluştur";
+  static final String subtitle3 =
+      "Arkadaşlarının zevklerini bir çalma listesinde buluştur";
+
+  //Create Playlist View
+  static final String setPlaylistName = "Çalma listene bir isim ver";
+  static final String cancel = "İptal";
+  static final String create = "Oluştur";
+
+  //Update Playlist View
+  static final String change = "Değiştir";
+  static final String thisPlaylistAdd = "Bu çalma listesine ekle";
+  static final String recommendedSongs = "Önerilen Şarkılar";
+  static final String refresh = "Yenile";
+  static final String nullDataRecommendedSongs = "Önerilebilecek şarkı yok";
+
+  //Playlist Delete ShowDialog
+  static final String sDDeletePlaylistTitle = "Çalma listesini sil";
+  static final String sDCancel = "İptal edildi";
+  static final String sDDelete = "Sil";
+
+  //Playlist Change Visibility ShowDialog
+  static final String sDChangeVisibilityTitle =
+      "Çalma listesini başkalarıyla paylaşmak ister misin?";
+  static final String sDChangeVisibilitySubTitle =
+      "Bu çalma listesine davet ettiğin kişiler şarkı ekleyebilir ve çıkarabilir.";
+  static final String sDChangeVisibilityDoPrivate = "Paylaşılabilir yap";
+  static final String sDChangeVisibilityCancel = "İptal";
+
+
 }

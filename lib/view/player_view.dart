@@ -7,10 +7,10 @@ import 'package:spotify_clone/core/constants/app_sizes.dart';
 import 'package:spotify_clone/core/enums/media_type.dart';
 import 'package:spotify_clone/models/player_model.dart';
 import 'package:spotify_clone/view_model/player_view_model.dart';
-import 'package:spotify_clone/widgets/custom_icon.dart';
-import 'package:spotify_clone/widgets/custom_text.dart';
-import 'package:spotify_clone/widgets/listen_mode_bottom_sheet.dart';
-import 'package:spotify_clone/widgets/song_bottom_sheet.dart';
+import 'package:spotify_clone/widgets/custom_widgets/custom_icon.dart';
+import 'package:spotify_clone/widgets/custom_widgets/custom_text.dart';
+import 'package:spotify_clone/widgets/bottom_sheet/listen_mode_bottom_sheet.dart';
+import 'package:spotify_clone/widgets/bottom_sheet/song_bottom_sheet.dart';
 
 class PlayerView extends StatefulWidget {
   final String title;

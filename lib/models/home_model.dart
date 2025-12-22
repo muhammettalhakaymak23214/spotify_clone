@@ -9,7 +9,7 @@ class PlaylistItem extends HomeItem {
 
   PlaylistItem.fromJson(Map<String, dynamic> json) {
     id = json["id"];
-    imagesUrl = json["images"][0]["url"];
+    imagesUrl = json["images"]?[0]["url"];
     title = json["name"];
     subTitle = json["owner"]["display_name"];
     type = json["type"];

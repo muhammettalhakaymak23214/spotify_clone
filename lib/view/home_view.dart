@@ -6,7 +6,8 @@ import 'package:spotify_clone/core/constants/app_sizes.dart';
 import 'package:spotify_clone/core/constants/app_strings.dart';
 import 'package:spotify_clone/models/home_model.dart';
 import 'package:spotify_clone/view_model/home_view_model.dart';
-import 'package:spotify_clone/widgets/custom_app_bar.dart';
+import 'package:spotify_clone/widgets/custom_widgets/custom_app_bar.dart';
+import 'package:spotify_clone/widgets/custom_widgets/custom_icon.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -190,17 +191,28 @@ class _HorizontalMediaSection<T> extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
+                      Container(
+                        color: AppColors.grey,
                         width: 170,
                         height: 170,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.network("$imageUrl", fit: BoxFit.cover),
-                        ),
+                        child: imageUrl == null
+                            ? CustomIcon(
+                                iconData: Icons.music_note,
+                                iconSize: IconSize.mega,
+                                color: AppColors.darkToneInk,
+                              )
+                            : ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Image.network(
+                                  "$imageUrl",
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10),
                         child: Text(
+                          overflow: TextOverflow.ellipsis,
                           title,
                           style: TextStyle(
                             fontSize: AppSizes.fontSize,
