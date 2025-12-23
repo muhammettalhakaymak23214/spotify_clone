@@ -23,7 +23,9 @@ class UpdatePlaylistView extends StatefulWidget {
 class _UpdatePlaylistViewState extends State<UpdatePlaylistView> {
   //Variables
   final String _profilePhotoPath = "assets/png/profile_photo.png";
+  //ViewModel
   late UpdatePlaylistViewModel viewModel;
+  //Variables
   final double topContainerHeight = 250;
   final double height1 = 150;
   final EdgeInsetsGeometry padding1 = EdgeInsets.symmetric(horizontal: 20);
