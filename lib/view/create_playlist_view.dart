@@ -118,6 +118,7 @@ class _CreatePlaylistViewState extends State<CreatePlaylistView> {
                       success = await viewModel.createPlaylist(_defaultName);
                     }
                     if (success) {
+                      
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
@@ -126,6 +127,7 @@ class _CreatePlaylistViewState extends State<CreatePlaylistView> {
                           ),
                         ),
                       );
+                     
                     }
                   },
                   child: CustomText(

@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:spotify_clone/view/home_view.dart';
 import 'package:spotify_clone/view/library_view.dart';
 import 'package:spotify_clone/view/premium_view.dart';
+import 'package:spotify_clone/view/recently_played_view.dart';
 import 'package:spotify_clone/view/search_view.dart';
 import 'package:spotify_clone/widgets/custom_widgets/custom_bottom_app_bar.dart';
 import 'package:spotify_clone/widgets/custom_widgets/custom_drawer.dart';
 
 class MainTabView extends StatefulWidget {
-  const MainTabView({super.key,  this.initialIndex = 0});
+  const MainTabView({super.key, this.initialIndex = 0});
+
 
   final int initialIndex;
 
@@ -22,7 +24,11 @@ class _MainTabViewState extends State<MainTabView>
   @override
   void initState() {
     super.initState();
-    tabController = TabController(length: 4, vsync: this , initialIndex: widget.initialIndex,);
+    tabController = TabController(
+      length: 5,
+      vsync: this,
+      initialIndex: widget.initialIndex,
+    );
   }
 
   @override
@@ -31,7 +37,7 @@ class _MainTabViewState extends State<MainTabView>
     return Scaffold(
       key: scaffoldKey,
       extendBody: true,
-      body: tabBarView(tabController , scaffoldKey),
+      body: tabBarView(tabController, scaffoldKey ),
       bottomNavigationBar: CustomBottomAppBar(tabController: tabController),
       drawer: SizedBox(
         width: MediaQuery.of(context).size.width * 0.90,
@@ -41,12 +47,21 @@ class _MainTabViewState extends State<MainTabView>
   }
 }
 
-
-
-TabBarView tabBarView(TabController controller , GlobalKey<ScaffoldState> scaffoldKey) {
+TabBarView tabBarView(
+  TabController controller,
+  GlobalKey<ScaffoldState> scaffoldKey,
+ 
+) {
   return TabBarView(
     controller: controller,
     physics: NeverScrollableScrollPhysics(),
-    children: [HomeView(), SearchView(scaffoldKey: scaffoldKey), LibraryView(), PremiumView()],
+    children: [
+      HomeView(),
+      SearchView(scaffoldKey: scaffoldKey),
+      LibraryView(),
+      PremiumView(),
+      RecentlyPlayedView(),
+     
+    ],
   );
 }

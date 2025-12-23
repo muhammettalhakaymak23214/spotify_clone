@@ -248,7 +248,7 @@ class _UpdatePlaylistViewState extends State<UpdatePlaylistView> {
               },
             ),
             SizedBox(
-              height: 600,
+              height: 650,
               width: double.infinity,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -261,10 +261,12 @@ class _UpdatePlaylistViewState extends State<UpdatePlaylistView> {
                       return AnimatedPadding(
                         duration: const Duration(milliseconds: 300),
                         curve: Curves.easeInOut,
-                        padding: EdgeInsets.only(top: topPadding),
-                        child: _RecommendedSongsTitleSection(
-                          topPadding: topPadding,
+                        padding: EdgeInsets.only(
+                          top: topPadding,
+                          left: 20,
+                          bottom: 10,
                         ),
+                        child: _RecommendedSongsTitleSection(),
                       );
                     },
                   ),
@@ -320,27 +322,29 @@ class _Deneme extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
       onPressed: () async {
-        await Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) =>
-                PlaylistAddTracksSearchView(playlistId: widget.playlistId),
-          ),
-        ).then((result) {
-          if (result != null) {
-            viewModel.count = result;
+        if (viewModel.isAddingTrack == false) {
+          await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) =>
+                  PlaylistAddTracksSearchView(playlistId: widget.playlistId),
+            ),
+          ).then((result) {
+            if (result != null) {
+              viewModel.count = result;
+            }
+          });
+          await viewModel.getPlaylistDetail(playlistId: widget.playlistId);
+          await viewModel.getPlaylistTracks(playlistId: widget.playlistId);
+          int sayac = 0;
+          debugPrint(" count2 : ${viewModel.count}");
+          while (sayac < viewModel.count) {
+            debugPrint("girdi");
+            var index1 = viewModel.playlistInTracks.length;
+            index1 = index1 - (viewModel.count - sayac);
+            viewModel.listKey.currentState?.insertItem(index1);
+            sayac++;
           }
-        });
-        await viewModel.getPlaylistDetail(playlistId: widget.playlistId);
-        await viewModel.getPlaylistTracks(playlistId: widget.playlistId);
-        int sayac = 0;
-        debugPrint(" count2 : ${viewModel.count}");
-        while (sayac < viewModel.count) {
-          debugPrint("girdi");
-          var index1 = viewModel.playlistInTracks.length;
-          index1 = index1 - (viewModel.count - sayac);
-          viewModel.listKey.currentState?.insertItem(index1);
-          sayac++;
         }
       },
       icon: CustomIcon(iconData: Icons.add, color: AppColors.black),
@@ -375,32 +379,34 @@ class _ListNotEmptySection extends StatelessWidget {
             width: 100,
             child: ElevatedButton.icon(
               onPressed: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => PlaylistAddTracksSearchView(
-                      playlistId: widget.playlistId,
+                if (viewModel.isAddingTrack == false) {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => PlaylistAddTracksSearchView(
+                        playlistId: widget.playlistId,
+                      ),
                     ),
-                  ),
-                ).then((result) {
-                  if (result != null) {
-                    viewModel.count = result;
+                  ).then((result) {
+                    if (result != null) {
+                      viewModel.count = result;
+                    }
+                  });
+                  await viewModel.getPlaylistDetail(
+                    playlistId: widget.playlistId,
+                  );
+                  await viewModel.getPlaylistTracks(
+                    playlistId: widget.playlistId,
+                  );
+                  int sayac = 0;
+                  debugPrint(" count2 : ${viewModel.count}");
+                  while (sayac < viewModel.count) {
+                    debugPrint("girdi");
+                    var index1 = viewModel.playlistInTracks.length;
+                    index1 = index1 - (viewModel.count - sayac);
+                    viewModel.listKey.currentState?.insertItem(index1);
+                    sayac++;
                   }
-                });
-                await viewModel.getPlaylistDetail(
-                  playlistId: widget.playlistId,
-                );
-                await viewModel.getPlaylistTracks(
-                  playlistId: widget.playlistId,
-                );
-                int sayac = 0;
-                debugPrint(" count2 : ${viewModel.count}");
-                while (sayac < viewModel.count) {
-                  debugPrint("girdi");
-                  var index1 = viewModel.playlistInTracks.length;
-                  index1 = index1 - (viewModel.count - sayac);
-                  viewModel.listKey.currentState?.insertItem(index1);
-                  sayac++;
                 }
               },
               icon: CustomIcon(iconData: Icons.add, color: AppColors.black),
@@ -421,17 +427,19 @@ class _ListNotEmptySection extends StatelessWidget {
                   backgroundColor: AppColors.green,
                 ),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => TrackListView(
-                        id: widget.playlistId,
-                        title: viewModel.playlistName.value,
-                        type: MediaType.playlist,
-                        imageUrl: viewModel.playlistCoverImage.value,
+                  if (viewModel.isAddingTrack == false) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => TrackListView(
+                          id: widget.playlistId,
+                          title: viewModel.playlistName.value,
+                          type: MediaType.playlist,
+                          imageUrl: viewModel.playlistCoverImage.value,
+                        ),
                       ),
-                    ),
-                  );
+                    );
+                  }
                 },
                 child: CustomText(data: "Çalma listesine git"),
               ),
@@ -483,43 +491,48 @@ class _PlaylistAddedTracksState extends State<_PlaylistAddedTracks> {
             ),
             trailing: IconButton(
               onPressed: () async {
-                if (!widget.viewModel.isPressedRemove) {
-                  widget.viewModel.isPressedRemove = true;
+                if (widget.viewModel.isAddingTrack == false) {
+                  widget.viewModel.isAddingTrack = true;
+                  if (!widget.viewModel.isPressedRemove) {
+                    widget.viewModel.isPressedRemove = true;
 
-                  final removedTrack = widget.viewModel.playlistInTracks[index];
+                    final removedTrack =
+                        widget.viewModel.playlistInTracks[index];
 
-                  widget.viewModel.playlistInTracks.removeAt(index);
-                  widget.viewModel.listKey.currentState?.removeItem(
-                    index,
-                    (context, animation) => SizeTransition(
-                      sizeFactor: animation,
-                      child: ListTile(
-                        title: CustomText(
-                          data: removedTrack.trackName,
-                          textSize: TextSize.medium,
-                          textWeight: TextWeight.bold,
-                        ),
-                        subtitle: CustomText(
-                          data: removedTrack.artistName,
-                          textSize: TextSize.small,
-                          textWeight: TextWeight.normal,
-                          color: AppColors.grey,
+                    widget.viewModel.playlistInTracks.removeAt(index);
+                    widget.viewModel.listKey.currentState?.removeItem(
+                      index,
+                      (context, animation) => SizeTransition(
+                        sizeFactor: animation,
+                        child: ListTile(
+                          title: CustomText(
+                            data: removedTrack.trackName,
+                            textSize: TextSize.medium,
+                            textWeight: TextWeight.bold,
+                          ),
+                          subtitle: CustomText(
+                            data: removedTrack.artistName,
+                            textSize: TextSize.small,
+                            textWeight: TextWeight.normal,
+                            color: AppColors.grey,
+                          ),
                         ),
                       ),
-                    ),
-                  );
+                    );
 
-                  await widget.viewModel.deleteTracksToPlaylist(
-                    playlistId: widget.widget.playlistId,
-                    trackUri: "spotify:track:${removedTrack.id}",
-                  );
-                  await widget.viewModel.getPlaylistTracks(
-                    playlistId: widget.widget.playlistId,
-                  );
-                  await widget.viewModel.getPlaylistDetail(
-                    playlistId: widget.widget.playlistId,
-                  );
-                  widget.viewModel.isPressedRemove = false;
+                    await widget.viewModel.deleteTracksToPlaylist(
+                      playlistId: widget.widget.playlistId,
+                      trackUri: "spotify:track:${removedTrack.id}",
+                    );
+                    await widget.viewModel.getPlaylistTracks(
+                      playlistId: widget.widget.playlistId,
+                    );
+                    await widget.viewModel.getPlaylistDetail(
+                      playlistId: widget.widget.playlistId,
+                    );
+                    widget.viewModel.isPressedRemove = false;
+                  }
+                  widget.viewModel.isAddingTrack = false;
                 }
               },
               icon: CustomIcon(
@@ -549,12 +562,14 @@ class _RefreshButton extends StatelessWidget {
         width: 100,
         child: ElevatedButton(
           onPressed: () async {
-            viewModel.offset = viewModel.offset + 5;
-            viewModel.tracks.clear();
-            await viewModel.getUserTopTracks(
-              consumedCount: viewModel.offset,
-              limit: 5,
-            );
+            if (viewModel.isAddingTrack == false) {
+              viewModel.offset = viewModel.offset + 5;
+              viewModel.tracks.clear();
+              await viewModel.getUserTopTracks(
+                consumedCount: viewModel.offset,
+                limit: 5,
+              );
+            }
           },
           child: CustomText(
             data: AppStrings.refresh,
@@ -602,41 +617,45 @@ class _UserTopTracksListViewBuilder extends StatelessWidget {
           ),
           trailing: IconButton(
             onPressed: () async {
-              if (!viewModel.isPressedAdd) {
-                final _index1 = viewModel.playlistInTracks.length;
-                viewModel.isPressedAdd = true;
-                List<String> trackUris = [];
-                trackUris.add("spotify:track:${track.id}");
+              if (viewModel.isAddingTrack == false) {
+                viewModel.isAddingTrack = true;
+                if (!viewModel.isPressedAdd) {
+                  final _index1 = viewModel.playlistInTracks.length;
+                  viewModel.isPressedAdd = true;
+                  List<String> trackUris = [];
+                  trackUris.add("spotify:track:${track.id}");
 
-                await viewModel.getPlaylistTracks(
-                  playlistId: widget.playlistId,
-                );
-                final String? id = track.id;
-                final bool any = viewModel.playlistInTracks.any(
-                  (track) => track.id == id,
-                );
-                if (!any) {
-                  await viewModel.addTracksToPlaylist(
-                    playlistId: widget.playlistId,
-                    trackUris: trackUris,
-                  );
-                  viewModel.tracks.removeAt(index);
-                  viewModel.offset++;
-                  await viewModel.getUserTopTracks(
-                    consumedCount: viewModel.offset,
-                    limit: 1,
-                  );
-                  await viewModel.getPlaylistDetail(
-                    playlistId: widget.playlistId,
-                  );
                   await viewModel.getPlaylistTracks(
                     playlistId: widget.playlistId,
                   );
+                  final String? id = track.id;
+                  final bool any = viewModel.playlistInTracks.any(
+                    (track) => track.id == id,
+                  );
+                  if (!any) {
+                    await viewModel.addTracksToPlaylist(
+                      playlistId: widget.playlistId,
+                      trackUris: trackUris,
+                    );
+                    viewModel.tracks.removeAt(index);
+                    viewModel.offset++;
+                    await viewModel.getUserTopTracks(
+                      consumedCount: viewModel.offset,
+                      limit: 1,
+                    );
+                    await viewModel.getPlaylistDetail(
+                      playlistId: widget.playlistId,
+                    );
+                    await viewModel.getPlaylistTracks(
+                      playlistId: widget.playlistId,
+                    );
 
-                  viewModel.listKey.currentState?.insertItem(_index1);
+                    viewModel.listKey.currentState?.insertItem(_index1);
+                  }
+
+                  viewModel.isPressedAdd = false;
                 }
-
-                viewModel.isPressedAdd = false;
+                viewModel.isAddingTrack = false;
               }
             },
             icon: CustomIcon(iconData: Icons.add, iconSize: IconSize.large),
@@ -663,14 +682,12 @@ class _NullDataRecommendedSongs extends StatelessWidget {
 }
 
 class _RecommendedSongsTitleSection extends StatelessWidget {
-  const _RecommendedSongsTitleSection({required this.topPadding});
-
-  final double topPadding;
+  const _RecommendedSongsTitleSection();
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 20, top: topPadding, bottom: 20),
+      padding: EdgeInsets.only(),
       child: CustomText(
         data: AppStrings.recommendedSongs,
         textSize: TextSize.extraLarge,
@@ -691,11 +708,13 @@ class _ChangeButton extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(backgroundColor: AppColors.darkToneInk),
       onPressed: () {
-        UpdatePlaylistBottomSheet().updatePlaylistBottomSheet(
-          context,
-          playlistId: widget.playlistId,
-          viewModel: viewModel,
-        );
+        if (viewModel.isAddingTrack == false) {
+          UpdatePlaylistBottomSheet().updatePlaylistBottomSheet(
+            context,
+            playlistId: widget.playlistId,
+            viewModel: viewModel,
+          );
+        }
       },
       child: CustomText(data: AppStrings.change, textWeight: TextWeight.bold),
     );

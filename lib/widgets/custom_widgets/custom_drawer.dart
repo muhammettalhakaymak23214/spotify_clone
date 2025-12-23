@@ -3,6 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
 import 'package:spotify_clone/core/constants/app_sizes.dart';
 import 'package:spotify_clone/core/constants/app_strings.dart';
+import 'package:spotify_clone/view/main_tab_view.dart';
+import 'package:spotify_clone/view/recently_played_view.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -18,26 +20,41 @@ class CustomDrawer extends StatelessWidget {
           _CustomListTile(
             title: _DrawerMenuItem.addAccount.title,
             icon: _DrawerMenuItem.addAccount.icon,
+            onTap: () {},
           ),
           _CustomListTile(
             title: _DrawerMenuItem.updates.title,
             icon: _DrawerMenuItem.updates.icon,
+            onTap: () {},
           ),
           _CustomListTile(
             title: _DrawerMenuItem.listeningStats.title,
             icon: _DrawerMenuItem.listeningStats.icon,
+            onTap: () {},
           ),
           _CustomListTile(
             title: _DrawerMenuItem.recentlyPlayed.title,
             icon: _DrawerMenuItem.recentlyPlayed.icon,
+            onTap: () {
+            
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const MainTabView(initialIndex: 4),
+                ),
+                (route) => false,
+              );
+            },
           ),
           _CustomListTile(
             title: _DrawerMenuItem.notifications.title,
             icon: _DrawerMenuItem.notifications.icon,
+            onTap: () {},
           ),
           _CustomListTile(
             title: _DrawerMenuItem.settingsPrivacy.title,
             icon: _DrawerMenuItem.settingsPrivacy.icon,
+            onTap: () {},
           ),
         ],
       ),
@@ -75,13 +92,19 @@ class _AccountHeaderListTile extends StatelessWidget {
 }
 
 class _CustomListTile extends StatelessWidget {
-  const _CustomListTile({required this.title, required this.icon});
+  const _CustomListTile({
+    required this.title,
+    required this.icon,
+    required this.onTap,
+  });
   final String title;
   final Icon icon;
+  final GestureTapCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: onTap,
       leading: icon,
       title: Text(
         title,

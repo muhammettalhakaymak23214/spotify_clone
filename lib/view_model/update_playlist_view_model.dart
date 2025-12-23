@@ -22,6 +22,8 @@ class UpdatePlaylistViewModel {
   bool isPressedRemove = false;
   int offset = 0;
   int count = 0;
+  bool isAddingTrack = false;
+
 
   final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
 

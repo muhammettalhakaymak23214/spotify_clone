@@ -22,6 +22,7 @@ class _PlaylistAddTracksSearchViewState
   //ViewModel
   late PlaylistAddTracksSearchViewModel viewModel;
   late UpdatePlaylistViewModel viewModel2;
+  bool isAddingTrack = false;
 
   @override
   void initState() {
@@ -43,11 +44,13 @@ class _PlaylistAddTracksSearchViewState
           ), // Buraya istediğiniz ikonu verebilirsiniz
           onPressed: () {
             // Geri gitmek için Navigator.pop veya başka bir işlem
-            Navigator.pop(context, count);
+            if (!isAddingTrack) {
+              Navigator.pop(context, count);
+            }
           },
         ),
         title: TextField(
-          controller: _controller,
+          controller:  _controller,
           autofocus: true,
           cursorColor: AppColors.white,
           style: TextStyle(color: AppColors.white),
@@ -56,14 +59,14 @@ class _PlaylistAddTracksSearchViewState
             hintStyle: TextStyle(color: AppColors.grey),
             border: InputBorder.none,
           ),
-          onChanged: (value) {
+          onChanged: isAddingTrack ? null : (value)  {
             viewModel.searchResults?.clear();
             viewModel.search(value, 10);
           },
         ),
       ),
       body: Observer(
-        builder: (_) {
+        builder: (_)  {
           if (viewModel.query.value.isEmpty) {
             return _recentlyPlayedList();
           }
@@ -89,24 +92,36 @@ class _PlaylistAddTracksSearchViewState
             style: TextStyle(color: Colors.white70),
           ),
           trailing: IconButton(
-            onPressed: () async {
-              List<String> trackUris = [];
-              debugPrint(items.id);
-              trackUris.add("spotify:track:${items.id}");
-              await viewModel2.getPlaylistTracks(playlistId: widget.playlistId);
-              final bool any = viewModel2.playlistInTracks.any(
-                (track) => track.id == items.id,
-              );
-              if (!any) {
-                await viewModel2.addTracksToPlaylist(
-                  playlistId: widget.playlistId,
-                  trackUris: trackUris,
-                );
-                viewModel.itemsRecentlyPlayed.removeAt(index);
-                count++;
-                debugPrint(" count : ${count}");
-              }
-            },
+            onPressed: isAddingTrack
+                ? null
+                : () async {
+                  setState(() {
+                      isAddingTrack = true;
+                    });
+                    List<String> trackUris = [];
+                    debugPrint(items.id);
+                    trackUris.add("spotify:track:${items.id}");
+                    await viewModel2.getPlaylistTracks(
+                      playlistId: widget.playlistId,
+                    );
+                    final bool any = viewModel2.playlistInTracks.any(
+                      (track) => track.id == items.id,
+                    );
+                    if (!any) {
+                      await viewModel2.addTracksToPlaylist(
+                        playlistId: widget.playlistId,
+                        trackUris: trackUris,
+                      );
+                      viewModel.itemsRecentlyPlayed.removeAt(index);
+                      count++;
+                      debugPrint(" count : ${count}");
+                      
+                    }
+                    setState(() {
+                      isAddingTrack = false;
+                    });
+                    
+                  },
             icon: Padding(
               padding: const EdgeInsets.only(left: 10),
               child: Icon(Icons.add, color: AppColors.white),
@@ -136,28 +151,40 @@ class _PlaylistAddTracksSearchViewState
             style: TextStyle(color: Colors.white70),
           ),
           trailing: IconButton(
-            onPressed: () async {
-              //
-              List<String> trackUris = [];
-              debugPrint(item.id);
-              trackUris.add("spotify:track:${item.id}");
-              await viewModel2.getPlaylistTracks(playlistId: widget.playlistId);
-              final bool any = viewModel2.playlistInTracks.any(
-                (track) => track.id == item.id,
-              );
+            onPressed: isAddingTrack
+                ? null
+                : () async {
+                    //
+                    setState(() {
+                      isAddingTrack = true;
+                    });
+                    
+                    List<String> trackUris = [];
+                    debugPrint(item.id);
+                    trackUris.add("spotify:track:${item.id}");
+                    await viewModel2.getPlaylistTracks(
+                      playlistId: widget.playlistId,
+                    );
+                    final bool any = viewModel2.playlistInTracks.any(
+                      (track) => track.id == item.id,
+                    );
 
-              if (!any) {
-                await viewModel2.addTracksToPlaylist(
-                  playlistId: widget.playlistId,
-                  trackUris: trackUris,
-                );
-                viewModel.searchResults?.removeAt(index);
-                viewModel.offSet++;
-                debugPrint("${viewModel.offSet}");
-                await viewModel.search(_controller.text, 1);
-                count++;
-              }
-            },
+                    if (!any) {
+                      await viewModel2.addTracksToPlaylist(
+                        playlistId: widget.playlistId,
+                        trackUris: trackUris,
+                      );
+                      viewModel.searchResults?.removeAt(index);
+                      count++;
+                      debugPrint("${count}");
+                      await viewModel.search(_controller.text, 1);
+                      
+                    }
+                    setState(() {
+                      isAddingTrack = false;
+                    });
+                    
+                  },
             icon: Padding(
               padding: const EdgeInsets.only(left: 10),
               child: Icon(Icons.add, color: AppColors.white),
