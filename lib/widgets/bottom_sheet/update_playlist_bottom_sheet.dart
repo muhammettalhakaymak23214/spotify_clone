@@ -192,13 +192,13 @@ class _Row2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       child: Container(
         //  color: Colors.blue,
         height: 150,
         width: double.infinity,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             viewModel.playlistCoverImage.value.isNotEmpty
                 ? Container(
@@ -284,12 +284,12 @@ class _Row2 extends StatelessWidget {
                   ),
             Container(
               height: 150,
-              width: 200,
+              width: 180,
               //color: Colors.red,
               child: Column(
                 children: [
                   Container(
-                    width: 200,
+                    width: 180,
                     height: 40,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
@@ -314,7 +314,7 @@ class _Row2 extends StatelessWidget {
                   ),
                   SizedBox(height: 30),
                   Container(
-                    width: 200,
+                    width: 180,
                     height: 80,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),

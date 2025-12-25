@@ -39,123 +39,136 @@ class _PlaylistImageChangeViewState extends State<PlaylistImageChangeView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(backgroundColor: AppColors.darkToneInk),
-      body: SizedBox(
-        height: double.infinity,
-        width: double.infinity,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              height: 300,
-              width: 300,
-              color: AppColors.grey,
-              child: _buildCoverImage(),
-            ),
-            SizedBox(height: 25),
-            selectedImage == null
-                ? ElevatedButton(
-                    onPressed: () async {
-                      final tempSelectedImage = await ImagePickerHelper()
-                          .pickImageFromGallery();
-                      if (tempSelectedImage == null) {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return FileSizeWarningAlertDialog();
-                          },
-                        );
-                      } else {
-                        selectedImage = tempSelectedImage;
-                        setState(() {});
-                      }
-                    },
-                    child: CustomText(
-                      data: "Kapak görselini değiştir",
-                      color: AppColors.black,
-                      textSize: TextSize.medium,
-                      textWeight: TextWeight.bold,
-                    ),
-                  )
-                : ElevatedButton(
-                    onPressed: () async {
-                      showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (_) => Center(
-                          child: SizedBox(
-                            child: Lottie.asset(
-                              'assets/lottie/lottie_loading.json',
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                        ),
-                      );
-                      if (!isPressedAdd) {
-                        isPressedAdd = true;
-                        await widget.viewModel.updatePlaylistCover(
-                          playlistId: widget.playlistId,
-                          imageFile: selectedImage!,
-                        );
-                        await widget.viewModel.getPlaylistDetail(
-                          playlistId: widget.playlistId,
-                        );
-                        Navigator.pop(context);
-                        Navigator.pop(context);
-                      }
-                    },
-                    child: CustomText(
-                      data: "Onayla",
-                      color: AppColors.black,
-                      textSize: TextSize.medium,
-                      textWeight: TextWeight.bold,
-                    ),
-                  ),
-
-            SizedBox(height: 10),
-            widget.playlistCoverImageUrl.isNotEmpty
-                ? ElevatedButton(
-                    onPressed: () async {
-                      if (!isPressedRemove) {
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton( onPressed: () {
+            Navigator.pop(context);
+          } ,icon: CustomIcon(iconData: Icons.arrow_back , iconSize: IconSize.large,)),
+          backgroundColor: AppColors.darkToneInk),
+        body: SizedBox(
+          height: double.infinity,
+          width: double.infinity,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                height: 300,
+                width: 300,
+                color: AppColors.grey,
+                child: _buildCoverImage(),
+              ),
+              SizedBox(height: 25),
+              selectedImage == null
+                  ? ElevatedButton(
+                      onPressed: () async {
+                        final tempSelectedImage = await ImagePickerHelper()
+                            .pickImageFromGallery();
+                        if (tempSelectedImage == null) {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return FileSizeWarningAlertDialog();
+                            },
+                          );
+                        } else {
+                          selectedImage = tempSelectedImage;
+                          setState(() {});
+                        }
+                      },
+                      child: CustomText(
+                        data: "Kapak görselini değiştir",
+                        color: AppColors.black,
+                        textSize: TextSize.medium,
+                        textWeight: TextWeight.bold,
+                      ),
+                    )
+                  : ElevatedButton(
+                      onPressed: () async {
                         showDialog(
                           context: context,
                           barrierDismissible: false,
-                          builder: (_) => Center(
-                            child: SizedBox(
-                              child: Lottie.asset(
-                                'assets/lottie/lottie_loading.json',
-                                fit: BoxFit.contain,
+                          builder: (_) => PopScope(
+                            canPop: false,
+                            child: Center(
+                              child: SizedBox(
+                                child: Lottie.asset(
+                                  'assets/lottie/lottie_loading.json',
+                                  fit: BoxFit.contain,
+                                ),
                               ),
                             ),
                           ),
                         );
-                        isPressedRemove = true;
-                        selectedImage = await ImagePickerHelper().assetToFile(
-                          "assets/png/default_playlist_cover_image.jpg",
-                        );
-                        await widget.viewModel.updatePlaylistCover(
-                          playlistId: widget.playlistId,
-                          imageFile: selectedImage!,
-                        );
-                        await widget.viewModel.getPlaylistDetail(
-                          playlistId: widget.playlistId,
-                        );
-                        Navigator.pop(context);
-                        Navigator.pop(context);
-                      }
-                    },
-                    child: CustomText(
-                      data: "Kaldır",
-                      color: AppColors.black,
-                      textSize: TextSize.medium,
-                      textWeight: TextWeight.bold,
+                        if (!isPressedAdd) {
+                          isPressedAdd = true;
+                          await widget.viewModel.updatePlaylistCover(
+                            playlistId: widget.playlistId,
+                            imageFile: selectedImage!,
+                          );
+                          await widget.viewModel.getPlaylistDetail(
+                            playlistId: widget.playlistId,
+                          );
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                        }
+                      },
+                      child: CustomText(
+                        data: "Onayla",
+                        color: AppColors.black,
+                        textSize: TextSize.medium,
+                        textWeight: TextWeight.bold,
+                      ),
                     ),
-                  )
-                : SizedBox.shrink(),
-            SizedBox(height: 100),
-          ],
+      
+              SizedBox(height: 10),
+              widget.playlistCoverImageUrl.isNotEmpty
+                  ? ElevatedButton(
+                      onPressed: () async {
+                        if (!isPressedRemove) {
+                          showDialog(
+                            context: context,
+                            barrierDismissible: true,
+                            builder: (_) => PopScope(
+                              canPop: false,
+                              child: Center(
+                                child: SizedBox(
+                                  child: Lottie.asset(
+                                    'assets/lottie/lottie_loading.json',
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                          isPressedRemove = true;
+                          selectedImage = await ImagePickerHelper().assetToFile(
+                            "assets/png/default_playlist_cover_image.jpg",
+                          );
+                          await widget.viewModel.updatePlaylistCover(
+                            playlistId: widget.playlistId,
+                            imageFile: selectedImage!,
+                          );
+                          await widget.viewModel.getPlaylistDetail(
+                            playlistId: widget.playlistId,
+                          );
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                        }
+                      },
+                      child: CustomText(
+                        data: "Kaldır",
+                        color: AppColors.black,
+                        textSize: TextSize.medium,
+                        textWeight: TextWeight.bold,
+                      ),
+                    )
+                  : SizedBox.shrink(),
+              SizedBox(height: 100),
+            ],
+          ),
         ),
       ),
     );

@@ -31,47 +31,60 @@ class _PlaylistAddTracksSearchViewState
     viewModel2 = UpdatePlaylistViewModel();
     viewModel.fetchRecentlyPlayed();
   }
-
+/*
+  bool _onWillPop() async {
+    if (!isAddingTrack) {
+      return false;
+    }
+    return true;
+  }
+*/
   int count = 0;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-          ), // Buraya istediğiniz ikonu verebilirsiniz
-          onPressed: () {
-            // Geri gitmek için Navigator.pop veya başka bir işlem
-            if (!isAddingTrack) {
-              Navigator.pop(context, count);
-            }
-          },
-        ),
-        title: TextField(
-          controller:  _controller,
-          autofocus: true,
-          cursorColor: AppColors.white,
-          style: TextStyle(color: AppColors.white),
-          decoration: InputDecoration(
-            hintText: AppStrings.searchBar,
-            hintStyle: TextStyle(color: AppColors.grey),
-            border: InputBorder.none,
+    return PopScope(
+     // onPopInvokedWithResult: _onWillPop,
+      canPop: false,
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+            ), 
+            onPressed: () {
+            
+              if (!isAddingTrack) {
+                Navigator.pop(context, count);
+              }
+            },
           ),
-          onChanged: isAddingTrack ? null : (value)  {
-            viewModel.searchResults?.clear();
-            viewModel.search(value, 10);
+          title: TextField(
+            controller: _controller,
+            autofocus: true,
+            cursorColor: AppColors.white,
+            style: TextStyle(color: AppColors.white),
+            decoration: InputDecoration(
+              hintText: AppStrings.searchBar,
+              hintStyle: TextStyle(color: AppColors.grey),
+              border: InputBorder.none,
+            ),
+            onChanged: isAddingTrack
+                ? null
+                : (value) {
+                    viewModel.searchResults?.clear();
+                    viewModel.search(value, 10);
+                  },
+          ),
+        ),
+        body: Observer(
+          builder: (_) {
+            if (viewModel.query.value.isEmpty) {
+              return _recentlyPlayedList();
+            }
+            return _searchResultsList();
           },
         ),
-      ),
-      body: Observer(
-        builder: (_)  {
-          if (viewModel.query.value.isEmpty) {
-            return _recentlyPlayedList();
-          }
-          return _searchResultsList();
-        },
       ),
     );
   }
@@ -95,7 +108,7 @@ class _PlaylistAddTracksSearchViewState
             onPressed: isAddingTrack
                 ? null
                 : () async {
-                  setState(() {
+                    setState(() {
                       isAddingTrack = true;
                     });
                     List<String> trackUris = [];
@@ -115,12 +128,10 @@ class _PlaylistAddTracksSearchViewState
                       viewModel.itemsRecentlyPlayed.removeAt(index);
                       count++;
                       debugPrint(" count : ${count}");
-                      
                     }
                     setState(() {
                       isAddingTrack = false;
                     });
-                    
                   },
             icon: Padding(
               padding: const EdgeInsets.only(left: 10),
@@ -158,7 +169,7 @@ class _PlaylistAddTracksSearchViewState
                     setState(() {
                       isAddingTrack = true;
                     });
-                    
+
                     List<String> trackUris = [];
                     debugPrint(item.id);
                     trackUris.add("spotify:track:${item.id}");
@@ -178,12 +189,10 @@ class _PlaylistAddTracksSearchViewState
                       count++;
                       debugPrint("${count}");
                       await viewModel.search(_controller.text, 1);
-                      
                     }
                     setState(() {
                       isAddingTrack = false;
                     });
-                    
                   },
             icon: Padding(
               padding: const EdgeInsets.only(left: 10),

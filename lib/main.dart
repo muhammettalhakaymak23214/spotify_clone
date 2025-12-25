@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
+import 'package:spotify_clone/core/services/service_locator.dart';
 import 'package:spotify_clone/view/main_tab_view.dart';
 
-
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-    WidgetsFlutterBinding.ensureInitialized(); 
+  setupLocator(); 
 
-  await SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-  ]);
-  
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
   runApp(const MyApp());
 }
 
@@ -25,8 +24,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
 
       theme: ThemeData(
-        scaffoldBackgroundColor:
-            AppColors.darkToneInk, 
+        scaffoldBackgroundColor: AppColors.darkToneInk,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         appBarTheme: AppBarThemeData(
           foregroundColor: AppColors.white,

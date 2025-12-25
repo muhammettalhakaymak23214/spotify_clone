@@ -4,10 +4,12 @@ import 'package:lottie/lottie.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
 import 'package:spotify_clone/core/constants/app_strings.dart';
 import 'package:spotify_clone/core/enums/media_type.dart';
+import 'package:spotify_clone/core/services/service_locator.dart';
 import 'package:spotify_clone/models/player_model.dart';
 import 'package:spotify_clone/models/track_list_model.dart';
 import 'package:spotify_clone/models/user_model.dart';
 import 'package:spotify_clone/view/player_view.dart';
+import 'package:spotify_clone/view_model/player_view_model.dart';
 import 'package:spotify_clone/view_model/track_list_view_model.dart';
 import 'package:spotify_clone/widgets/custom_widgets/custom_icon.dart';
 import 'package:spotify_clone/widgets/custom_widgets/custom_point.dart';
@@ -32,6 +34,7 @@ class TrackListView extends StatefulWidget {
 }
 
 class _TrackListViewState extends State<TrackListView> {
+  final player = getIt<PlayerViewModel>();
   late TrackListViewModel viewModel;
   late ScrollController scrollController;
   double offset = 0;
@@ -184,6 +187,7 @@ class _TrackListViewState extends State<TrackListView> {
                         title: widget.title,
                         type: widget.type,
                         index: index,
+                        player: player,
                       ),
                     );
                   },
@@ -204,6 +208,7 @@ class _CustomListTile extends StatelessWidget {
     required this.title,
     required this.type,
     required this.index,
+    required this.player,
   });
   final String title;
   final MediaType type;
@@ -212,6 +217,7 @@ class _CustomListTile extends StatelessWidget {
   final double imageSize = 50;
   final EdgeInsetsGeometry padding = EdgeInsets.all(0);
   final int index;
+  final PlayerViewModel player;
 
   List<PlayTrackItem> playlist = [];
 
@@ -254,6 +260,7 @@ class _CustomListTile extends StatelessWidget {
         );
         Navigator.pop(context);
         final playlist = await Future.wait(futures);
+        /*
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -264,7 +271,15 @@ class _CustomListTile extends StatelessWidget {
               currentIndex: index,
             ),
           ),
-        );
+        );*/
+        // player.playlist.addAll(widget.playlist);
+        // player.playlist.addAll(playlist);
+        // player.playerPlay();
+       player.playFromPlaylist(
+    list: playlist,
+    index: index,
+    type: type,
+  );
       },
     );
   }
@@ -349,7 +364,15 @@ class _CoverImage extends StatelessWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: imageUrl.isEmpty
-              ? CustomIcon(iconData: Icons.add_ic_call_outlined)
+              ? Container(
+                  width: size,
+                  height: size,
+                  color: AppColors.grey,
+                  child: CustomIcon(
+                    iconData: Icons.music_note,
+                    iconSize: IconSize.mega,
+                  ),
+                )
               : Image.network(
                   imageUrl,
                   width: size,

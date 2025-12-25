@@ -22,6 +22,7 @@ class PlayerViewModel {
   late MediaType currentType;
 
   //init Player
+
   void initPlayer() {
     _readOtoNext();
     _readOtoLoop();
@@ -53,6 +54,22 @@ class PlayerViewModel {
   Stream<Duration?> get durationStream => audioPlayerService.durationStream;
   Stream<Duration> get positionStream => audioPlayerService.positionStream;
   Stream<bool> get playingStream => audioPlayerService.playingStream;
+
+  void playFromPlaylist({
+    required List<PlayTrackItem> list,
+    required int index,
+    required MediaType type,
+  }) {
+    runInAction(() {
+      currentType = type;
+      playlist
+        ..clear()
+        ..addAll(list);
+      currentIndex.value = index;
+      selectAlbumUrlOrPath(type);
+      startSong(type);
+    });
+  }
 
   //Controls
   void playerPlay() {
@@ -143,7 +160,7 @@ class PlayerViewModel {
     debugPrint("[startSong] : End");
   }
 
-//Update Song
+  //Update Song
   void _songUpdate() {
     debugPrint("[songUpdate] : Start");
     selectAlbumUrlOrPath(currentType);
@@ -168,8 +185,8 @@ class PlayerViewModel {
     debugPrint("[indexNext] : Start");
     runInAction(() {
       currentIndex.value = (currentIndex.value + 1) % playlist.length;
-      _songUpdate();
     });
+    _songUpdate();
     debugPrint("[indexNext] : End");
   }
 
@@ -218,11 +235,8 @@ class PlayerViewModel {
     debugPrint("[selectAlbumUrlOrPath] : End");
   }
 
-  Future<bool> isDownloaded (String id) async {
-    final bool isDowloaded = await SongDataManager()
-                .songExistsByFilePath(id);
+  Future<bool> isDownloaded(String id) async {
+    final bool isDowloaded = await SongDataManager().songExistsByFilePath(id);
     return isDowloaded;
   }
-
-  
 }
