@@ -5,6 +5,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
 import 'package:spotify_clone/core/constants/app_sizes.dart';
 import 'package:spotify_clone/core/enums/media_type.dart';
+import 'package:spotify_clone/core/services/service_locator.dart';
 import 'package:spotify_clone/models/player_model.dart';
 import 'package:spotify_clone/view_model/player_view_model.dart';
 import 'package:spotify_clone/widgets/custom_widgets/custom_icon.dart';
@@ -20,7 +21,6 @@ class PlayerView extends StatefulWidget {
   final MediaType type;
 
   const PlayerView({
-    super.key,
     required this.title,
     required this.type,
     required this.playlist,
@@ -32,24 +32,18 @@ class PlayerView extends StatefulWidget {
 }
 
 class _PlayerViewState extends State<PlayerView> {
-  late PlayerViewModel viewModel;
-
+  //late PlayerViewModel viewModel;
+  final viewModel = getIt<PlayerViewModel>();
   @override
   void initState() {
     super.initState();
-    viewModel = PlayerViewModel();
-    viewModel.currentType = widget.type;
-    viewModel.initPlayer();
-    viewModel.playlist.addAll(widget.playlist);
-    viewModel.currentIndex.value = widget.currentIndex;
+    // viewModel = PlayerViewModel();
+   // viewModel.currentType = widget.type;
+    //viewModel.initPlayer();
+    //viewModel.playlist.addAll(widget.playlist);
+    //viewModel.currentIndex.value = widget.currentIndex;
     viewModel.selectAlbumUrlOrPath(widget.type);
-    viewModel.startSong(widget.type);
-  }
-
-  @override
-  void dispose() {
-    viewModel.stopSong();
-    super.dispose();
+    //viewModel.startSong(widget.type);
   }
 
   @override

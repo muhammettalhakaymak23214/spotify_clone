@@ -6,6 +6,7 @@ import 'package:spotify_clone/core/constants/app_colors.dart';
 import 'package:spotify_clone/core/constants/app_strings.dart';
 import 'package:spotify_clone/core/enums/media_type.dart';
 import 'package:spotify_clone/models/player_model.dart';
+import 'package:spotify_clone/view/main_tab_view.dart';
 import 'package:spotify_clone/view/player_view.dart';
 import 'package:spotify_clone/view/track_list_view.dart';
 import 'package:spotify_clone/view_model/library_view_model.dart';
@@ -176,6 +177,7 @@ class _LibraryViewState extends State<LibraryView> {
                           title: Text(item.title ?? "No Title"),
                           subtitle: Text(subtitle),
                           onTap: () async {
+                            /*
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -186,6 +188,20 @@ class _LibraryViewState extends State<LibraryView> {
                                   imageUrl: item.imagesUrl ?? "",
                                 ),
                               ),
+                            );*/
+
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => MainTabView(
+                                  initialIndex: 5,
+                                  id: item.id ?? "",
+                                  title: item.title ?? "",
+                                  type: item.type ?? MediaType.show,
+                                  imageUrl: item.imagesUrl ?? "",
+                                ),
+                              ),
+                              (route) => false,
                             );
                           },
                         );
