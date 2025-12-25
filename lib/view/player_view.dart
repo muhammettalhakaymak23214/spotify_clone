@@ -11,6 +11,7 @@ import 'package:spotify_clone/widgets/custom_widgets/custom_icon.dart';
 import 'package:spotify_clone/widgets/custom_widgets/custom_text.dart';
 import 'package:spotify_clone/widgets/bottom_sheet/listen_mode_bottom_sheet.dart';
 import 'package:spotify_clone/widgets/bottom_sheet/song_bottom_sheet.dart';
+import 'package:spotify_clone/widgets/progress_bars/player_view_progress_bar.dart';
 
 class PlayerView extends StatefulWidget {
   final String title;
@@ -100,7 +101,10 @@ class _PlayerViewState extends State<PlayerView> {
                 SizedBox(height: sizedBoxHeightOne),
                 _Row1(leftPadding: leftPadding, track: track),
                 SizedBox(height: sizedBoxHeightTwo),
-                _ProgresBar(viewModel: viewModel, leftPadding: leftPadding),
+                PlayerViewProgresBar(
+                  viewModel: viewModel,
+                  leftPadding: leftPadding,
+                ),
                 _Row2(
                   leftPadding: leftPadding,
                   viewModel: viewModel,
@@ -128,53 +132,6 @@ class _PlayerViewState extends State<PlayerView> {
         ],
         stops: [0.3, 0.9],
       ),
-    );
-  }
-}
-
-class _ProgresBar extends StatelessWidget {
-  const _ProgresBar({required this.viewModel, required this.leftPadding});
-
-  final PlayerViewModel viewModel;
-  final double leftPadding;
-
-  @override
-  Widget build(BuildContext context) {
-    final double barHeight = 5;
-    final double thumbRadius = 5;
-    final double timeLabelPadding = 10;
-
-    return StreamBuilder<Duration?>(
-      stream: viewModel.durationStream,
-      builder: (context, snapshotDuration) {
-        final duration = snapshotDuration.data ?? Duration.zero;
-
-        return StreamBuilder<Duration>(
-          stream: viewModel.positionStream,
-          builder: (context, snapshotPosition) {
-            final position = snapshotPosition.data ?? Duration.zero;
-
-            return Padding(
-              padding: EdgeInsets.symmetric(horizontal: leftPadding),
-              child: ProgressBar(
-                progress: position,
-                total: duration,
-                barHeight: barHeight,
-                baseBarColor: AppColors.grey,
-                progressBarColor: AppColors.white,
-                thumbColor: AppColors.white,
-                thumbRadius: thumbRadius,
-                timeLabelPadding: timeLabelPadding,
-                timeLabelTextStyle: TextStyle(
-                  color: AppColors.grey,
-                  fontSize: AppSizes.fontSize,
-                ),
-                onSeek: (newPosition) => viewModel.seek(newPosition),
-              ),
-            );
-          },
-        );
-      },
     );
   }
 }

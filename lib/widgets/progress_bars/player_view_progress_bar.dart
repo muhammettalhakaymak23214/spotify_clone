@@ -1,37 +1,45 @@
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
+import 'package:spotify_clone/core/constants/app_sizes.dart';
 import 'package:spotify_clone/view_model/player_view_model.dart';
 
-class MiniPlayerProgressBar extends StatelessWidget {
-  const MiniPlayerProgressBar({super.key, required this.player});
+class PlayerViewProgresBar extends StatelessWidget {
+  const PlayerViewProgresBar({
+    super.key,
+    required this.viewModel,
+    required this.leftPadding,
+  });
 
-  final PlayerViewModel player;
+  final PlayerViewModel viewModel;
+  final double leftPadding;
 
   @override
   Widget build(BuildContext context) {
-    final double barHeight = 3;
-    final double thumbRadius = 3;
-    final EdgeInsetsGeometry progressBarPadding = EdgeInsets.symmetric(
-      horizontal: 5,
-      vertical: 2,
-    );
+    //Variables
+    final double barHeight = 5;
+    final double thumbRadius = 5;
+    final double timeLabelPadding = 10;
     final Color baseBaseColor = AppColors.grey;
     final Color progressBaseColor = AppColors.white;
     final Color thumbColor = AppColors.white;
+    final textStyle = TextStyle(
+      color: AppColors.grey,
+      fontSize: AppSizes.fontSize,
+    );
 
     return StreamBuilder<Duration?>(
-      stream: player.durationStream,
+      stream: viewModel.durationStream,
       builder: (context, snapshotDuration) {
         final duration = snapshotDuration.data ?? Duration.zero;
 
         return StreamBuilder<Duration>(
-          stream: player.positionStream,
+          stream: viewModel.positionStream,
           builder: (context, snapshotPosition) {
             final position = snapshotPosition.data ?? Duration.zero;
 
             return Padding(
-              padding: progressBarPadding,
+              padding: EdgeInsets.symmetric(horizontal: leftPadding),
               child: ProgressBar(
                 progress: position,
                 total: duration,
@@ -40,8 +48,9 @@ class MiniPlayerProgressBar extends StatelessWidget {
                 progressBarColor: progressBaseColor,
                 thumbColor: thumbColor,
                 thumbRadius: thumbRadius,
-                timeLabelLocation: TimeLabelLocation.none,
-                onSeek: (newPosition) => player.seek(newPosition),
+                timeLabelPadding: timeLabelPadding,
+                timeLabelTextStyle: textStyle,
+                onSeek: (newPosition) => viewModel.seek(newPosition),
               ),
             );
           },

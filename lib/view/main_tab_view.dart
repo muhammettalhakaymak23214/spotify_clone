@@ -12,7 +12,7 @@ import 'package:spotify_clone/widgets/custom_widgets/custom_bottom_app_bar.dart'
 import 'package:spotify_clone/widgets/custom_widgets/custom_drawer.dart';
 import 'package:spotify_clone/widgets/custom_widgets/custom_icon.dart';
 import 'package:spotify_clone/widgets/custom_widgets/custom_text.dart';
-import 'package:spotify_clone/widgets/progress_bar.dart/mini_player_progress_bar.dart';
+import 'package:spotify_clone/widgets/progress_bars/mini_player_progress_bar.dart';
 
 class MainTabView extends StatefulWidget {
   const MainTabView({super.key, this.initialIndex = 0});
