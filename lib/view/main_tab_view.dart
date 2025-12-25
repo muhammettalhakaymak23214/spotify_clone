@@ -223,7 +223,7 @@ class MiniPlayer extends StatelessWidget {
                     ],
                   ),
                 ),
-                ProgresBar(player: player),
+                MiniPlayerProgressBar(player: player),
               ],
             ),
           );
