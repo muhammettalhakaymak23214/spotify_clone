@@ -1,15 +1,14 @@
 import 'dart:io';
-import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
+import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
-import 'package:spotify_clone/core/constants/app_sizes.dart';
 import 'package:spotify_clone/core/enums/media_type.dart';
 import 'package:spotify_clone/core/services/service_locator.dart';
+import 'package:spotify_clone/main.dart';
 import 'package:spotify_clone/models/player_model.dart';
-import 'package:spotify_clone/view_model/player_view_model.dart';
-import 'package:spotify_clone/widgets/custom_widgets/custom_icon.dart';
-import 'package:spotify_clone/widgets/custom_widgets/custom_text.dart';
+import 'package:spotify_clone/core/stores/player_view_model.dart';
 import 'package:spotify_clone/widgets/bottom_sheet/listen_mode_bottom_sheet.dart';
 import 'package:spotify_clone/widgets/bottom_sheet/song_bottom_sheet.dart';
 import 'package:spotify_clone/widgets/progress_bars/player_view_progress_bar.dart';
@@ -21,94 +20,124 @@ class PlayerView extends StatefulWidget {
   final MediaType type;
 
   const PlayerView({
+    super.key,
     required this.title,
     required this.type,
     required this.playlist,
     required this.currentIndex,
   });
 
+  static Future<void> show(
+    BuildContext context, {
+    required String title,
+    required List<PlayTrackItem> playlist,
+    required int currentIndex,
+    required MediaType type,
+  }) {
+    return showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      enableDrag: true,
+      builder: (context) => PlayerView(
+        title: title,
+        playlist: playlist,
+        currentIndex: currentIndex,
+        type: type,
+      ),
+    );
+  }
+
   @override
   State<PlayerView> createState() => _PlayerViewState();
 }
 
 class _PlayerViewState extends State<PlayerView> {
-  //late PlayerViewModel viewModel;
-  final viewModel = getIt<PlayerViewModel>();
+  final viewModel = getIt<PlayerStore>();
+
   @override
   void initState() {
     super.initState();
-    // viewModel = PlayerViewModel();
-   // viewModel.currentType = widget.type;
-    //viewModel.initPlayer();
-    //viewModel.playlist.addAll(widget.playlist);
-    //viewModel.currentIndex.value = widget.currentIndex;
-    viewModel.selectAlbumUrlOrPath(widget.type);
-    //viewModel.startSong(widget.type);
+    viewModel.getOtoLoop();
+    viewModel.getOtoMode();
+    viewModel.getOtoNext();
   }
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
-    double leftPadding = (screenWidth - 350) / 2;
-
-    final double sizedBoxHeightOne = 70;
-    final double sizedBoxHeightTwo = 20;
-
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight),
-        child: Observer(
-          builder: (context) {
-            final track = viewModel.playlist[viewModel.currentIndex.value];
-            final color = viewModel.bgColor;
-            return _CustomAppBar(
-              viewModel: viewModel,
-              backgroundColor: color.value,
-              widget: widget,
-              track: track,
-              title: widget.title,
-            );
-          },
-        ),
-      ),
+      extendBodyBehindAppBar: true,
+      backgroundColor: const Color.fromARGB(255, 0, 0, 0),
       body: Observer(
         builder: (context) {
           final track = viewModel.playlist[viewModel.currentIndex.value];
           final otoNextValue = viewModel.otoNext.value;
           final otoLoopValue = viewModel.otoLoop.value;
-          final backgroundColor = viewModel.bgColor.value;
 
-          return Container(
-            width: screenWidth,
-            height: screenHeight,
-            decoration: _boxDecoration(backgroundColor),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _CoverImage(
-                  leftPadding: leftPadding,
-                  track: track,
-                  type: widget.type,
+          return StreamBuilder<MediaItem?>(
+            stream: audioHandler.mediaItem,
+            builder: (context, snapshot) {
+              final item = snapshot.data;
+              final int? argb = item?.extras?['color'] as int?;
+              final Color color = argb != null ? Color(argb) : Colors.amber;
+
+              return Container(
+                width: 1.sw,
+                height: 1.sh,
+                decoration: _boxDecoration(color),
+                child: SafeArea(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 25.w),
+                    child: Column(
+                      children: [
+                     
+                        SizedBox(height: 45.h),
+                        _CustomAppBar(
+                          viewModel: viewModel,
+                          widget: widget,
+                          track: track,
+                          title: widget.title,
+                        ),
+
+                       
+                        const Spacer(flex: 2),
+
+                    
+                        _CoverImage(track: track, type: widget.type),
+
+                    
+                       SizedBox(height: 60.h),
+
+                     
+                        _Row1(track: track),
+                        
+                        SizedBox(height: 40.h),
+
+                  
+                        PlayerViewProgresBar(
+                          viewModel: viewModel,
+                          leftPadding: 0,
+                        ),
+SizedBox(height: 40.h),
+                      
+                        _Row2(
+                          viewModel: viewModel,
+                          otoNextValue: otoNextValue,
+                          otoLoopValue: otoLoopValue,
+                        ),
+
+                       
+                        SizedBox(height: 40.h),
+                        const _Row3(),
+                        
+                       
+                        SizedBox(height: 20.h),
+                      ],
+                    ),
+                  ),
                 ),
-                SizedBox(height: sizedBoxHeightOne),
-                _Row1(leftPadding: leftPadding, track: track),
-                SizedBox(height: sizedBoxHeightTwo),
-                PlayerViewProgresBar(
-                  viewModel: viewModel,
-                  leftPadding: leftPadding,
-                ),
-                _Row2(
-                  leftPadding: leftPadding,
-                  viewModel: viewModel,
-                  otoNextValue: otoNextValue,
-                  otoLoopValue: otoLoopValue,
-                ),
-                SizedBox(height: 20),
-                _Row3(leftPadding: leftPadding),
-              ],
-            ),
+              );
+            },
           );
         },
       ),
@@ -117,332 +146,245 @@ class _PlayerViewState extends State<PlayerView> {
 
   BoxDecoration _boxDecoration(Color backgroundColor) {
     return BoxDecoration(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(30.r),
+        topRight: Radius.circular(30.r),
+      ),
       gradient: LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
         colors: [
-          backgroundColor.withValues(alpha: 1),
-          AppColors.black.withValues(alpha: 0.5),
+          backgroundColor.withOpacity(1),
+          AppColors.black.withOpacity(0.95),
         ],
-        stops: [0.3, 0.9],
+        stops: const [0.0, 0.85],
       ),
     );
   }
 }
+
 
 class _Row3 extends StatelessWidget {
-  const _Row3({required this.leftPadding});
-
-  final double leftPadding;
-  final double containerWidth = 250;
-
+  const _Row3();
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: leftPadding),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            alignment: Alignment.centerLeft,
-            width: containerWidth,
-            child: CustomIcon(iconData: Icons.devices),
-          ),
-          CustomIcon(iconData: Icons.share),
-          CustomIcon(iconData: Icons.queue_music),
-        ],
-      ),
+    return Row(
+      children: [
+        Icon(Icons.devices, color: Colors.white, size: 22.w),
+        const Spacer(),
+        Icon(Icons.share, color: Colors.white, size: 22.w),
+        SizedBox(width: 25.w),
+        Icon(Icons.queue_music, color: Colors.white, size: 24.w),
+      ],
     );
   }
 }
 
-class _Row2 extends StatelessWidget {
-  _Row2({
-    required this.leftPadding,
-    required this.viewModel,
-    required this.otoNextValue,
-    required this.otoLoopValue,
-  });
 
-  final double leftPadding;
-  final PlayerViewModel viewModel;
+class _Row2 extends StatelessWidget {
+  final PlayerStore viewModel;
   final bool otoNextValue;
   final bool otoLoopValue;
 
-  final String activeSuffleIconPath = "assets/png/active_suffle.png";
-  final String suffleIconPath = "assets/png/suffle.png";
-  final String activeLoopIconPath = "assets/png/active_loop.png";
-  final String loopIconPath = "assets/png/loop.png";
-
-  final double smallContainerSize = 40;
-  final double mediumContainerSize = 50;
-  final BorderRadiusGeometry borderRadius = BorderRadius.circular(50);
-  final double smallSpaceWidth = 5;
+  const _Row2({required this.viewModel, required this.otoNextValue, required this.otoLoopValue});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: leftPadding),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            height: smallContainerSize,
-            width: smallContainerSize,
-            decoration: BoxDecoration(
-              color: AppColors.white,
-              borderRadius: borderRadius,
-            ),
-            child: IconButton(
-              icon: SizedBox(
-                height: 30,
-                child: otoNextValue
-                    ? Image.asset(activeSuffleIconPath)
-                    : Image.asset(suffleIconPath),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        _WhiteCircleButton(
+          size: 42.w,
+          onTap: () => ListenModeBottomSheet.show(context, viewModel),
+          child: Image.asset(
+            otoNextValue ? "assets/png/active_suffle.png" : "assets/png/suffle.png",
+            width: 20.w,
+          ),
+        ),
+        _WhiteCircleButton(
+          size: 48.w,
+          onTap: () => viewModel.indexPrevious(),
+          child: Icon(Icons.skip_previous, color: Colors.black, size: 28.w),
+        ),
+        StreamBuilder<bool>(
+          stream: viewModel.playingStream,
+          builder: (context, snapshot) {
+            final isPlaying = snapshot.data ?? false;
+            return _WhiteCircleButton(
+              size: 65.w,
+              onTap: () => isPlaying ? viewModel.playerPause() : viewModel.playerPlay(),
+              child: Icon(
+                isPlaying ? Icons.pause : Icons.play_arrow,
+                color: Colors.black,
+                size: 38.w,
               ),
-              onPressed: () {
-                ListenModeBottomSheet.show(context, viewModel);
-              },
-            ),
-          ),
-          SizedBox(width: smallSpaceWidth),
-          Container(
-            height: mediumContainerSize,
-            width: mediumContainerSize,
-            decoration: BoxDecoration(
-              color: AppColors.white,
-              borderRadius: borderRadius,
-            ),
-            child: IconButton(
-              onPressed: () {
-                viewModel.indexPrevious();
-              },
-              icon: CustomIcon(
-                color: AppColors.black,
-                iconData: Icons.skip_previous,
-                iconSize: IconSize.extraLarge,
-              ),
-            ),
-          ),
-
-          StreamBuilder<bool>(
-            stream: viewModel.playingStream,
-            builder: (context, snapshot) {
-              final isPlaying = snapshot.data ?? false;
-
-              return IconButton(
-                icon: CustomIcon(
-                  iconData: isPlaying ? Icons.pause_circle : Icons.play_circle,
-                  iconSize: IconSize.mega,
-                ),
-                onPressed: () {
-                  if (isPlaying) {
-                    viewModel.playerPause();
-                  } else {
-                    viewModel.playerPlay();
-                  }
-                },
-              );
-            },
-          ),
-          Container(
-            height: mediumContainerSize,
-            width: mediumContainerSize,
-            decoration: BoxDecoration(
-              color: AppColors.white,
-              borderRadius: borderRadius,
-            ),
-            child: IconButton(
-              onPressed: () {
-                viewModel.indexNext();
-              },
-              icon: CustomIcon(
-                color: AppColors.black,
-                iconData: Icons.skip_next,
-                iconSize: IconSize.extraLarge,
-              ),
-            ),
-          ),
-          SizedBox(width: smallSpaceWidth),
-          Container(
-            height: smallContainerSize,
-            width: smallContainerSize,
-            decoration: BoxDecoration(
-              color: AppColors.white,
-              borderRadius: borderRadius,
-            ),
-            child: IconButton(
-              icon: SizedBox(
-                child: viewModel.otoLoop.value
-                    ? Image.asset(activeLoopIconPath)
-                    : Image.asset(loopIconPath),
-              ),
-              onPressed: () {
-                viewModel.setOtoLoop();
-              },
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _Row1 extends StatelessWidget {
-  const _Row1({required this.leftPadding, required this.track});
-
-  final double leftPadding;
-  final PlayTrackItem track;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: leftPadding),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CustomText(
-                data: track.trackName,
-                textSize: TextSize.large,
-                textWeight: TextWeight.bold,
-              ),
-              CustomText(
-                data: track.artistName,
-                textSize: TextSize.large,
-                textWeight: TextWeight.normal,
-              ),
-            ],
-          ),
-          CustomIcon(
-            iconData: Icons.add_circle_outline,
-            iconSize: IconSize.extraLarge,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _CoverImage extends StatelessWidget {
-  const _CoverImage({
-    required this.leftPadding,
-    required this.track,
-    required this.type,
-  });
-
-  final MediaType type;
-  final double leftPadding;
-  final PlayTrackItem track;
-  final double size = 350;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(left: leftPadding),
-      child: type != MediaType.downloaded
-          ? ClipRRect(
-              borderRadius: BorderRadiusGeometry.circular(10),
-              child: track.albumImage != null && track.albumImage!.isNotEmpty
-                  ? Image.network(
-                      track.albumImage!,
-                      width: size,
-                      height: size,
-                      fit: BoxFit.cover,
-                    )
-                  : Container(
-                      width: size,
-                      height: size,
-                      color: AppColors.grey,
-                      child: CustomIcon(
-                        iconData: Icons.music_note,
-                        iconSize: IconSize.extraLarge,
-                      ),
-                    ),
-            )
-          : ClipRRect(
-              borderRadius: BorderRadiusGeometry.circular(10),
-              child:
-                  track.albumImagePath != null &&
-                      track.albumImagePath!.isNotEmpty
-                  ? Image.file(
-                      File(track.albumImagePath!),
-                      width: size,
-                      height: size,
-                      fit: BoxFit.cover,
-                    )
-                  : Container(
-                      width: size,
-                      height: size,
-                      color: AppColors.grey,
-                      child: CustomIcon(
-                        iconData: Icons.music_note,
-                        iconSize: IconSize.extraLarge,
-                      ),
-                    ),
-            ),
-    );
-  }
-}
-
-class _CustomAppBar extends StatelessWidget {
-  _CustomAppBar({
-    required this.widget,
-    required this.backgroundColor,
-    required this.track,
-    required this.title,
-    required this.viewModel,
-  });
-  final PlayerViewModel viewModel;
-  final PlayTrackItem track;
-  final Color backgroundColor;
-  final PlayerView widget;
-  final EdgeInsetsGeometry actionPadding = EdgeInsets.only(right: 20);
-  final double leadingWidth = 80;
-  final double backgroundColorAlphaValue = 0.8;
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      centerTitle: true,
-      backgroundColor: backgroundColor.withValues(
-        alpha: backgroundColorAlphaValue,
-      ),
-      title: Column(
-        children: [
-          CustomText(data: widget.type.title, textWeight: TextWeight.light),
-          CustomText(
-            data: widget.title,
-            textWeight: TextWeight.normal,
-            textSize: TextSize.medium,
-          ),
-        ],
-      ),
-      leadingWidth: leadingWidth,
-      actionsPadding: actionPadding,
-      actions: [
-        IconButton(
-          onPressed: () async {
-            final bool isDowloaded = await viewModel.isDownloaded(
-              track.id ?? "no id",
-            );
-
-            SongBottomSheet.show(
-              context,
-              viewModel,
-              track,
-              title,
-              widget.type,
-              isDowloaded,
             );
           },
-          icon: CustomIcon(iconData: Icons.more_vert_outlined),
+        ),
+        _WhiteCircleButton(
+          size: 48.w,
+          onTap: () => viewModel.indexNext(),
+          child: Icon(Icons.skip_next, color: Colors.black, size: 28.w),
+        ),
+        _WhiteCircleButton(
+          size: 42.w,
+          onTap: () async {
+            await viewModel.setOtoLoop();
+            viewModel.getOtoLoop();
+            viewModel.getOtoNext();
+          },
+          child: Image.asset(
+            otoLoopValue ? "assets/png/active_loop.png" : "assets/png/loop.png",
+            width: 20.w,
+          ),
         ),
       ],
+    );
+  }
+}
+
+class _WhiteCircleButton extends StatelessWidget {
+  final double size;
+  final Widget child;
+  final VoidCallback onTap;
+  const _WhiteCircleButton({required this.size, required this.child, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: size,
+        height: size,
+        decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+        child: Center(child: child),
+      ),
+    );
+  }
+}
+
+
+class _Row1 extends StatelessWidget {
+  final PlayTrackItem track;
+  const _Row1({required this.track});
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<MediaItem?>(
+      stream: audioHandler.mediaItem,
+      builder: (context, snapshot) {
+        final item = snapshot.data;
+        return Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    item?.title ?? "",
+                    style: TextStyle(color: Colors.white, fontSize: 24.sp, fontWeight: FontWeight.bold),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(
+                    item?.artist ?? "",
+                    style: TextStyle(color: Colors.white.withOpacity(0.7), fontSize: 16.sp, fontWeight: FontWeight.w400),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
+            Icon(Icons.add_circle_outline, color: Colors.white, size: 30.w),
+          ],
+        );
+      },
+    );
+  }
+}
+
+
+class _CoverImage extends StatelessWidget {
+  final MediaType type;
+  final PlayTrackItem track;
+  const _CoverImage({required this.track, required this.type});
+
+  @override
+  Widget build(BuildContext context) {
+    double imageSize = 0.85.sw;
+    return StreamBuilder<MediaItem?>(
+      stream: audioHandler.mediaItem,
+      builder: (context, snapshot) {
+        final item = snapshot.data;
+        final albumArt = item?.album;
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(15.r),
+          child: albumArt != null && albumArt.isNotEmpty
+              ? (type != MediaType.downloaded
+                  ? Image.network(albumArt, width: imageSize, height: imageSize, fit: BoxFit.cover)
+                  : Image.file(File(albumArt), width: imageSize, height: imageSize, fit: BoxFit.cover))
+              : Container(
+                  width: imageSize,
+                  height: imageSize,
+                  color: AppColors.grey,
+                  child: Icon(Icons.music_note, color: Colors.white, size: 80.w),
+                ),
+        );
+      },
+    );
+  }
+}
+
+
+class _CustomAppBar extends StatelessWidget {
+  final PlayerStore viewModel;
+  final PlayTrackItem track;
+  final PlayerView widget;
+  final String title;
+
+  const _CustomAppBar({required this.widget, required this.track, required this.title, required this.viewModel});
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<MediaItem?>(
+      stream: audioHandler.mediaItem,
+      builder: (context, snapshot) {
+        final item = snapshot.data;
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IconButton(
+              icon: Icon(Icons.keyboard_arrow_down, color: Colors.white, size: 35.w),
+              onPressed: () => Navigator.pop(context),
+            ),
+            Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    widget.type.title.toUpperCase(),
+                    style: TextStyle(color: Colors.white.withOpacity(0.6), fontSize: 12.sp, letterSpacing: 1.2),
+                  ),
+                  Text(
+                    item?.title ?? "",
+                    style: TextStyle(color: Colors.white, fontSize: 15.sp, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
+            IconButton(
+              onPressed: () async {
+                final bool isDownloaded = await viewModel.isDownloaded(item?.genre ?? "no id");
+                SongBottomSheet.show(context, viewModel, track, title, widget.type, isDownloaded, item);
+              },
+              icon: Icon(Icons.more_vert, color: Colors.white, size: 28.w),
+            ),
+          ],
+        );
+      },
     );
   }
 }

@@ -6,12 +6,12 @@ import 'package:palette_generator_master/palette_generator_master.dart';
 class PaletteHelper {
   static Future<Color> getBackgroundColor(
     String imageUrl, {
-    bool isPath = false,
+    bool isUrl = false,
   }) async {
     try {
 
       late PaletteGeneratorMaster  palette;
-      if (isPath == false) {
+      if (isUrl == false) {
         palette = await PaletteGeneratorMaster.fromImageProvider(
           // NetworkImage(imageUrl),
           FileImage(File(imageUrl)),

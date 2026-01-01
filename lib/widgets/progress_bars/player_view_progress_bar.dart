@@ -2,7 +2,7 @@ import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
 import 'package:spotify_clone/core/constants/app_sizes.dart';
-import 'package:spotify_clone/view_model/player_view_model.dart';
+import 'package:spotify_clone/core/stores/player_view_model.dart';
 
 class PlayerViewProgresBar extends StatelessWidget {
   const PlayerViewProgresBar({
@@ -11,7 +11,7 @@ class PlayerViewProgresBar extends StatelessWidget {
     required this.leftPadding,
   });
 
-  final PlayerViewModel viewModel;
+  final PlayerStore viewModel;
   final double leftPadding;
 
   @override

@@ -120,7 +120,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           height: AppSizes.avatarSize2,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: AppColors.blackPanther,
+         //   color: AppColors.blackPanther,
           ),
           child: Center(child: leading ?? SizedBox.shrink()),
         ),

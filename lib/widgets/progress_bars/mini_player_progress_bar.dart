@@ -1,23 +1,29 @@
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
-import 'package:spotify_clone/view_model/player_view_model.dart';
+import 'package:spotify_clone/core/stores/player_view_model.dart';
 
 class MiniPlayerProgressBar extends StatelessWidget {
   const MiniPlayerProgressBar({super.key, required this.player});
 
-  final PlayerViewModel player;
+  final PlayerStore player;
 
   @override
   Widget build(BuildContext context) {
-    //Variables
-    final double barHeight = 3;
-    final double thumbRadius = 3;
+   
+    final double barHeight = 3.h; 
+    
+   
+    final double thumbRadius = 0; 
+
+    
     final EdgeInsetsGeometry progressBarPadding = EdgeInsets.symmetric(
-      horizontal: 5,
-      vertical: 2,
+      horizontal: 10.w, 
+      vertical: 1.h,   
     );
-    final Color baseBaseColor = AppColors.grey;
+
+    final Color baseBaseColor = AppColors.grey.withOpacity(0.2); 
     final Color progressBaseColor = AppColors.white;
     final Color thumbColor = AppColors.white;
 
@@ -41,7 +47,7 @@ class MiniPlayerProgressBar extends StatelessWidget {
                 progressBarColor: progressBaseColor,
                 thumbColor: thumbColor,
                 thumbRadius: thumbRadius,
-                timeLabelLocation: TimeLabelLocation.none,
+                timeLabelLocation: TimeLabelLocation.none, 
                 onSeek: (newPosition) => player.seek(newPosition),
               ),
             );

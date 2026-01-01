@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
 import 'package:spotify_clone/core/constants/app_strings.dart';
@@ -7,19 +8,20 @@ import 'package:spotify_clone/core/helpers/song_data_manager.dart';
 import 'package:spotify_clone/core/services/file_manager_service.dart';
 import 'package:spotify_clone/models/player_model.dart';
 import 'package:spotify_clone/view/main_tab_view.dart';
-import 'package:spotify_clone/view_model/player_view_model.dart';
+import 'package:spotify_clone/core/stores/player_view_model.dart';
 import 'package:spotify_clone/widgets/custom_widgets/custom_drag_handle.dart';
 import 'package:spotify_clone/widgets/custom_widgets/custom_icon.dart';
 import 'package:spotify_clone/widgets/custom_widgets/custom_point.dart';
 import 'package:spotify_clone/widgets/custom_widgets/custom_text.dart';
 
 class SongBottomSheet extends StatelessWidget {
-  final PlayerViewModel viewModel;
+  final PlayerStore viewModel;
   final BuildContext context;
   final PlayTrackItem track;
   final String title;
   final MediaType type;
   final bool isDownloaded;
+  final MediaItem? item;
   const SongBottomSheet({
     super.key,
     required this.viewModel,
@@ -27,7 +29,7 @@ class SongBottomSheet extends StatelessWidget {
     required this.track,
     required this.title,
     required this.type,
-    required this.isDownloaded,
+    required this.isDownloaded,required this.item,
   });
 
   @override
@@ -38,28 +40,32 @@ class SongBottomSheet extends StatelessWidget {
       title: title,
       type: type,
       isDownloaded: isDownloaded,
+      item: item,
     );
   }
 
   static void show(
     BuildContext context,
-    PlayerViewModel viewModel,
+    PlayerStore viewModel,
     PlayTrackItem track,
     String title,
     MediaType type,
     bool isDownloaded,
+    MediaItem? item,
   ) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (_) => SongBottomSheet(
+        
         viewModel: viewModel,
         context: context,
         track: track,
         title: title,
         type: type,
         isDownloaded: isDownloaded,
+        item: item,
       ),
     );
   }
@@ -71,14 +77,15 @@ class _DraggableSection extends StatefulWidget {
     required this.track,
     required this.title,
     required this.type,
-    required this.isDownloaded,
+    required this.isDownloaded, required this.item,
   });
 
-  final PlayerViewModel viewModel;
+  final PlayerStore viewModel;
   final PlayTrackItem track;
   final String title;
   final MediaType type;
   final bool isDownloaded;
+  final MediaItem? item;
 
   @override
   State<_DraggableSection> createState() => _DraggableSectionState();
@@ -109,7 +116,7 @@ final BorderRadiusGeometry _borderRadius = BorderRadius.vertical(
             children: [
               SizedBox(height: 10),
               CustomDragHandle(),
-              _TitleListTile(widget: widget),
+              _TitleListTile(widget: widget ,   item: widget.item,),
               Divider(color: AppColors.grey),
               !widget.isDownloaded
                   ? _CustomListTile(
@@ -119,7 +126,7 @@ final BorderRadiusGeometry _borderRadius = BorderRadius.vertical(
                         if (widget.type != MediaType.downloaded) {
                           if (!isLoading) {
                             isLoading = true;
-                            await OnPressMethods().download(widget.track, context);
+                            await OnPressMethods().download(widget.track, context , widget.item);
                             isLoading = false;
                           }
                         }
@@ -237,9 +244,9 @@ final BorderRadiusGeometry _borderRadius = BorderRadius.vertical(
 
 class _TitleListTile extends StatelessWidget {
    _TitleListTile({
-    required this.widget,
+    required this.widget,required this.item,
   });
-
+  final MediaItem? item;
   final _DraggableSection widget;
   final BorderRadiusGeometry _borderRadius = BorderRadius.circular(10);
 
@@ -249,18 +256,18 @@ class _TitleListTile extends StatelessWidget {
       leading: ClipRRect(
         borderRadius: _borderRadius,
         child: widget.type != MediaType.downloaded
-            ? Image.network(widget.track.albumImage ?? "")
-            : Image.file(File(widget.track.albumImagePath ?? "")),
+            ?  Image.network(item!.album!)
+            : Image.file(File(item?.album ?? "")),
       ),
-      title: CustomText(data: widget.title),
+      title: CustomText(data: item?.title ?? ""),
       subtitle: Row(
         children: [
-          CustomText(data: widget.track.artistName, color: AppColors.grey),
+          CustomText(data: item?.artist ?? "", color: AppColors.grey),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5),
             child: Point(color: AppColors.grey),
           ),
-          CustomText(data: widget.track.trackName, color: AppColors.grey),
+          CustomText(data: item?.title ?? "", color: AppColors.grey),
         ],
       ),
     );
@@ -268,15 +275,20 @@ class _TitleListTile extends StatelessWidget {
 }
 
 class OnPressMethods {
-  Future<void> download(PlayTrackItem track, BuildContext context) async {
-    String songMP3Url = track.previewUrl ?? "";
-    String songCoverImageUrl = "${track.albumImage}";
-    String songMP3FileName = "${track.id}.mp3";
-    String songCoverImageFileName = "${track.id}.jpg";
+  Future<void> download(PlayTrackItem track, BuildContext context , MediaItem? item) async {
+    //String songMP3Url = track.previewUrl ?? "";
+    //String songCoverImageUrl = "${track.albumImage}";
+   // String songMP3FileName = "${track.id}.mp3";
+   // String songCoverImageFileName = "${track.id}.jpg";
 
-    debugPrint("_" * 30);
-    debugPrint("[MP3 File Name] : $songMP3FileName");
-    debugPrint("[Cover Image File Name] : $songCoverImageFileName");
+   // debugPrint("_" * 30);
+   // debugPrint("[MP3 File Name] : $songMP3FileName");
+   // debugPrint("[Cover Image File Name] : $songCoverImageFileName");
+
+    String songMP3Url = item?.id ?? "";
+    String songCoverImageUrl = "${item?.album}";
+    String songMP3FileName = "${item?.genre}.mp3";
+    String songCoverImageFileName = "${item?.genre}.jpg";
 
     String? pathSongMp3 = await FileManagerService().downloadFile(
       songMP3Url,
@@ -316,7 +328,7 @@ class OnPressMethods {
   Future<void> delete(
     PlayTrackItem track,
     BuildContext context,
-    PlayerViewModel viewModel,
+    PlayerStore viewModel,
     MediaType type,
   ) async {
     debugPrint("sildi");

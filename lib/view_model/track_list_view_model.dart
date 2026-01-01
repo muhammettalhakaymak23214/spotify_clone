@@ -1,3 +1,4 @@
+import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:spotify_clone/core/enums/media_type.dart';
@@ -22,8 +23,60 @@ class TrackListViewModel {
   Observable<bool> isLoading = Observable<bool>(false);
   Observable<Color> bgColor = Observable<Color>(Colors.black);
 
+//--------------
+//final AudioHandler audioHandler;
+/*
+  late MediaType currentType;
+
+  //TrackListViewModel({required this.audioHandler});
+  
+  void playFromPlaylist({
+    required List<PlayTrackItem> list,
+    required int index,
+    required MediaType type,
+    required String id,
+  }) async {
+    runInAction(() {
+      currentType = type;
+      playlist
+        ..clear()
+        ..addAll(list);
+      debugPrint("playlist sarki adedi : [${playlist.length}]");
+      currentIndex.value = index;
+      debugPrint("playlist sarki indexi : [$index]");
+    });
+
+    const fallbackUrl =
+        'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
+    if (type != MediaType.downloaded) {
+      final urls = list
+          .map(
+            (e) => (e.previewUrl != null && e.previewUrl!.isNotEmpty)
+                ? e.previewUrl!
+                : fallbackUrl,
+          )
+          .toList();
+    } else if (type == MediaType.downloaded) {
+      final urls = list
+          .map(
+            (e) => (e.previewPath != null && e.previewPath!.isNotEmpty)
+                ? e.previewPath!
+                : fallbackUrl,
+          )
+          .toList();
+    }
+
+    await (audioHandler as AudioPlayerService).setPlaylist(
+      list,
+      index,
+      type,
+      id,
+      false,
+    );
+  }*/
+//---------------
   Future<void> updateBackground(String imageUrl) async {
-    final color = await PaletteHelper.getBackgroundColor(imageUrl , isPath: true  );
+    final color = await PaletteHelper.getBackgroundColor(imageUrl , isUrl: true  );
 
     runInAction(() {
       bgColor.value = color;
@@ -184,7 +237,7 @@ class TrackListViewModel {
       trackName: spotifyTrack.name,
       artistName: spotifyTrack.artistsName?.join(", "),
       albumImage: spotifyTrack.albumImage ?? previewUrl?.last,
-      previewUrl: previewUrl?.first ?? "",
+      previewUrl: previewUrl?.first ?? "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
     );
 
     return track;

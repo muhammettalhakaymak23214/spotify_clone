@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spotify_clone/core/enums/media_type.dart';
 import 'package:spotify_clone/view/home_view.dart';
 import 'package:spotify_clone/view/library_view.dart';
@@ -48,6 +49,7 @@ class _MainTabViewState extends State<MainTabView>
   @override
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+    final double bottomNavigatorBarHeight = 60.h + 75.h + 2.h;
     return Scaffold(
       key: scaffoldKey,
       extendBody: true,
@@ -59,18 +61,27 @@ class _MainTabViewState extends State<MainTabView>
         widget.imageUrl,
         widget.type,
       ),
-      bottomNavigationBar: SizedBox(
-        height: 190,
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              child: MiniPlayer(),
-            ),
-            CustomBottomAppBar(tabController: tabController),
-          ],
+
+      bottomNavigationBar: SafeArea(
+  child: SizedBox(
+    
+    height: 145.h, 
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: 10.w, 
+            vertical: 1.h,   
+          ),
+          child: MiniPlayer(),
         ),
-      ),
+        
+        CustomBottomAppBar(tabController: tabController),
+      ],
+    ),
+  ),
+),
       drawer: SizedBox(
         width: MediaQuery.of(context).size.width * 0.90,
         child: CustomDrawer(),
@@ -96,12 +107,7 @@ TabBarView tabBarView(
       LibraryView(),
       PremiumView(),
       RecentlyPlayedView(),
-      TrackListView(
-        id: id,
-        title: title,
-        type: type,
-        imageUrl: imageUrl,
-      ),
+      TrackListView(id: id, title: title, type: type, imageUrl: imageUrl),
     ],
   );
 }

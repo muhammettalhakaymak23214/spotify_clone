@@ -1,201 +1,348 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:marquee/marquee.dart'; 
+import 'dart:io';
+import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:spotify_clone/core/enums/media_type.dart';
 import 'package:spotify_clone/core/helpers/color_extension.dart';
 import 'package:spotify_clone/core/services/service_locator.dart';
+import 'package:spotify_clone/main.dart';
 import 'package:spotify_clone/view/player_view.dart';
-import 'package:spotify_clone/view_model/player_view_model.dart';
+import 'package:spotify_clone/core/stores/player_view_model.dart';
 import 'package:spotify_clone/widgets/custom_widgets/custom_icon.dart';
-import 'package:spotify_clone/widgets/custom_widgets/custom_text.dart';
 import 'package:spotify_clone/widgets/progress_bars/mini_player_progress_bar.dart';
 
 class MiniPlayer extends StatelessWidget {
-  final player = getIt<PlayerViewModel>();
-
+  final player = getIt<PlayerStore>();
   MiniPlayer({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      child: Observer(
-        builder: (context) {
-          //final color = player.bgColor.value;
-          final color = player.bgColor.value.darken(0.25);
+    return StreamBuilder<MediaItem?>(
+      stream: audioHandler.mediaItem,
+      builder: (context, snapshot) {
+        final item = snapshot.data;
+        if (item == null) {
           return Container(
-            height: 60,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: color,
+            height: 60.h,
+            margin: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+          );
+        }
 
-              borderRadius: BorderRadius.circular(10),
+        final int? argb = item.extras?['color'] as int?;
+        final Color bgColor = argb != null
+            ? Color(argb).darken(0.50)
+            : Colors.black;
+
+        return GestureDetector(
+          onTap: () => _openPlayer(context),
+          child: Container(
+            height: 60.h, 
+            margin: EdgeInsets.symmetric(horizontal: 3.w, vertical: 4.h),
+            decoration: BoxDecoration(
+              color: bgColor,
+              borderRadius: BorderRadius.circular(10.r), 
             ),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Container(
-                  height: 50,
-                  width: double.infinity,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Observer(
-                        builder: (context) {
-                          return ClipRRect(
-                            borderRadius: BorderRadiusGeometry.circular(10),
-                            child: player.playlist.isNotEmpty
-                                ? Image.network(
-                                    player
-                                        .playlist[player.currentIndex.value]
-                                        .albumImage!,
-                                    height: 40,
-                                    width: 40,
-                                    fit: BoxFit.cover,
-                                  )
-                                : Image.network(
-                                    "https://image.hurimg.com/i/hurriyet/90/750x422/56f52c2f18c7736068498229.jpg",
-                                    height: 40,
-                                    width: 40,
-                                    fit: BoxFit.cover,
-                                  ),
-                          );
-                        },
-                      ),
-                      SizedBox(
-                        height: 60,
-                        width: 180,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Observer(
-                              builder: (context) {
-                                return CustomText(
-                                  data: player.playlist.isNotEmpty
-                                      ? player
-                                            .playlist[player.currentIndex.value]
-                                            .trackName
-                                      : "hata",
-                                  textWeight: TextWeight.bold,
-                                  textSize: TextSize.medium,
-                                );
-                              },
-                            ),
-                            SizedBox(height: 2),
-                            Observer(
-                              builder: (context) {
-                                return CustomText(
-                                  data: player.playlist.isNotEmpty
-                                      ? player
-                                            .playlist[player.currentIndex.value]
-                                            .artistName
-                                      : "hata",
-                                  textWeight: TextWeight.regular,
-                                );
-                              },
-                            ),
-                          ],
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 10.w, right: 4.w),
+                    child: Row(
+                      children: [
+                        _buildAlbumArt(item, 40.w), 
+                        SizedBox(width: 12.w), 
+
+                        Expanded(
+                          child: SwipeableTextArea(
+                            player: player,
+                            currentItem: item,
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        width: 125,
-                        height: 60,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                onTap: () {
-                                  debugPrint("Device Button on click.");
-                                },
-                                child: SizedBox(
-                                  height: 40,
-                                  width: 40,
-                                  child: CustomIcon(
-                                    iconData: Icons.devices_outlined,
-                                    iconSize: IconSize.large,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                onTap: () {
-                                  debugPrint("Add Button on click.");
-                                },
-                                child: SizedBox(
-                                  height: 40,
-                                  width: 40,
-                                  child: CustomIcon(
-                                    iconData: Icons.add_circle_outline,
-                                    iconSize: IconSize.large,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            StreamBuilder<bool>(
-                              stream: player.playingStream,
-                              builder: (context, snapshot) {
-                                final isPlaying = snapshot.data ?? false;
-                                return Material(
-                                  color: Colors.transparent,
-                                  child: InkWell(
-                                    onTap: () {
-                                      if (isPlaying) {
-                                        player.playerPause();
-                                      } else {
-                                        player.playerPlay();
-                                      }
-                                    },
-                                    child: Container(
-                                      height: 40,
-                                      width: 40,
-                                      child: CustomIcon(
-                                        iconData: isPlaying
-                                            ? Icons.pause
-                                            : Icons.play_arrow,
-                                        iconSize: IconSize.large,
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+
+                        _buildButtons(player),
+                      ],
+                    ),
                   ),
                 ),
                 MiniPlayerProgressBar(player: player),
               ],
             ),
-          );
-        },
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildAlbumArt(MediaItem item, double size) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(6.r),
+      child: (getIt<PlayerStore>().currentType != MediaType.downloaded)
+          ? Image.network(
+              item.album!,
+              height: size,
+              width: size,
+              fit: BoxFit.cover,
+            )
+          : Image.file(
+              File(item.album!),
+              height: size,
+              width: size,
+              fit: BoxFit.cover,
+            ),
+    );
+  }
+
+  Widget _buildButtons(PlayerStore player) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        _icon(Icons.devices_outlined),
+        _icon(Icons.add_circle_outline),
+        StreamBuilder<bool>(
+          stream: player.playingStream,
+          builder: (_, s) {
+            final playing = s.data ?? false;
+            return _icon(
+              playing ? Icons.pause : Icons.play_arrow,
+              onTap: () => playing ? player.playerPause() : player.playerPlay(),
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _icon(IconData icon, {VoidCallback? onTap}) {
+    return InkWell(
+      onTap: onTap ?? () {},
+      borderRadius: BorderRadius.circular(20.r),
+      child: Padding(
+        padding: EdgeInsets.all(8.w),
+        child: CustomIcon(iconData: icon, iconSize: IconSize.medium),
       ),
-      onTap: () {
-        debugPrint("tiklandi");
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => PlayerView(
-              title: player.playlist[player.currentIndex.value].trackName ?? "",
-              type: player.currentType,
-              playlist: player.playlist,
-              currentIndex: player.currentIndex.value,
+    );
+  }
+
+  void _openPlayer(BuildContext context) {
+    /*
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => PlayerView(
+          title: player.playlist[player.currentIndex.value].trackName ?? "",
+          type: player.currentType,
+          playlist: player.playlist,
+          currentIndex: player.currentIndex.value,
+        ),
+      ),
+    );*/
+    PlayerView.show(
+  context,
+  title: player.playlist[player.currentIndex.value].trackName ?? "",
+  playlist: player.playlist,
+  currentIndex:player.currentIndex.value,
+  type: player.currentType,
+);
+  }
+}
+
+class SwipeableTextArea extends StatefulWidget {
+  final PlayerStore player;
+  final MediaItem currentItem;
+  const SwipeableTextArea({
+    super.key,
+    required this.player,
+    required this.currentItem,
+  });
+
+  @override
+  State<SwipeableTextArea> createState() => _SwipeableTextAreaState();
+}
+
+class _SwipeableTextAreaState extends State<SwipeableTextArea>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  double _drag = 0.0;
+  bool _isSwiping = false;
+  String _helperText = "";
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+  }
+
+  @override
+  void didUpdateWidget(SwipeableTextArea oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.currentItem.id != widget.currentItem.id) {
+      setState(() {
+        _isSwiping = false;
+        _drag = 0;
+        _controller.reset();
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final width = constraints.maxWidth;
+
+        return GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onHorizontalDragUpdate: (d) {
+            if (_isSwiping) return;
+            setState(() {
+              _drag += d.delta.dx / width;
+              _drag = _drag.clamp(-1.0, 1.0);
+            });
+          },
+          onHorizontalDragEnd: (d) {
+            if (_drag.abs() > 0.25) {
+              setState(() {
+                _isSwiping = true;
+                _helperText = _drag < 0 ? "Sonraki parça" : "Önceki parça";
+              });
+
+              _controller.forward(from: 0.0).then((_) {
+                if (_helperText == "Sonraki parça") {
+                  widget.player.indexNext();
+                } else {
+                  widget.player.indexPrevious();
+                }
+              });
+            } else {
+              setState(() => _drag = 0);
+            }
+          },
+          child: ClipRect(
+            child: AnimatedBuilder(
+              animation: _controller,
+              builder: (context, _) {
+                double mainX = _drag * width;
+                if (_isSwiping) {
+                  mainX = _drag * width * (1 - _controller.value) -
+                      (_controller.value * (_drag < 0 ? width : -width));
+                }
+
+                double helperX;
+                if (_drag < 0) {
+                  helperX = (width + mainX).clamp(0.0, width);
+                } else {
+                  helperX = (-width + mainX).clamp(-width, 0.0);
+                }
+
+                return Stack(
+                  children: [
+                    Transform.translate(
+                      offset: Offset(helperX, 0),
+                      child: Container(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          _drag < 0 ? "Sonraki parça" : "Önceki parça",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14.sp, 
+                          ),
+                        ),
+                      ),
+                    ),
+                    Transform.translate(
+                      offset: Offset(mainX, 0),
+                      child: Opacity(
+                        opacity: (1 - _drag.abs()).clamp(0.0, 1.0),
+                        child: _buildTrackInfo(widget.currentItem),
+                      ),
+                    ),
+                  ],
+                );
+              },
             ),
           ),
         );
       },
-      onHorizontalDragEnd: (details) {
-        if (details.primaryVelocity! > 0) {
-          player.indexPrevious();
-          debugPrint("sola kaydi");
-        } else {
-          debugPrint("saga kaydi");
-          player.indexNext();
-        }
-      },
+    );
+  }
+
+  Widget _buildTrackInfo(MediaItem item) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: 20.h, 
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final double maxWidth = constraints.maxWidth;
+              final textStyle = TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 13.sp, 
+              );
+
+              final TextPainter textPainter = TextPainter(
+                text: TextSpan(text: item.title, style: textStyle),
+                maxLines: 1,
+                textDirection: TextDirection.ltr,
+              )..layout();
+
+              if (textPainter.width > maxWidth) {
+                return Marquee(
+                  text: item.title,
+                  style: textStyle,
+                  blankSpace: 50.w,
+                  velocity: 30.0,
+                  pauseAfterRound: const Duration(seconds: 2),
+                  startAfter: const Duration(seconds: 1),
+                );
+              } else {
+                return Text(item.title, style: textStyle, maxLines: 1);
+              }
+            },
+          ),
+        ),
+        SizedBox(
+          height: 16.h, 
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final textStyle = Theme.of(context).textTheme.labelSmall?.copyWith(
+                    color: Colors.white70,
+                    fontSize: 11.sp, 
+                  ) ?? TextStyle(color: Colors.white70, fontSize: 9.sp);
+
+              final TextPainter textPainter = TextPainter(
+                text: TextSpan(text: item.artist ?? "", style: textStyle),
+                maxLines: 1,
+                textDirection: TextDirection.ltr,
+              )..layout();
+
+              if (textPainter.width > constraints.maxWidth) {
+                return Marquee(
+                  text: item.artist ?? "",
+                  style: textStyle,
+                  blankSpace: 40.w,
+                  velocity: 25.0,
+                  pauseAfterRound: const Duration(seconds: 2),
+                );
+              } else {
+                return Text(item.artist ?? "", style: textStyle, maxLines: 1);
+              }
+            },
+          ),
+        ),
+      ],
     );
   }
 }

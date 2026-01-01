@@ -5,11 +5,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
 import 'package:spotify_clone/core/constants/app_strings.dart';
 import 'package:spotify_clone/core/enums/media_type.dart';
+import 'package:spotify_clone/core/services/service_locator.dart';
 import 'package:spotify_clone/models/player_model.dart';
 import 'package:spotify_clone/view/main_tab_view.dart';
 import 'package:spotify_clone/view/player_view.dart';
 import 'package:spotify_clone/view/track_list_view.dart';
 import 'package:spotify_clone/view_model/library_view_model.dart';
+import 'package:spotify_clone/core/stores/player_view_model.dart';
 import 'package:spotify_clone/widgets/custom_widgets/custom_app_bar.dart';
 import 'package:spotify_clone/widgets/bottom_sheet/create_bottom_sheet.dart';
 import 'package:spotify_clone/widgets/custom_widgets/custom_icon.dart';
@@ -23,6 +25,7 @@ class LibraryView extends StatefulWidget {
 }
 
 class _LibraryViewState extends State<LibraryView> {
+  final player = getIt<PlayerStore>();
   late LibraryViewModel viewModel;
   List<PlayTrackItem> playlist = [];
 
@@ -248,7 +251,9 @@ class _LibraryViewState extends State<LibraryView> {
                                     );
                                     i++;
                                   }
-
+                                   player.playFromPlaylist(list: playlist, index: index, type: MediaType.downloaded , id: "0");
+                                  
+/*
                                   await Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -259,9 +264,11 @@ class _LibraryViewState extends State<LibraryView> {
                                         currentIndex: index,
                                       ),
                                     ),
-                                  );
+                                  );*/
                                   await viewModel.loadSongs();
+                                   //player.playFromPlaylist(list: playlist, index: index, type: MediaType.downloaded);
                                 },
+
                                 leading: ClipRRect(
                                   borderRadius: BorderRadiusGeometry.circular(
                                     10,

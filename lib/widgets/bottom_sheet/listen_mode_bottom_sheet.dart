@@ -3,13 +3,13 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
 import 'package:spotify_clone/core/constants/app_paddings.dart';
 import 'package:spotify_clone/core/constants/app_strings.dart';
-import 'package:spotify_clone/view_model/player_view_model.dart';
+import 'package:spotify_clone/core/stores/player_view_model.dart';
 import 'package:spotify_clone/widgets/custom_widgets/custom_drag_handle.dart';
 import 'package:spotify_clone/widgets/custom_widgets/custom_icon.dart';
 import 'package:spotify_clone/widgets/custom_widgets/custom_text.dart';
 
 class ListenModeBottomSheet extends StatelessWidget {
-  final PlayerViewModel viewModel;
+  final PlayerStore viewModel;
   const ListenModeBottomSheet({super.key, required this.viewModel});
 
   @override
@@ -17,7 +17,7 @@ class ListenModeBottomSheet extends StatelessWidget {
     return _DraggableSection(viewModel: viewModel);
   }
 
-  static void show(BuildContext context, PlayerViewModel viewModel) {
+  static void show(BuildContext context, PlayerStore viewModel) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -30,7 +30,7 @@ class ListenModeBottomSheet extends StatelessWidget {
 class _DraggableSection extends StatelessWidget {
   _DraggableSection({required this.viewModel});
 
-  final PlayerViewModel viewModel;
+  final PlayerStore viewModel;
 
   final BorderRadiusGeometry _borderRadius = BorderRadius.vertical(
     top: Radius.circular(20),
@@ -103,7 +103,7 @@ class _PlayInOrderSection extends StatelessWidget {
     required this.otoModeValue,
   });
 
-  final PlayerViewModel viewModel;
+  final PlayerStore viewModel;
 
   final bool otoModeValue;
 
@@ -124,7 +124,8 @@ class _PlayInOrderSection extends StatelessWidget {
         activeThumbColor: Colors.green,
         value: !otoModeValue,
         onChanged: (value) {
-          viewModel.setOtoMode(!value);
+          viewModel.setOtoMode();
+          viewModel.getOtoMode();
         },
       ),
     );
@@ -134,7 +135,7 @@ class _PlayInOrderSection extends StatelessWidget {
 class _MixPlaySection extends StatelessWidget {
   const _MixPlaySection({required this.viewModel, required this.otoModeValue});
 
-  final PlayerViewModel viewModel;
+  final PlayerStore viewModel;
 
   final bool otoModeValue;
 
@@ -155,7 +156,8 @@ class _MixPlaySection extends StatelessWidget {
         activeThumbColor: Colors.green,
         value: otoModeValue,
         onChanged: (value) {
-          viewModel.setOtoMode(value);
+          viewModel.setOtoMode();
+          viewModel.getOtoMode();
         },
       ),
     );
@@ -165,7 +167,7 @@ class _MixPlaySection extends StatelessWidget {
 class _OtoNextSection extends StatelessWidget {
   _OtoNextSection({required this.viewModel, required this.otoNextValue});
 
-  final PlayerViewModel viewModel;
+  final PlayerStore viewModel;
   final bool otoNextValue;
 
   final String activeSuffleIconPath = "assets/png/active_suffle.png";
@@ -199,8 +201,10 @@ class _OtoNextSection extends StatelessWidget {
         focusColor: Colors.green,
         activeThumbColor: Colors.green,
         value: otoNextValue,
-        onChanged: (value) {
-          viewModel.setOtoNext(value);
+        onChanged: (value) async {
+         await viewModel.setOtoNext();
+          viewModel.getOtoNext();
+          viewModel.getOtoLoop();
         },
       ),
     );

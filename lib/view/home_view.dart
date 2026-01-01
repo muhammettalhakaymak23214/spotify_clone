@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
-import 'package:spotify_clone/core/constants/app_paddings.dart';
-import 'package:spotify_clone/core/constants/app_sizes.dart';
 import 'package:spotify_clone/core/constants/app_strings.dart';
 import 'package:spotify_clone/models/home_model.dart';
 import 'package:spotify_clone/view_model/home_view_model.dart';
@@ -34,108 +33,73 @@ class _HomeViewState extends State<HomeView> {
     final String title1 = "Çalma Listelerin";
     final String title2 = "Yeni Çıkanlar";
     final String title3 = "Sevdiğin Sanatçılar";
+
     return Scaffold(
       appBar: CustomAppBar(
         selectedIndex: 10,
-        leading: Image.asset(imagePath),
-        onTap: () => Scaffold.of(context).openDrawer(),
-        title: Row(
-          children: [
-            Padding(
-              padding: AppPaddings.right10,
-              child: SizedBox(
-                height: 30,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.blackPanther,
-                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 0),
-                    minimumSize: Size(0, 30),
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  ),
-                  onPressed: () {},
-                  child: Text(
-                    AppStrings.all,
-                    style: TextStyle(color: AppColors.white),
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: SizedBox(
-                height: 30,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.blackPanther,
-                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 0),
-                    minimumSize: Size(0, 30),
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  ),
-                  onPressed: () {},
-                  child: Text(
-                    AppStrings.music,
-                    style: TextStyle(color: AppColors.white),
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: SizedBox(
-                height: 30,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.blackPanther,
-                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 0),
-                    minimumSize: Size(0, 30),
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  ),
-                  onPressed: () {},
-                  child: Text(
-                    AppStrings.podcasts,
-                    style: TextStyle(color: AppColors.white),
-                  ),
-                ),
-              ),
-            ),
-          ],
+        leading: Image.asset(
+          imagePath,
+          width: 35.w,
+          height: 35.w,
         ),
-        // appBarHeight: 110,
+        onTap: () => Scaffold.of(context).openDrawer(),
+        title: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: [
+              _buildFilterButton(AppStrings.all),
+              _buildFilterButton(AppStrings.music),
+              _buildFilterButton(AppStrings.podcasts),
+            ],
+          ),
+        ),
       ),
       body: ListView(
+        physics: const BouncingScrollPhysics(),
         children: [
-          Observer(
-            builder: (context) {
-              return _HorizontalMediaSection<PlaylistItem>(
-                viewModel: viewModel,
-                items: viewModel.itemsPlaylist,
-                itemCount: viewModel.itemsPlaylist.length,
-                sectionTitle: title1,
-              );
-            },
-          ),
-          Observer(
-            builder: (context) {
-              return _HorizontalMediaSection<NewReleasesItem>(
-                viewModel: viewModel,
-                items: viewModel.itemsNewReleases,
-                itemCount: viewModel.itemsNewReleases.length,
-                sectionTitle: title2,
-              );
-            },
-          ),
-          Observer(
-            builder: (context) {
-              return _HorizontalMediaSection<UserTopArtistsItem>(
-                viewModel: viewModel,
-                items: viewModel.itemsUserTopArtists,
-                itemCount: viewModel.itemsUserTopArtists.length,
-                sectionTitle: title3,
-              );
-            },
-          ),
+          _observerSection<PlaylistItem>(title1, viewModel.itemsPlaylist),
+          _observerSection<NewReleasesItem>(title2, viewModel.itemsNewReleases),
+          _observerSection<UserTopArtistsItem>(title3, viewModel.itemsUserTopArtists),
+          
+          SizedBox(height: 10.h),
         ],
       ),
+    );
+  }
+
+  Widget _buildFilterButton(String text) {
+    return Padding(
+      padding: EdgeInsets.only(right: 8.w),
+      child: SizedBox(
+        height: 30.h,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColors.blackPanther,
+            padding: EdgeInsets.symmetric(horizontal: 12.w),
+            minimumSize: Size(0, 30.h),
+            shape: const StadiumBorder(),
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          ),
+          onPressed: () {},
+          child: Text(
+            text,
+            style: TextStyle(color: AppColors.white, fontSize: 12.sp),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _observerSection<T>(String title, List<T> items) {
+    return Observer(
+      builder: (context) {
+        return _HorizontalMediaSection<T>(
+          viewModel: viewModel,
+          items: items,
+          itemCount: items.length,
+          sectionTitle: title,
+        );
+      },
     );
   }
 }
@@ -160,78 +124,78 @@ class _HorizontalMediaSection<T> extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: AppPaddings.symmetricH20V5,
+          
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 4.h),
           child: Text(
             sectionTitle,
             style: TextStyle(
-              fontSize: AppSizes.fontSize22,
+              fontSize: 19.sp, 
               fontWeight: FontWeight.bold,
               color: AppColors.white,
             ),
           ),
         ),
         SizedBox(
-          height: 230,
+       
+          height: 210.h, 
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
+            physics: const BouncingScrollPhysics(),
             itemCount: itemCount,
-
+            padding: EdgeInsets.only(left: 20.w),
             itemBuilder: (context, index) {
               final item = items[index] as HomeItem;
-              final imageUrl =
-                  item.imagesUrl != null && item.imagesUrl!.isNotEmpty
+              final imageUrl = (item.imagesUrl != null && item.imagesUrl!.isNotEmpty)
                   ? item.imagesUrl
                   : null;
-              final subtitle = item.subTitle ?? "";
-              final title = item.title ?? "";
-              return Padding(
-                padding: const EdgeInsets.only(left: 20, top: 5),
-                child: SizedBox(
-                  width: 170,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        color: AppColors.grey,
-                        width: 170,
-                        height: 170,
-                        child: imageUrl == null
-                            ? CustomIcon(
-                                iconData: Icons.music_note,
-                                iconSize: IconSize.mega,
-                                color: AppColors.darkToneInk,
-                              )
-                            : ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: Image.network(
-                                  "$imageUrl",
-                                  fit: BoxFit.cover,
-                                ),
+
+              return Container(
+                width: 155.w,
+                margin: EdgeInsets.only(right: 15.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: 155.w,
+                      height: 155.w,
+                      child: imageUrl == null
+                          ? CustomIcon(
+                              iconData: Icons.music_note,
+                              iconSize: IconSize.mega,
+                              color: AppColors.darkToneInk,
+                            )
+                          : ClipRRect(
+                              borderRadius: BorderRadius.circular(8.r),
+                              child: Image.network(
+                                imageUrl,
+                                fit: BoxFit.cover,
                               ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: Text(
-                          overflow: TextOverflow.ellipsis,
-                          title,
-                          style: TextStyle(
-                            fontSize: AppSizes.fontSize,
-                            color: AppColors.white,
-                          ),
+                            ),
+                    ),
+                    Padding(
+                     
+                      padding: EdgeInsets.only(top: 6.h),
+                      child: Text(
+                        item.title ?? "",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 13.sp,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.white,
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 0),
-                        child: Text(
-                          subtitle,
-                          style: TextStyle(
-                            fontSize: AppSizes.fontSize,
-                            color: AppColors.white,
-                          ),
-                        ),
+                    ),
+                    Text(
+                      item.subTitle ?? "",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 11.sp,
+                        color: Colors.grey,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               );
             },

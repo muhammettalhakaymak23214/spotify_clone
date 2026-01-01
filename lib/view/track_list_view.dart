@@ -9,7 +9,7 @@ import 'package:spotify_clone/models/player_model.dart';
 import 'package:spotify_clone/models/track_list_model.dart';
 import 'package:spotify_clone/models/user_model.dart';
 import 'package:spotify_clone/view/player_view.dart';
-import 'package:spotify_clone/view_model/player_view_model.dart';
+import 'package:spotify_clone/core/stores/player_view_model.dart';
 import 'package:spotify_clone/view_model/track_list_view_model.dart';
 import 'package:spotify_clone/widgets/custom_widgets/custom_icon.dart';
 import 'package:spotify_clone/widgets/custom_widgets/custom_point.dart';
@@ -34,7 +34,7 @@ class TrackListView extends StatefulWidget {
 }
 
 class _TrackListViewState extends State<TrackListView> {
-  final player = getIt<PlayerViewModel>();
+  final player = getIt<PlayerStore>();
   late TrackListViewModel viewModel;
   late ScrollController scrollController;
   double offset = 0;
@@ -171,6 +171,7 @@ class _TrackListViewState extends State<TrackListView> {
                       textSize: TextSize.extraLarge,
                     ),
                   ),
+                  
                 );
               }
 
@@ -188,6 +189,7 @@ class _TrackListViewState extends State<TrackListView> {
                         type: widget.type,
                         index: index,
                         player: player,
+                        id: widget.id,
                       ),
                     );
                   },
@@ -195,6 +197,10 @@ class _TrackListViewState extends State<TrackListView> {
               );
             },
           ),
+          SliverToBoxAdapter(
+  child: SizedBox(height: 200),
+),
+        
         ],
       ),
     );
@@ -208,7 +214,7 @@ class _CustomListTile extends StatelessWidget {
     required this.title,
     required this.type,
     required this.index,
-    required this.player,
+    required this.player, required this.id,
   });
   final String title;
   final MediaType type;
@@ -217,7 +223,8 @@ class _CustomListTile extends StatelessWidget {
   final double imageSize = 50;
   final EdgeInsetsGeometry padding = EdgeInsets.all(0);
   final int index;
-  final PlayerViewModel player;
+  final PlayerStore player;
+   final String id;
 
   List<PlayTrackItem> playlist = [];
 
@@ -275,11 +282,7 @@ class _CustomListTile extends StatelessWidget {
         // player.playlist.addAll(widget.playlist);
         // player.playlist.addAll(playlist);
         // player.playerPlay();
-       player.playFromPlaylist(
-    list: playlist,
-    index: index,
-    type: type,
-  );
+        player.playFromPlaylist(list: playlist, index: index, type: type , id: id);
       },
     );
   }

@@ -59,6 +59,11 @@ dependencies:
   image_picker: ^1.2.1
 
   get_it: ^9.2.0
+  audio_service: ^0.18.18
+
+  marquee: ^2.3.0
+
+  flutter_screenutil: ^5.9.3
 
   
 
