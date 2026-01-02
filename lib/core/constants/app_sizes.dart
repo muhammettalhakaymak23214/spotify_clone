@@ -22,3 +22,4 @@ class AppSizes {
   static final Size bottomPreferredSize = Size.fromHeight(50);
 
 }
+

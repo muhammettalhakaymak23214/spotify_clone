@@ -1,11 +1,13 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:spotify_clone/core/enums/media_type.dart';
 import 'package:spotify_clone/core/helpers/song_data_manager.dart';
 import 'package:spotify_clone/core/services/audio_player_service.dart';
 import 'package:spotify_clone/core/services/shared_preference_service.dart';
 import 'package:spotify_clone/models/player_model.dart';
+import 'package:spotify_clone/models/progress_bar_state.dart';
 
 class PlayerStore {
   //Audio Handler
@@ -151,7 +153,17 @@ class PlayerStore {
   //Duration Stream
   Stream<Duration?> get durationStream =>
       audioHandler.mediaItem.map((item) => item?.duration);
-      
+
   //Position Stream
   Stream<Duration> get positionStream => AudioService.position;
+
+  Stream<ProgressBarState> get progressBarStream =>
+    Rx.combineLatest2<Duration, Duration?, ProgressBarState>(
+      positionStream,
+      durationStream,
+      (position, duration) => ProgressBarState(
+        position: position,              
+        total: duration ?? Duration.zero, 
+      ),
+    ).startWith(ProgressBarState(position: Duration.zero, total: Duration.zero));
 }

@@ -18,6 +18,7 @@ class MiniPlayer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     
     return StreamBuilder<MediaItem?>(
       stream: audioHandler.mediaItem,
       builder: (context, snapshot) {
@@ -65,7 +66,10 @@ class MiniPlayer extends StatelessWidget {
                     ),
                   ),
                 ),
-                MiniPlayerProgressBar(player: player),
+                Padding(
+                  padding: _Constants.progressBarPadding,
+                  child: MiniPlayerProgressBar(player: player),
+                ),
               ],
             ),
           ),
@@ -345,4 +349,11 @@ class _SwipeableTextAreaState extends State<SwipeableTextArea>
       ],
     );
   }
+}
+
+
+abstract final class _Constants {
+
+  static EdgeInsets get progressBarPadding => EdgeInsets.symmetric(horizontal: 10.w, vertical: 1.h);
+
 }

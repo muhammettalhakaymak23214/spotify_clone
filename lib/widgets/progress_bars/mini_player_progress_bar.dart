@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
 import 'package:spotify_clone/core/stores/player_view_model.dart';
+import 'package:spotify_clone/models/progress_bar_state.dart';
 
 class MiniPlayerProgressBar extends StatelessWidget {
   const MiniPlayerProgressBar({super.key, required this.player});
@@ -11,49 +12,37 @@ class MiniPlayerProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   
-    final double barHeight = 3.h; 
-    
-   
-    final double thumbRadius = 0; 
+    return StreamBuilder<ProgressBarState>(
+      stream: player.progressBarStream,
+      builder: (context, snapshot) {
+        final state = snapshot.data;
+        final position = state?.position ?? Duration.zero;
+        final total =
+            state?.total ??
+            Duration.zero; 
 
-    
-    final EdgeInsetsGeometry progressBarPadding = EdgeInsets.symmetric(
-      horizontal: 10.w, 
-      vertical: 1.h,   
-    );
-
-    final Color baseBaseColor = AppColors.grey.withOpacity(0.2); 
-    final Color progressBaseColor = AppColors.white;
-    final Color thumbColor = AppColors.white;
-
-    return StreamBuilder<Duration?>(
-      stream: player.durationStream,
-      builder: (context, snapshotDuration) {
-        final duration = snapshotDuration.data ?? Duration.zero;
-
-        return StreamBuilder<Duration>(
-          stream: player.positionStream,
-          builder: (context, snapshotPosition) {
-            final position = snapshotPosition.data ?? Duration.zero;
-
-            return Padding(
-              padding: progressBarPadding,
-              child: ProgressBar(
-                progress: position,
-                total: duration,
-                barHeight: barHeight,
-                baseBarColor: baseBaseColor,
-                progressBarColor: progressBaseColor,
-                thumbColor: thumbColor,
-                thumbRadius: thumbRadius,
-                timeLabelLocation: TimeLabelLocation.none, 
-                onSeek: (newPosition) => player.seek(newPosition),
-              ),
-            );
-          },
+        return ProgressBar(
+          progress: position,
+          total: total,
+          barHeight: _Constants.barHeight,
+          baseBarColor: _Constants.baseBarColor,
+          progressBarColor: _Constants.progressBarColor,
+          thumbColor: _Constants.thumbColor,
+          thumbRadius: _Constants.thumbRadius,
+          timeLabelLocation: TimeLabelLocation.none,
+          onSeek: (newPosition) => player.seek(newPosition),
         );
       },
     );
   }
+}
+
+abstract final class _Constants {
+  // Size
+  static double get barHeight => 3.h;
+  static double get thumbRadius => 0;
+  // Color
+  static final Color baseBarColor = AppColors.white.withValues(alpha: 0.2);
+  static const Color progressBarColor = AppColors.white;
+  static const Color thumbColor = AppColors.white;
 }

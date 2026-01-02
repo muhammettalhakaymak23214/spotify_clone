@@ -25,6 +25,9 @@ class AppColors {
   //TextField
   static const Color textFiledEnabledLineColor = Colors.white54;
 
+ 
+
+
   
 
 }

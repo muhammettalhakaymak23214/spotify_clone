@@ -65,6 +65,8 @@ dependencies:
 
   flutter_screenutil: ^5.9.3
 
+  rxdart: ^0.28.0
+
   
 
   # The following adds the Cupertino Icons font to your application.

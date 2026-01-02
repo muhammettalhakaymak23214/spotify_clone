@@ -90,7 +90,6 @@ class _PlayerViewState extends State<PlayerView> {
                     padding: EdgeInsets.symmetric(horizontal: 25.w),
                     child: Column(
                       children: [
-                     
                         SizedBox(height: 45.h),
                         _CustomAppBar(
                           viewModel: viewModel,
@@ -99,38 +98,28 @@ class _PlayerViewState extends State<PlayerView> {
                           title: widget.title,
                         ),
 
-                       
                         const Spacer(flex: 2),
 
-                    
                         _CoverImage(track: track, type: widget.type),
 
-                    
-                       SizedBox(height: 60.h),
+                        SizedBox(height: 60.h),
 
-                     
                         _Row1(track: track),
-                        
+
                         SizedBox(height: 40.h),
 
-                  
-                        PlayerViewProgresBar(
-                          viewModel: viewModel,
-                          leftPadding: 0,
-                        ),
-SizedBox(height: 40.h),
-                      
+                        PlayerViewProgresBar(player: viewModel),
+                        SizedBox(height: 40.h),
+
                         _Row2(
                           viewModel: viewModel,
                           otoNextValue: otoNextValue,
                           otoLoopValue: otoLoopValue,
                         ),
 
-                       
                         SizedBox(height: 40.h),
                         const _Row3(),
-                        
-                       
+
                         SizedBox(height: 20.h),
                       ],
                     ),
@@ -163,7 +152,6 @@ SizedBox(height: 40.h),
   }
 }
 
-
 class _Row3 extends StatelessWidget {
   const _Row3();
   @override
@@ -180,13 +168,16 @@ class _Row3 extends StatelessWidget {
   }
 }
 
-
 class _Row2 extends StatelessWidget {
   final PlayerStore viewModel;
   final bool otoNextValue;
   final bool otoLoopValue;
 
-  const _Row2({required this.viewModel, required this.otoNextValue, required this.otoLoopValue});
+  const _Row2({
+    required this.viewModel,
+    required this.otoNextValue,
+    required this.otoLoopValue,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -197,7 +188,9 @@ class _Row2 extends StatelessWidget {
           size: 42.w,
           onTap: () => ListenModeBottomSheet.show(context, viewModel),
           child: Image.asset(
-            otoNextValue ? "assets/png/active_suffle.png" : "assets/png/suffle.png",
+            otoNextValue
+                ? "assets/png/active_suffle.png"
+                : "assets/png/suffle.png",
             width: 20.w,
           ),
         ),
@@ -212,7 +205,8 @@ class _Row2 extends StatelessWidget {
             final isPlaying = snapshot.data ?? false;
             return _WhiteCircleButton(
               size: 65.w,
-              onTap: () => isPlaying ? viewModel.playerPause() : viewModel.playerPlay(),
+              onTap: () =>
+                  isPlaying ? viewModel.playerPause() : viewModel.playerPlay(),
               child: Icon(
                 isPlaying ? Icons.pause : Icons.play_arrow,
                 color: Colors.black,
@@ -247,7 +241,11 @@ class _WhiteCircleButton extends StatelessWidget {
   final double size;
   final Widget child;
   final VoidCallback onTap;
-  const _WhiteCircleButton({required this.size, required this.child, required this.onTap});
+  const _WhiteCircleButton({
+    required this.size,
+    required this.child,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -256,13 +254,15 @@ class _WhiteCircleButton extends StatelessWidget {
       child: Container(
         width: size,
         height: size,
-        decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          shape: BoxShape.circle,
+        ),
         child: Center(child: child),
       ),
     );
   }
 }
-
 
 class _Row1 extends StatelessWidget {
   final PlayTrackItem track;
@@ -282,13 +282,21 @@ class _Row1 extends StatelessWidget {
                 children: [
                   Text(
                     item?.title ?? "",
-                    style: TextStyle(color: Colors.white, fontSize: 24.sp, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
                     item?.artist ?? "",
-                    style: TextStyle(color: Colors.white.withOpacity(0.7), fontSize: 16.sp, fontWeight: FontWeight.w400),
+                    style: TextStyle(
+                      color: Colors.white.withOpacity(0.7),
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w400,
+                    ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -302,7 +310,6 @@ class _Row1 extends StatelessWidget {
     );
   }
 }
-
 
 class _CoverImage extends StatelessWidget {
   final MediaType type;
@@ -321,13 +328,27 @@ class _CoverImage extends StatelessWidget {
           borderRadius: BorderRadius.circular(15.r),
           child: albumArt != null && albumArt.isNotEmpty
               ? (type != MediaType.downloaded
-                  ? Image.network(albumArt, width: imageSize, height: imageSize, fit: BoxFit.cover)
-                  : Image.file(File(albumArt), width: imageSize, height: imageSize, fit: BoxFit.cover))
+                    ? Image.network(
+                        albumArt,
+                        width: imageSize,
+                        height: imageSize,
+                        fit: BoxFit.cover,
+                      )
+                    : Image.file(
+                        File(albumArt),
+                        width: imageSize,
+                        height: imageSize,
+                        fit: BoxFit.cover,
+                      ))
               : Container(
                   width: imageSize,
                   height: imageSize,
                   color: AppColors.grey,
-                  child: Icon(Icons.music_note, color: Colors.white, size: 80.w),
+                  child: Icon(
+                    Icons.music_note,
+                    color: Colors.white,
+                    size: 80.w,
+                  ),
                 ),
         );
       },
@@ -335,14 +356,18 @@ class _CoverImage extends StatelessWidget {
   }
 }
 
-
 class _CustomAppBar extends StatelessWidget {
   final PlayerStore viewModel;
   final PlayTrackItem track;
   final PlayerView widget;
   final String title;
 
-  const _CustomAppBar({required this.widget, required this.track, required this.title, required this.viewModel});
+  const _CustomAppBar({
+    required this.widget,
+    required this.track,
+    required this.title,
+    required this.viewModel,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -354,7 +379,11 @@ class _CustomAppBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             IconButton(
-              icon: Icon(Icons.keyboard_arrow_down, color: Colors.white, size: 35.w),
+              icon: Icon(
+                Icons.keyboard_arrow_down,
+                color: Colors.white,
+                size: 35.w,
+              ),
               onPressed: () => Navigator.pop(context),
             ),
             Expanded(
@@ -363,11 +392,19 @@ class _CustomAppBar extends StatelessWidget {
                 children: [
                   Text(
                     widget.type.title.toUpperCase(),
-                    style: TextStyle(color: Colors.white.withOpacity(0.6), fontSize: 12.sp, letterSpacing: 1.2),
+                    style: TextStyle(
+                      color: Colors.white.withOpacity(0.6),
+                      fontSize: 12.sp,
+                      letterSpacing: 1.2,
+                    ),
                   ),
                   Text(
                     item?.title ?? "",
-                    style: TextStyle(color: Colors.white, fontSize: 15.sp, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
                     textAlign: TextAlign.center,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -377,8 +414,18 @@ class _CustomAppBar extends StatelessWidget {
             ),
             IconButton(
               onPressed: () async {
-                final bool isDownloaded = await viewModel.isDownloaded(item?.genre ?? "no id");
-                SongBottomSheet.show(context, viewModel, track, title, widget.type, isDownloaded, item);
+                final bool isDownloaded = await viewModel.isDownloaded(
+                  item?.genre ?? "no id",
+                );
+                SongBottomSheet.show(
+                  context,
+                  viewModel,
+                  track,
+                  title,
+                  widget.type,
+                  isDownloaded,
+                  item,
+                );
               },
               icon: Icon(Icons.more_vert, color: Colors.white, size: 28.w),
             ),
