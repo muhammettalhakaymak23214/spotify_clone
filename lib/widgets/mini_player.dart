@@ -1,5 +1,5 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:marquee/marquee.dart'; 
+import 'package:marquee/marquee.dart';
 import 'dart:io';
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +10,7 @@ import 'package:spotify_clone/main.dart';
 import 'package:spotify_clone/view/player_view.dart';
 import 'package:spotify_clone/core/stores/player_view_model.dart';
 import 'package:spotify_clone/widgets/custom_widgets/custom_icon.dart';
+import 'package:spotify_clone/widgets/custom_widgets/auto_scrolling_text.dart';
 import 'package:spotify_clone/widgets/progress_bars/mini_player_progress_bar.dart';
 
 class MiniPlayer extends StatelessWidget {
@@ -18,15 +19,14 @@ class MiniPlayer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     
     return StreamBuilder<MediaItem?>(
       stream: audioHandler.mediaItem,
       builder: (context, snapshot) {
         final item = snapshot.data;
         if (item == null) {
           return Container(
-            height: 60.h,
-            margin: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+            height: _Constants.miniPlayerHeight,
+            margin: _Constants.emptyMargin,
           );
         }
 
@@ -36,23 +36,23 @@ class MiniPlayer extends StatelessWidget {
             : Colors.black;
 
         return GestureDetector(
-          onTap: () => _openPlayer(context),
+          onTap: () => _openPlayerView(context),
           child: Container(
-            height: 60.h, 
-            margin: EdgeInsets.symmetric(horizontal: 3.w, vertical: 4.h),
+            height: _Constants.miniPlayerHeight,
+            margin: _Constants.playerMargin,
             decoration: BoxDecoration(
               color: bgColor,
-              borderRadius: BorderRadius.circular(10.r), 
+              borderRadius: _Constants.playerRadius,
             ),
             child: Column(
               children: [
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.only(left: 10.w, right: 4.w),
+                    padding: _Constants.contentPadding,
                     child: Row(
                       children: [
-                        _buildAlbumArt(item, 40.w), 
-                        SizedBox(width: 12.w), 
+                        _buildAlbumArt(item),
+                        SizedBox(width: _Constants.gapWidth),
 
                         Expanded(
                           child: SwipeableTextArea(
@@ -78,20 +78,20 @@ class MiniPlayer extends StatelessWidget {
     );
   }
 
-  Widget _buildAlbumArt(MediaItem item, double size) {
+  Widget _buildAlbumArt(MediaItem item) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(6.r),
+      borderRadius: _Constants.albumRadius,
       child: (getIt<PlayerStore>().currentType != MediaType.downloaded)
           ? Image.network(
               item.album!,
-              height: size,
-              width: size,
+              height: _Constants.albumSize,
+              width: _Constants.albumSize,
               fit: BoxFit.cover,
             )
           : Image.file(
               File(item.album!),
-              height: size,
-              width: size,
+              height: _Constants.albumSize,
+              width: _Constants.albumSize,
               fit: BoxFit.cover,
             ),
     );
@@ -128,26 +128,14 @@ class MiniPlayer extends StatelessWidget {
     );
   }
 
-  void _openPlayer(BuildContext context) {
-    /*
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => PlayerView(
-          title: player.playlist[player.currentIndex.value].trackName ?? "",
-          type: player.currentType,
-          playlist: player.playlist,
-          currentIndex: player.currentIndex.value,
-        ),
-      ),
-    );*/
+  void _openPlayerView(BuildContext context) {
     PlayerView.show(
-  context,
-  title: player.playlist[player.currentIndex.value].trackName ?? "",
-  playlist: player.playlist,
-  currentIndex:player.currentIndex.value,
-  type: player.currentType,
-);
+      context,
+      title: player.playlist[player.currentIndex.value].trackName ?? "",
+      playlist: player.playlist,
+      currentIndex: player.currentIndex.value,
+      type: player.currentType,
+    );
   }
 }
 
@@ -237,7 +225,8 @@ class _SwipeableTextAreaState extends State<SwipeableTextArea>
               builder: (context, _) {
                 double mainX = _drag * width;
                 if (_isSwiping) {
-                  mainX = _drag * width * (1 - _controller.value) -
+                  mainX =
+                      _drag * width * (1 - _controller.value) -
                       (_controller.value * (_drag < 0 ? width : -width));
                 }
 
@@ -258,7 +247,7 @@ class _SwipeableTextAreaState extends State<SwipeableTextArea>
                           _drag < 0 ? "Sonraki parça" : "Önceki parça",
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 14.sp, 
+                            fontSize: 14.sp,
                           ),
                         ),
                       ),
@@ -281,79 +270,60 @@ class _SwipeableTextAreaState extends State<SwipeableTextArea>
   }
 
   Widget _buildTrackInfo(MediaItem item) {
+    final trackStyle = _Constants.trackNameStyle(context);
+    final artistStyle = _Constants.artistNameStyle(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          height: 20.h, 
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              final double maxWidth = constraints.maxWidth;
-              final textStyle = TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 13.sp, 
-              );
-
-              final TextPainter textPainter = TextPainter(
-                text: TextSpan(text: item.title, style: textStyle),
-                maxLines: 1,
-                textDirection: TextDirection.ltr,
-              )..layout();
-
-              if (textPainter.width > maxWidth) {
-                return Marquee(
-                  text: item.title,
-                  style: textStyle,
-                  blankSpace: 50.w,
-                  velocity: 30.0,
-                  pauseAfterRound: const Duration(seconds: 2),
-                  startAfter: const Duration(seconds: 1),
-                );
-              } else {
-                return Text(item.title, style: textStyle, maxLines: 1);
-              }
-            },
-          ),
+        AutoScrollingText(
+          text: item.title,
+          style: trackStyle,
+          height: 20.h,
+          blankSpace: 50.w,
+          velocity: 30.0,
         ),
-        SizedBox(
-          height: 16.h, 
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              final textStyle = Theme.of(context).textTheme.labelSmall?.copyWith(
-                    color: Colors.white70,
-                    fontSize: 11.sp, 
-                  ) ?? TextStyle(color: Colors.white70, fontSize: 9.sp);
-
-              final TextPainter textPainter = TextPainter(
-                text: TextSpan(text: item.artist ?? "", style: textStyle),
-                maxLines: 1,
-                textDirection: TextDirection.ltr,
-              )..layout();
-
-              if (textPainter.width > constraints.maxWidth) {
-                return Marquee(
-                  text: item.artist ?? "",
-                  style: textStyle,
-                  blankSpace: 40.w,
-                  velocity: 25.0,
-                  pauseAfterRound: const Duration(seconds: 2),
-                );
-              } else {
-                return Text(item.artist ?? "", style: textStyle, maxLines: 1);
-              }
-            },
-          ),
-        ),
+        AutoScrollingText(
+          text: item.artist ?? "",
+          style: artistStyle,
+          height: 16.h,
+          blankSpace: 40.w,
+          velocity: 25.0,
+        ),     
       ],
     );
   }
 }
 
-
 abstract final class _Constants {
+  //Padding
+  static EdgeInsets get progressBarPadding =>
+      EdgeInsets.symmetric(horizontal: 10.w, vertical: 1.h);
+  static EdgeInsets get contentPadding =>
+      EdgeInsets.only(left: 10.w, right: 4.w);
+  //Margin
+  static EdgeInsets get emptyMargin =>
+      EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h);
+  static EdgeInsets get playerMargin =>
+      EdgeInsets.symmetric(horizontal: 3.w, vertical: 4.h);
+  //Radius
+  static BorderRadius get playerRadius => BorderRadius.circular(10.r);
+  static BorderRadius get albumRadius => BorderRadius.circular(5.r);
+  //Size
+  static double get miniPlayerHeight => 60.h;
+  static double get albumSize => 40.w;
+  static double get gapWidth => 12.w;
+  //Style
+  static TextStyle trackNameStyle(BuildContext context) =>
+      Theme.of(context).textTheme.titleMedium!;
+  static TextStyle artistNameStyle(BuildContext context) =>
+      Theme.of(context).textTheme.bodySmall!;
 
-  static EdgeInsets get progressBarPadding => EdgeInsets.symmetric(horizontal: 10.w, vertical: 1.h);
+  // Marquee & Swipe Config
+  static const double marqueeVelocity = 30.0;
+  static const Duration marqueePause = Duration(seconds: 2);
 
+  static const Duration startAfter = Duration(seconds: 1);
+  static double get marqueeBlankSpace => 50.w;
+  static double get swipeThreshold => 0.25; // %25 kaydırınca şarkı değişsin
 }

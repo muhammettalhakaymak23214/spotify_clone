@@ -142,17 +142,18 @@ class _MyAppState extends State<MyApp> {
 
           builder: (context, child) {
             return MediaQuery(
-              data: MediaQuery.of(context).copyWith(
-              
-                textScaler: const TextScaler.linear(1.0),
-              ),
+              data: MediaQuery.of(
+                context,
+              ).copyWith(textScaler: const TextScaler.linear(1.0)),
               child: child!,
             );
           },
 
           theme: ThemeData(
+            
             scaffoldBackgroundColor: AppColors.darkToneInk,
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            
+           
             appBarTheme: AppBarThemeData(
               foregroundColor: AppColors.white,
               backgroundColor: AppColors.blackPanther,
@@ -180,6 +181,24 @@ class _MyAppState extends State<MyApp> {
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
+            ),
+            //
+            textTheme: TextTheme(
+              
+              titleMedium: TextStyle(
+                color: AppColors.white,
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 0.5,
+              ),
+              
+              bodySmall: TextStyle(
+                color: AppColors.white.withValues(alpha: 0.7),
+                fontSize: 12.sp,
+                fontWeight: FontWeight.w400,
+              ),
+              
+              labelSmall: TextStyle(color: AppColors.grey, fontSize: 10.sp),
             ),
           ),
 
