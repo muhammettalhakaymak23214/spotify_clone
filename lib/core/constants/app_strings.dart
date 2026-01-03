@@ -167,5 +167,8 @@ class AppStrings {
   static final String sDChangeVisibilityDoPrivate = "Paylaşılabilir yap";
   static final String sDChangeVisibilityCancel = "İptal";
 
+  static const String nextTrack = "Sonraki parça";
+  static const String previousTrack = "Önceki parça";
+
 
 }
