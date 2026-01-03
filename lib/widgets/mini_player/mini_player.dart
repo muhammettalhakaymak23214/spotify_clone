@@ -2,9 +2,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:io';
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
-import 'package:spotify_clone/core/constants/app_strings.dart';
 import 'package:spotify_clone/core/enums/media_type.dart';
 import 'package:spotify_clone/core/helpers/color_extension.dart';
+import 'package:spotify_clone/core/l10n/generated/app_localizations.dart';
 import 'package:spotify_clone/core/services/service_locator.dart';
 import 'package:spotify_clone/main.dart';
 import 'package:spotify_clone/view/player_view.dart';
@@ -162,11 +162,11 @@ class _SwipeableTextAreaState extends State<SwipeableTextArea>
     if (_drag.abs() > _Constants.swipeThresholdRatio) {
       setState(() {
         _isSwiping = true;
-        _helperText = _drag < 0 ? AppStrings.nextTrack : AppStrings.previousTrack;
+        _helperText = _drag < 0 ? AppLocalizations.of(context)!.miniPlayerNextTrack : AppLocalizations.of(context)!.miniPlayerPreviousTrack;
       });
 
       _controller.forward(from: 0.0).then((_) {
-        if (_helperText == AppStrings.nextTrack) {
+        if (_helperText == AppLocalizations.of(context)!.miniPlayerNextTrack) {
           widget.player.indexNext();
         } else {
           widget.player.indexPrevious();
@@ -195,7 +195,7 @@ class _SwipeableTextAreaState extends State<SwipeableTextArea>
           xOffset: helperX,
           text: _isSwiping
               ? _helperText
-              : (_drag < 0 ? AppStrings.nextTrack : AppStrings.previousTrack),
+              : (_drag < 0 ? AppLocalizations.of(context)!.miniPlayerNextTrack : AppLocalizations.of(context)!.miniPlayerPreviousTrack),
         ),
         Transform.translate(
           offset: Offset(mainX, 0),

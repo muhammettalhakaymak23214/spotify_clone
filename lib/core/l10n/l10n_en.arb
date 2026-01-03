@@ -1,0 +1,152 @@
+{
+    "bottomNavigatorHome": "Home",
+    "bottomNavigatorSearch": "Search",
+    "bottomNavigatorLibrary": "Your Library",
+    "bottomNavigatorPremium": "Premium",
+    "bottomNavigatorCreate": "Create",
+    "miniPlayerNextTrack": "Next track",
+    "miniPlayerPreviousTrack": "Previous track",
+    "searchViewTitle": "Browse all",
+    "searchViewSearchBarText": "What do you want to listen to?",
+    "drawerProfileView": "View profile",
+    "drawerAddAccount": "Add account",
+    "drawerUpdates": "What's new",
+    "drawerListeningStats": "Listening stats",
+    "drawerRecentlyPlayed": "Recently played",
+    "drawerNotifications": "Notifications",
+    "drawerSettingsPrivacy": "Settings and privacy",
+    "premiumViewPremium": "Premium",
+    "premiumViewTitle": "Get back to Premium: {monthCount} months for {price}* when you join Spotify",
+    "@premiumViewTitle": {
+        "placeholders": {
+            "monthCount": { "type": "String" },
+            "price": { "type": "String" }
+        }
+    },
+    "premiumViewSubtitle": "Limited time offer",
+    "premiumViewGetIndividual": "Get Premium Individual",
+    "premiumViewGetStudent": "Get Premium Student",
+    "premiumViewGetDuo": "Get Premium Duo",
+    "premiumViewGetFamily": "Get Premium Family",
+    "premiumViewPlanIndividual": "Individual",
+    "premiumViewPlanStudent": "Student",
+    "premiumViewPlanDuo": "Duo",
+    "premiumViewPlanFamily": "Family",
+    "premiumViewPlanIndividualAccount": "1 Premium account",
+    "premiumViewPlanIndividualCancel": "Cancel anytime",
+    "premiumViewPlanStudentAccount": "1 verified Premium account",
+    "premiumViewPlanStudentDiscount": "Discount for eligible students",
+    "premiumViewPlanStudentCancel": "Cancel anytime",
+    "premiumViewPlanDuoAccount": "2 Premium accounts",
+    "premiumViewPlanDuoCancel": "Cancel anytime",
+    "premiumViewPlanFamilyAccount": "Up to 6 Premium accounts",
+    "premiumViewPlanFamilyControl": "Control content marked as explicit",
+    "premiumViewPlanFamilyCancel": "Cancel anytime",
+    "premiumViewPlanPricePromo": "{monthCount} months for {price}",
+    "@premiumViewPlanPricePromo": {
+        "placeholders": {
+            "monthCount": { "type": "String" },
+            "price": { "type": "String" }
+        }
+    },
+    "premiumViewPlanPriceAfterPromo": "{price} per month thereafter",
+    "@premiumViewPlanPriceAfterPromo": {
+        "placeholders": {
+            "price": { "type": "String" }
+        }
+    },
+    "premiumViewPlanPricePerMonth": "{price}/month",
+    "@premiumViewPlanPricePerMonth": {
+        "placeholders": {
+            "price": { "type": "String" }
+        }
+    },
+    "premiumViewWhyJoinTitle": "Why join Premium?",
+    "premiumViewWhyFeatureAdFree": "Ad-free music listening",
+    "premiumViewWhyFeatureOffline": "Download to listen offline",
+    "premiumViewWhyFeatureOnDemand": "Play songs in any order",
+    "premiumViewWhyFeatureHighQuality": "High audio quality",
+    "premiumViewWhyFeatureGroupListening": "Listen with friends in real time",
+    "premiumViewWhyFeatureQueueEditing": "Organize your listening queue",
+    "premiumViewCurrentPlansTitle": "Current Plans",
+    "premiumViewTermsIndividualWelcome": "{promoPrice} for first {monthCount} months, then {standardPrice}/month. Welcome back offer for Premium Individual. Only available to users who haven't had Premium for more than 30 days and haven't used a 'welcome back' offer in the last 24 months. Only available through Spotify. Google Play offers may vary.",
+    "@premiumViewTermsIndividualWelcome": {
+        "placeholders": {
+            "monthCount": { "type": "String" },
+            "promoPrice": { "type": "String" },
+            "standardPrice": { "type": "String" }
+        }
+    },
+    "premiumViewTermsApply": "Terms apply.",
+    "premiumViewTermsExpiryDate": "Offer ends on {date}.",
+    "@premiumViewTermsExpiryDate": {
+        "placeholders": {
+            "date": { "type": "String" }
+        }
+    },
+    "premiumViewConditionsIndividual": "{promoPrice} for first {monthCount} months, then {standardPrice}/month. Welcome back offer for Premium Individual. Available only to users who have been without Premium for more than 30 days. Google Play offers may vary.",
+    "@premiumViewConditionsIndividual": {
+        "placeholders": {
+            "monthCount": { "type": "String" },
+            "promoPrice": { "type": "String" },
+            "standardPrice": { "type": "String" }
+        }
+    },
+    "premiumViewConditionsStudent": "Offer available only to students at accredited higher education institutions.",
+    "premiumViewConditionsDuo": "For couples residing at the same address.",
+    "premiumViewConditionsFamily": "For up to 6 family members residing at the same address.",
+    "premiumViewConditionsGeneralTerms": "Terms apply.",
+    "premiumViewConditionsExpiryDate": "Offer ends on {date}.",
+    "@premiumViewConditionsExpiryDate": {
+        "placeholders": {
+            "date": { "type": "String" }
+        }
+    },
+    "playerViewMenuDownload": "Download",
+    "playerViewMenuDeleteDownload": "Remove Download",
+    "playerViewMenuShare": "Share",
+    "playerViewMenuAddPlaylist": "Add to another playlist",
+    "playerViewMenuHideAlbum": "Hide in this album",
+    "playerViewMenuAdFree": "Listen to music ad-free",
+    "playerViewMenuAddQueue": "Add to Queue",
+    "playerViewMenuGoQueue": "Go to Queue",
+    "playerViewMenuGoAlbum": "Go to album",
+    "playerViewMenuGoArtist": "Go to artist",
+    "playerViewMenuStartJam": "Start a Jam",
+    "playerViewMenuExcludeTaste": "Exclude from your taste profile",
+    "playerViewMenuSleepTimer": "Sleep timer",
+    "playerViewMenuSongRadio": "Go to song radio",
+    "playerViewMenuContributors": "Show credits",
+    "playerViewMenuSpotifyCode": "Show Spotify Code",
+    "playerViewMenuListenModes": "Listening modes",
+    "playerViewMenuAutoNext": "Autoplay",
+    "playerViewMenuMixPlay": "Shuffle",
+    "playerViewMenuPlayInOrder": "Play in order",
+    "createPlaylistTitle": "Playlist",
+    "createPlaylistSubtitle": "Create a playlist with songs or episodes",
+    "createCollaborativeTitle": "Collaborative Playlist",
+    "createCollaborativeSubtitle": "Create a playlist with your friends",
+    "createBlendTitle": "Blend",
+    "createBlendSubtitle": "Combine your tastes with friends in a playlist",
+    "createPlaylistViewDialogPlaylistNameHint": "Give your playlist a name",
+    "createPlaylistViewCancel": "Cancel",
+    "createPlaylistViewCreate": "Create",
+    "updatePlaylistViewChange": "Change",
+    "updatePlaylistViewRefresh": "Refresh",
+    "updatePlaylistViewPlaylistAddToThis": "Add to this playlist",
+    "updatePlaylistViewPlaylistRecommendedTitle": "Recommended Songs",
+    "updatePlaylistViewPlaylistNoRecommendations": "No songs to recommend",
+    "shareVisibilityTitle": "Do you want to share this playlist with others?",
+    "shareVisibilitySubtitle": "People you invite can add and remove songs in this playlist.",
+    "shareVisibilityMakePublic": "Make shareable",
+    "shareVisibilityCancel": "Cancel",
+    "playlistDeleteAlertDialogDeletePlaylistTitle": "Delete playlist?",
+    "playlistDeleteAlertCancel": "Cancel",
+    "playlistDeleteAlertDelete": "Delete",
+    "filterAll": "All",
+    "filterMusic": "Music",
+    "filterPodcasts": "Podcasts",
+    "filterArtists": "Artists",
+    "filterAlbums": "Albums",
+    "filterPlaylists": "Your Playlists"
+}

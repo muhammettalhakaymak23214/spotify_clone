@@ -1,0 +1,152 @@
+{
+    "bottomNavigatorHome": "الصفحة الرئيسية",
+    "bottomNavigatorSearch": "بحث",
+    "bottomNavigatorLibrary": "مكتبتك",
+    "bottomNavigatorPremium": "Premium",
+    "bottomNavigatorCreate": "إنشاء",
+    "miniPlayerNextTrack": "الأغنية التالية",
+    "miniPlayerPreviousTrack": "الأغنية السابقة",
+    "searchViewTitle": "تصفح الكل",
+    "searchViewSearchBarText": "ما الذي تريد الاستماع إليه؟",
+    "drawerProfileView": "عرض الملف الشخصي",
+    "drawerAddAccount": "إضافة حساب",
+    "drawerUpdates": "ما الجديد",
+    "drawerListeningStats": "إحصائيات الاستماع",
+    "drawerRecentlyPlayed": "تم تشغيله مؤخراً",
+    "drawerNotifications": "تحديثاتك",
+    "drawerSettingsPrivacy": "الإعدادات والخصوصية",
+    "premiumViewPremium": "Premium",
+    "premiumViewTitle": "العودة إلى Premium: أول {monthCount} أشهر مقابل {price}* عند الانضمام إلى Spotify",
+    "@premiumViewTitle": {
+        "placeholders": {
+            "monthCount": { "type": "String" },
+            "price": { "type": "String" }
+        }
+    },
+    "premiumViewSubtitle": "عرض لفترة محدودة",
+    "premiumViewGetIndividual": "احصل على Premium Individual",
+    "premiumViewGetStudent": "احصل على Premium Student",
+    "premiumViewGetDuo": "احصل على Premium Duo",
+    "premiumViewGetFamily": "احصل على Premium Family",
+    "premiumViewPlanIndividual": "فردي",
+    "premiumViewPlanStudent": "طالب",
+    "premiumViewPlanDuo": "Duo",
+    "premiumViewPlanFamily": "عائلي",
+    "premiumViewPlanIndividualAccount": "حساب Premium واحد",
+    "premiumViewPlanIndividualCancel": "إلغاء الاشتراك في أي وقت",
+    "premiumViewPlanStudentAccount": "حساب Premium واحد تم التحقق منه",
+    "premiumViewPlanStudentDiscount": "خصم للطلاب المؤهلين",
+    "premiumViewPlanStudentCancel": "إلغاء الاشتراك في أي وقت",
+    "premiumViewPlanDuoAccount": "حسابا Premium",
+    "premiumViewPlanDuoCancel": "إلغاء الاشتراك في أي وقت",
+    "premiumViewPlanFamilyAccount": "ما يصل إلى 6 حسابات Premium",
+    "premiumViewPlanFamilyControl": "التحكم في المحتوى المصنف كغير لائق",
+    "premiumViewPlanFamilyCancel": "إلغاء الاشتراك في أي وقت",
+    "premiumViewPlanPricePromo": "{monthCount} أشهر مقابل {price}",
+    "@premiumViewPlanPricePromo": {
+        "placeholders": {
+            "monthCount": { "type": "String" },
+            "price": { "type": "String" }
+        }
+    },
+    "premiumViewPlanPriceAfterPromo": "بعد ذلك {price} شهرياً",
+    "@premiumViewPlanPriceAfterPromo": {
+        "placeholders": {
+            "price": { "type": "String" }
+        }
+    },
+    "premiumViewPlanPricePerMonth": "{price}/شهرياً",
+    "@premiumViewPlanPricePerMonth": {
+        "placeholders": {
+            "price": { "type": "String" }
+        }
+    },
+    "premiumViewWhyJoinTitle": "لماذا تنضم إلى Premium؟",
+    "premiumViewWhyFeatureAdFree": "استمتع بالموسيقى بدون إعلانات",
+    "premiumViewWhyFeatureOffline": "تنزيل الموسيقى للاستماع إليها بدون إنترنت",
+    "premiumViewWhyFeatureOnDemand": "تشغيل الأغاني بأي ترتيب",
+    "premiumViewWhyFeatureHighQuality": "جودة صوت عالية",
+    "premiumViewWhyFeatureGroupListening": "استمع مع أصدقائك في نفس الوقت",
+    "premiumViewWhyFeatureQueueEditing": "تنظيم قائمة انتظار الاستماع",
+    "premiumViewCurrentPlansTitle": "الخطط الحالية",
+    "premiumViewTermsIndividualWelcome": "أول {monthCount} أشهر مقابل {promoPrice}، ثم {standardPrice} شهرياً. عرض العودة إلى Premium Individual. متاح فقط للمستخدمين الذين لم يشتركوا في Premium لأكثر من 30 يوماً. قد تختلف العروض على Google Play.",
+    "@premiumViewTermsIndividualWelcome": {
+        "placeholders": {
+            "monthCount": { "type": "String" },
+            "promoPrice": { "type": "String" },
+            "standardPrice": { "type": "String" }
+        }
+    },
+    "premiumViewTermsApply": "تطبق الشروط.",
+    "premiumViewTermsExpiryDate": "ينتهي العرض في {date}.",
+    "@premiumViewTermsExpiryDate": {
+        "placeholders": {
+            "date": { "type": "String" }
+        }
+    },
+    "premiumViewConditionsIndividual": "أول {monthCount} أشهر مقابل {promoPrice}، ثم {standardPrice} شهرياً. عرض العودة إلى Premium Individual.",
+    "@premiumViewConditionsIndividual": {
+        "placeholders": {
+            "monthCount": { "type": "String" },
+            "promoPrice": { "type": "String" },
+            "standardPrice": { "type": "String" }
+        }
+    },
+    "premiumViewConditionsStudent": "العرض متاح فقط للطلاب في مؤسسات التعليم العالي المعتمدة.",
+    "premiumViewConditionsDuo": "لشخصين يعيشان في نفس العنوان.",
+    "premiumViewConditionsFamily": "لما يصل إلى 6 أفراد من العائلة يعيشون في نفس العنوان.",
+    "premiumViewConditionsGeneralTerms": "تطبق الشروط.",
+    "premiumViewConditionsExpiryDate": "ينتهي العرض في {date}.",
+    "@premiumViewConditionsExpiryDate": {
+        "placeholders": {
+            "date": { "type": "String" }
+        }
+    },
+    "playerViewMenuDownload": "تنزيل",
+    "playerViewMenuDeleteDownload": "إزالة المحتوى الذي تم تنزيله",
+    "playerViewMenuShare": "مشاركة",
+    "playerViewMenuAddPlaylist": "إضافة إلى قائمة أغاني أخرى",
+    "playerViewMenuHideAlbum": "إخفاء في هذا الألبوم",
+    "playerViewMenuAdFree": "استمع إلى الموسيقى بدون إعلانات",
+    "playerViewMenuAddQueue": "إضافة إلى قائمة الانتظار",
+    "playerViewMenuGoQueue": "انتقل إلى قائمة الانتظar",
+    "playerViewMenuGoAlbum": "انتقل إلى الألبوم",
+    "playerViewMenuGoArtist": "انتقل إلى الفنان",
+    "playerViewMenuStartJam": "ابدأ Jam",
+    "playerViewMenuExcludeTaste": "استبعاد من ذوقك الموسيقي",
+    "playerViewMenuSleepTimer": "إيقاف التشغيل التلقائي",
+    "playerViewMenuSongRadio": "انتقل إلى راديو الأغنية",
+    "playerViewMenuContributors": "عرض المساهمين في الأغنية",
+    "playerViewMenuSpotifyCode": "عرض رمز Spotify",
+    "playerViewMenuListenModes": "أوضاع الاستماع",
+    "playerViewMenuAutoNext": "تشغيل تلقائي",
+    "playerViewMenuMixPlay": "تشغيل عشوائي",
+    "playerViewMenuPlayInOrder": "تشغيل بالترتيب",
+    "createPlaylistTitle": "قائمة أغاني",
+    "createPlaylistSubtitle": "إنشاء قائمة أغاني تحتوي على أغاني أو حلقات",
+    "createCollaborativeTitle": "قائمة أغاني مشتركة",
+    "createCollaborativeSubtitle": "إنشاء قائمة أغاني مع أصدقائك",
+    "createBlendTitle": "Blend",
+    "createBlendSubtitle": "اجمع بين ذوقك وذوق أصدقائك في قائمة أغاني واحدة",
+    "createPlaylistViewDialogPlaylistNameHint": "اختر اسماً لقائمة الأغاني",
+    "createPlaylistViewCancel": "إلغاء",
+    "createPlaylistViewCreate": "إنشاء",
+    "updatePlaylistViewChange": "تغيير",
+    "updatePlaylistViewRefresh": "تحديث",
+    "updatePlaylistViewPlaylistAddToThis": "إضافة إلى هذه القائمة",
+    "updatePlaylistViewPlaylistRecommendedTitle": "أغانٍ مقترحة",
+    "updatePlaylistViewPlaylistNoRecommendations": "لا توجد أغانٍ مقترحة",
+    "shareVisibilityTitle": "هل تريد مشاركة قائمة الأغاني هذه مع الآخرين؟",
+    "shareVisibilitySubtitle": "يمكن للأشخاص الذين تدعوهم إضافة وإزالة الأغاني من هذه القائمة.",
+    "shareVisibilityMakePublic": "اجعلها قابلة للمشاركة",
+    "shareVisibilityCancel": "إلغاء",
+    "playlistDeleteAlertDialogDeletePlaylistTitle": "حذف قائمة الأغاني؟",
+    "playlistDeleteAlertCancel": "إلغاء",
+    "playlistDeleteAlertDelete": "حذف",
+    "filterAll": "الكل",
+    "filterMusic": "موسيقى",
+    "filterPodcasts": "بودكاست",
+    "filterArtists": "فنانون",
+    "filterAlbums": "ألبومات",
+    "filterPlaylists": "قوائم الأغاني الخاصة بك"
+}

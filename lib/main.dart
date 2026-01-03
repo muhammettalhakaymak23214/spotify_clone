@@ -1,9 +1,12 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
 import 'package:spotify_clone/core/enums/media_type.dart';
+import 'package:spotify_clone/core/l10n/generated/app_localizations.dart';
+
 import 'package:spotify_clone/core/services/audio_player_service.dart';
 import 'package:spotify_clone/core/services/player_service.dart';
 import 'package:spotify_clone/core/services/recently_played_service.dart';
@@ -140,6 +143,17 @@ class _MyAppState extends State<MyApp> {
           title: 'Spotify Clone',
           debugShowCheckedModeBanner: false,
 
+          supportedLocales: AppLocalizations.supportedLocales,
+
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+
+          //locale: const Locale('en'),
+
           builder: (context, child) {
             return MediaQuery(
               data: MediaQuery.of(
@@ -150,10 +164,8 @@ class _MyAppState extends State<MyApp> {
           },
 
           theme: ThemeData(
-            
             scaffoldBackgroundColor: AppColors.darkToneInk,
-            
-           
+
             appBarTheme: AppBarThemeData(
               foregroundColor: AppColors.white,
               backgroundColor: AppColors.blackPanther,
@@ -184,20 +196,19 @@ class _MyAppState extends State<MyApp> {
             ),
             //
             textTheme: TextTheme(
-              
               titleMedium: TextStyle(
                 color: AppColors.white,
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w600,
                 letterSpacing: 0.5,
               ),
-              
+
               bodySmall: TextStyle(
                 color: AppColors.white.withValues(alpha: 0.7),
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w400,
               ),
-              
+
               labelSmall: TextStyle(color: AppColors.grey, fontSize: 10.sp),
             ),
           ),

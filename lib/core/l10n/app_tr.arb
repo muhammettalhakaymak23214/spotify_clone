@@ -1,0 +1,155 @@
+{
+    "bottomNavigatorHome": "Ana Sayfa",
+    "bottomNavigatorSearch": "Ara",
+    "bottomNavigatorLibrary": "Kitaplığın",
+    "bottomNavigatorPremium": "Premium",
+    "bottomNavigatorCreate": "Oluştur",
+    "miniPlayerNextTrack": "Sonraki parça",
+    "miniPlayerPreviousTrack": "Önceki parça",
+    "searchViewTitle": "Hepsine göz at",
+    "searchViewSearchBarText": "Ne dinlemek istiyorsun?",
+    "drawerProfileView": "Profili görüntüle",
+    "drawerAddAccount": "Hesap ekle",
+    "drawerUpdates": "Yenilikler",
+    "drawerListeningStats": "Dinleme istatistikleri",
+    "drawerRecentlyPlayed": "Son çalınanlar",
+    "drawerNotifications": "Güncellemelerin",
+    "drawerSettingsPrivacy": "Ayarlar ve gizlilik",
+    "premiumViewPremium": "Premium",
+    "premiumViewTitle": "Premium'a geri dön: Spotify'a üye olduğunda ilk {monthCount} ay boyunca {price}*",
+    "@premiumViewTitle": {
+        "placeholders": {
+            "monthCount": { "type": "String" },
+            "price": { "type": "String" }
+        }
+    },
+    "premiumViewSubtitle": "Sınırlı süreli teklif",
+    "premiumViewGetIndividual": "Premium'u edin",
+    "premiumViewGetStudent": "Premium Öğrenci planını edin",
+    "premiumViewGetDuo": "Premium Duo planını edin",
+    "premiumViewGetFamily": "Premium Aile planını edin",
+    "premiumViewPlanIndividual": "Bireysel",
+    "premiumViewPlanStudent": "Öğrenci",
+    "premiumViewPlanDuo": "Duo",
+    "premiumViewPlanFamily": "Aile",
+    "premiumViewPlanIndividualAccount": "1 Premium hesabı",
+    "premiumViewPlanIndividualCancel": "İstediğin zaman iptal et",
+    "premiumViewPlanStudentAccount": "Doğrulanmış 1 Premium hesabı",
+    "premiumViewPlanStudentDiscount": "Koşulları sağlayan öğrenciler için indirim",
+    "premiumViewPlanStudentCancel": "İstediğin zaman iptal et",
+    "premiumViewPlanDuoAccount": "2 Premium hesap",
+    "premiumViewPlanDuoCancel": "İstediğin zaman iptal et",
+    "premiumViewPlanFamilyAccount": "6 Premium hesap",
+    "premiumViewPlanFamilyControl": "Sansürsüz olarak işaretlenen içerikleri kontrol et",
+    "premiumViewPlanFamilyCancel": "İstediğin zaman iptal et",
+    "premiumViewPlanPricePromo": "{monthCount} ay boyunca {price}",
+    "@premiumViewPlanPricePromo": {
+        "placeholders": {
+            "monthCount": { "type": "String" },
+            "price": { "type": "String" }
+        }
+    },
+    "premiumViewPlanPriceAfterPromo": "Sonra ayda {price}",
+    "@premiumViewPlanPriceAfterPromo": {
+        "placeholders": {
+            "price": { "type": "String" }
+        }
+    },
+    "premiumViewPlanPricePerMonth": "{price}/ay",
+    "@premiumViewPlanPricePerMonth": {
+        "placeholders": {
+            "price": { "type": "String" }
+        }
+    },
+    "premiumViewWhyJoinTitle": "Neden Premium'a katılmalısın?",
+    "premiumViewWhyFeatureAdFree": "Reklamsız müzik dinle",
+    "premiumViewWhyFeatureOffline": "İndir ve çevrimdışı dinle",
+    "premiumViewWhyFeatureOnDemand": "Şarkıları istediğin sırada çal",
+    "premiumViewWhyFeatureHighQuality": "Yüksek ses kalitesi",
+    "premiumViewWhyFeatureGroupListening": "Arkadaşlarınla aynı anda dinle",
+    "premiumViewWhyFeatureQueueEditing": "Dinleme sıranı düzenle",
+    "premiumViewCurrentPlansTitle": "Mevcut Planlar",
+    "premiumViewTermsIndividualWelcome": "İlk {monthCount} ay boyunca {promoPrice}, sonra ayda {standardPrice}. Premium Bireysel için tekrar hoş geldin teklifi. Premium'a erişimi 30 günden uzun süre önce sona eren ve son 24 ay içinde hiçbir \"tekrar hoş geldin\" teklifinden yararlanmamış olan kullanıcılar tarafından kullanılabilir. Sadece Spotify aracılığıyla üye olan kişiler tekliften yararlanabilir. Google Play'de teklifler farklı olabilir.",
+    "@premiumViewTermsIndividualWelcome": {
+        "placeholders": {
+            "monthCount": { "type": "String" },
+            "promoPrice": { "type": "String" },
+            "standardPrice": { "type": "String" }
+        }
+    },
+    "premiumViewTermsApply": "Koşullar geçerlidir.",
+    "premiumViewTermsExpiryDate": "Teklif {date} tarihinde sona erecek.",
+    "@premiumViewTermsExpiryDate": {
+        "placeholders": {
+            "date": { "type": "String" }
+        }
+    },
+    "premiumViewConditionsIndividual": "İlk {monthCount} ay boyunca {promoPrice}, sonra ayda {standardPrice}. Premium Bireysel için tekrar hoş geldin teklifi. Premium'a erişimi 30 günden uzun süre önce sona eren ve son 24 ay içinde hiçbir \"tekrar hoş geldin\" teklifinden yararlanmamış olan kullanıcılar tarafından kullanılabilir. Sadece Spotify aracılığıyla üye olan kişiler tekliften yararlanabilir. Google Play'de teklifler farklı olabilir.",
+    "@premiumViewConditionsIndividual": {
+        "placeholders": {
+            "monthCount": { "type": "String" },
+            "promoPrice": { "type": "String" },
+            "standardPrice": { "type": "String" }
+        }
+    },
+    "premiumViewConditionsStudent": "Teklif, yalnızca geçerli yükseköğretim kurumlarındaki öğrenciler içindir.",
+    "premiumViewConditionsDuo": "Aynı adreste yaşayan çiftler için.",
+    "premiumViewConditionsFamily": "Aynı adreste oturan en fazla 6 aile üyesi için.",
+    "premiumViewConditionsGeneralTerms": "Koşullar geçerlidir.",
+    "premiumViewConditionsExpiryDate": "Teklif {date} tarihinde sona erecek.",
+    "@premiumViewConditionsExpiryDate": {
+        "placeholders": {
+            "date": { "type": "String" }
+        }
+    },
+    "playerViewMenuDownload": "İndir",
+    "playerViewMenuDeleteDownload": "İndirilenlerden Kaldır",
+    "playerViewMenuShare": "Paylaş",
+    "playerViewMenuAddPlaylist": "Başka bir çalma listesine ekle",
+    "playerViewMenuHideAlbum": "Bu albümde gizle",
+    "playerViewMenuAdFree": "Müzikleri reklamsız dinle",
+    "playerViewMenuAddQueue": "Sıraya Ekle",
+    "playerViewMenuGoQueue": "Çalma Sırasına git",
+    "playerViewMenuGoAlbum": "Albüme git",
+    "playerViewMenuGoArtist": "Sanatçıya git",
+    "playerViewMenuStartJam": "Jam başlat",
+    "playerViewMenuExcludeTaste": "Parçayı müzik zevki profilinden hariç tut",
+    "playerViewMenuSleepTimer": "Otomatik kapatma",
+    "playerViewMenuSongRadio": "Şarkı radyosuna git",
+    "playerViewMenuContributors": "Şarkıya katkıda bulunanları görüntüle",
+    "playerViewMenuSpotifyCode": "Spotify kodunu göster",
+    "playerViewMenuListenModes": "Dinleme modları",
+    "playerViewMenuAutoNext": "Otomatik oynatma",
+    "playerViewMenuMixPlay": "Karışık çal",
+    "playerViewMenuPlayInOrder": "Sırayla çal",
+    "createPlaylistTitle": "Çalma listesi",
+    "createPlaylistSubtitle": "Şarkı veya bölüm içeren bir çalma listesi oluştur",
+    "createCollaborativeTitle": "Ortak çalma listesi",
+    "createCollaborativeSubtitle": "Arkadaşlarınla birlikte çalma listesi oluştur",
+    "createBlendTitle": "Blend",
+    "createBlendSubtitle": "Arkadaşlarının zevklerini bir çalma listesinde buluştur",
+    "createPlaylistViewDialogPlaylistNameHint": "Çalma listene bir isim ver",
+    "createPlaylistViewCancel": "İptal",
+    "createPlaylistViewCreate": "Oluştur",
+    "updatePlaylistViewChange": "Değiştir",
+    "updatePlaylistViewRefresh": "Yenile",
+    "updatePlaylistViewPlaylistAddToThis": "Bu çalma listesine ekle",
+    "updatePlaylistViewPlaylistRecommendedTitle": "Önerilen Şarkılar",
+    "updatePlaylistViewPlaylistNoRecommendations": "Önerilebilecek şarkı yok",
+    "shareVisibilityTitle": "Çalma listesini başkalarıyla paylaşmak ister misin?",
+    "shareVisibilitySubtitle": "Bu çalma listesine davet ettiğin kişiler şarkı ekleyebilir ve çıkarabilir.",
+    "shareVisibilityMakePublic": "Paylaşılabilir yap",
+    "shareVisibilityCancel": "İptal",
+    "playlistDeleteAlertDialogDeletePlaylistTitle": "Çalma listesini sil?",
+    "playlistDeleteAlertCancel": "İptal",
+    "playlistDeleteAlertDelete": "Sil",
+    "filterAll": "Tümü",
+    "filterMusic": "Müzik",
+    "filterPodcasts": "Podcast'ler",
+    "filterArtists": "Sanatçılar",
+    "filterAlbums": "Albümler",
+    "filterPlaylists": "Çalma Listelerin"
+    
+}
+
+
