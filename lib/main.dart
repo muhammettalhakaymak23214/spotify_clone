@@ -147,7 +147,7 @@ class _MyAppState extends State<MyApp> {
       splitScreenMode: true,
       builder: (context, child) {
         return MaterialApp(
-          title: 'Spotify Clone',
+          title: 'Spotify clone',
           debugShowCheckedModeBanner: false,
 
           supportedLocales: AppLocalizations.supportedLocales,
