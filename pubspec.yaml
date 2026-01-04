@@ -72,6 +72,8 @@ dependencies:
 
   intl: ^0.20.2
 
+  flutter_native_splash: ^2.4.7
+
   
 
   # The following adds the Cupertino Icons font to your application.
@@ -141,3 +143,11 @@ flutter_launcher_icons:
   image_path: "assets/png/spotify_logo.png" 
   adaptive_icon_background: "#121212" 
   adaptive_icon_foreground: "assets/png/spotify_logo.png" 
+
+flutter_native_splash:
+  color: "#121212"
+  image: assets/png/spotify_logo_splash.png
+  android_12:
+    image: assets/png/spotify_logo_splash.png
+  android_gravity: center
+  ios_content_mode: center

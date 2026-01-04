@@ -2,6 +2,7 @@ import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
 import 'package:spotify_clone/core/enums/media_type.dart';
@@ -19,7 +20,9 @@ import 'package:spotify_clone/core/stores/player_view_model.dart';
 
 late AudioPlayerService audioHandler;
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+ // WidgetsFlutterBinding.ensureInitialized();
 
   //Shared Preference Init
   await SharedPreferenceService.init();
@@ -64,6 +67,8 @@ void main() async {
   );
 
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
+  FlutterNativeSplash.remove();
 
   runApp(MyApp());
 }
