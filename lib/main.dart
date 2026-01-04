@@ -22,7 +22,7 @@ late AudioPlayerService audioHandler;
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
- // WidgetsFlutterBinding.ensureInitialized();
+  // WidgetsFlutterBinding.ensureInitialized();
 
   //Shared Preference Init
   await SharedPreferenceService.init();
@@ -65,6 +65,8 @@ void main() async {
     type: MediaType.playlist,
     id: "0",
   );
+
+  await Future.delayed(const Duration(milliseconds: 500));
 
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
@@ -160,7 +162,6 @@ class _MyAppState extends State<MyApp> {
           ],
 
           //locale: const Locale('en'),
-
           builder: (context, child) {
             return MediaQuery(
               data: MediaQuery.of(
@@ -172,6 +173,8 @@ class _MyAppState extends State<MyApp> {
 
           theme: ThemeData(
             scaffoldBackgroundColor: AppColors.darkToneInk,
+
+            dividerTheme: DividerThemeData(color: AppColors.white),
 
             appBarTheme: AppBarThemeData(
               foregroundColor: AppColors.white,
@@ -202,21 +205,99 @@ class _MyAppState extends State<MyApp> {
               ),
             ),
             //
+            iconTheme: IconThemeData(
+              color: AppColors.white,
+              size: 24.sp,             
+            ),
             textTheme: TextTheme(
+              //Display
+              displayLarge: TextStyle(
+                fontSize: 40.sp,
+                fontWeight: FontWeight.w800,
+                letterSpacing: -1.0,
+                height: 1.1,
+                color: Colors.white,
+              ),
+              //Headline
+              headlineLarge: TextStyle(
+                fontSize: 32.sp,
+                fontWeight: FontWeight.w700,
+                letterSpacing: -0.5,
+                height: 1.2,
+                color: Colors.white,
+              ),
+              headlineMedium: TextStyle(
+                fontSize: 26.sp,
+                fontWeight: FontWeight.w600,
+                height: 1.2,
+                color: Colors.white,
+              ),
+              headlineSmall: TextStyle(
+                fontSize: 20.sp,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+              ),
+              //Title
+              titleLarge: TextStyle(
+                fontSize: 22.sp,
+                fontWeight: FontWeight.w700,
+                height: 1.3,
+                color: Colors.white,
+              ),
               titleMedium: TextStyle(
-                color: AppColors.white,
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 0.15,
+                height: 1.4,
+                color: Colors.white,
+              ),
+              titleSmall: TextStyle(
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w600,
-                letterSpacing: 0.5,
+                letterSpacing: 0.1,
+                color: Colors.white,
               ),
-
+              //Body
+              bodyLarge: TextStyle(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w400,
+                letterSpacing: 0.5,
+                height: 1.5,
+                color: Colors.white,
+              ),
+              bodyMedium: TextStyle(
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w400,
+                letterSpacing: 0.25,
+                height: 1.4,
+                color: Colors.white,
+              ),
               bodySmall: TextStyle(
-                color: AppColors.white.withValues(alpha: 0.7),
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w400,
+                letterSpacing: 0.4,
+                height: 1.4,
+                color: Colors.white.withValues(alpha: 0.7),
               ),
-
-              labelSmall: TextStyle(color: AppColors.grey, fontSize: 10.sp),
+              //Label
+              labelLarge: TextStyle(
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 1.1,
+                color: Colors.white,
+              ),
+              labelMedium: TextStyle(
+                fontSize: 12.sp,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 0.5,
+                color: Colors.white,
+              ),
+              labelSmall: TextStyle(
+                fontSize: 10.sp,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 1.2,
+                color: AppColors.grey,
+              ),
             ),
           ),
 

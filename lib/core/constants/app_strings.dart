@@ -32,7 +32,7 @@ class AppStrings {
   static final String searchBar = "Ne dinlemek istiyorsun?";
   //SliverAppBar
   static final String searchBarTitle = "Ne dinlemek istiyorsun?";
-
+/*
     static final String profileView = "Profili görüntüle";
   static final String addAccount = "Hesap ekle";
   static final String updates = "Yenilikler";
@@ -40,7 +40,7 @@ class AppStrings {
   static final String recentlyPlayed = "Son çalınanlar";
   static final String notifications = "Güncellemelerin";
   static final String settingsPrivacy = "Ayarlar ve gizlilik";
-
+*/
     static final String planButtonTitle1 = "Premium'u edin";
   static final String planButtonTitle2 = "Premium Öğrenci planını edin";
   static final String planButtonTitle3 = "Premium Duo planını edin";

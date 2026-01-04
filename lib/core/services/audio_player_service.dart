@@ -75,6 +75,7 @@ class AudioPlayerService extends BaseAudioHandler
         isUrl: true,
       );
       id = url.previewUrl!;
+     // id = "${url.id}_${url.previewPath!}";
       image = url.albumImage!;
       duration = await _player.setUrl(url.previewUrl!);
       artUri = Uri.parse(url.albumImage!);
@@ -85,6 +86,7 @@ class AudioPlayerService extends BaseAudioHandler
       );
       duration = await _player.setUrl(url.previewPath!);
       id = url.previewPath!;
+    // id = "${url.id}_${url.previewPath!}";
       image = url.albumImagePath!;
       artUri = Uri.file(url.albumImagePath!);
     }

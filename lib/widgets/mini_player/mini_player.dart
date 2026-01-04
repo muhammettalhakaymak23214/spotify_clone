@@ -21,7 +21,7 @@ class MiniPlayer extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamBuilder<MediaItem?>(
       stream: audioHandler.mediaItem.distinct(
-        (prev, next) => prev?.id == next?.id,
+        (prev, next) => prev?.title == next?.title,
       ),
       builder: (context, snapshot) {
         final item = snapshot.data;
@@ -50,6 +50,7 @@ class MiniPlayer extends StatelessWidget {
                         SizedBox(width: _Constants.gapWidth),
                         Expanded(
                           child: SwipeableTextArea(
+                           
                             player: player,
                             currentItem: item,
                           ),
@@ -114,7 +115,7 @@ class _SwipeableTextAreaState extends State<SwipeableTextArea>
   @override
   void didUpdateWidget(SwipeableTextArea oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.currentItem.id != widget.currentItem.id) {
+    if (oldWidget.currentItem.title != widget.currentItem.title) {
       setState(() {
         _isSwiping = false;
         _drag = 0;
