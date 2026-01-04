@@ -34,6 +34,8 @@ void main() async {
       androidNotificationChannelName: 'Audio playback',
       androidNotificationOngoing: true,
 
+      androidNotificationIcon: 'drawable/ic_launcher_foreground',
+
       //androidOngoing: false,
       androidNotificationClickStartsActivity: true,
 
