@@ -7,7 +7,7 @@ import 'package:spotify_clone/view/premium_view.dart';
 import 'package:spotify_clone/view/recently_played_view.dart';
 import 'package:spotify_clone/view/search_view.dart';
 import 'package:spotify_clone/view/track_list_view.dart';
-import 'package:spotify_clone/widgets/custom_widgets/custom_bottom_app_bar.dart';
+import 'package:spotify_clone/product/widgets/navigation/app_navigation_bar.dart';
 import 'package:spotify_clone/product/widgets/drawer/app_drawer.dart';
 import 'package:spotify_clone/widgets/mini_player/mini_player.dart';
 
@@ -77,7 +77,7 @@ class _MainTabViewState extends State<MainTabView>
           child: MiniPlayer(),
         ),
         
-        CustomBottomAppBar(tabController: tabController),
+        AppBottomNavigationBar(tabController: tabController),
       ],
     ),
   ),

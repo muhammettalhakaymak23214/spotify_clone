@@ -172,10 +172,6 @@ class _MyAppState extends State<MyApp> {
           },
 
           theme: ThemeData(
-            scaffoldBackgroundColor: AppColors.darkToneInk,
-
-            dividerTheme: DividerThemeData(color: AppColors.white),
-
             appBarTheme: AppBarThemeData(
               foregroundColor: AppColors.white,
               backgroundColor: AppColors.blackPanther,
@@ -185,11 +181,6 @@ class _MyAppState extends State<MyApp> {
                 fontSize: 25,
                 fontWeight: FontWeight.bold,
               ),
-            ),
-            bottomAppBarTheme: BottomAppBarThemeData(
-              //height: 70,
-              //shadowColor: Colors.amber,
-              color: const Color.fromARGB(204, 0, 0, 0),
             ),
             tabBarTheme: TabBarThemeData(
               dividerColor: Colors.transparent,
@@ -204,11 +195,23 @@ class _MyAppState extends State<MyApp> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            //
-            iconTheme: IconThemeData(
-              color: AppColors.white,
-              size: 24.sp,             
+
+            //Yeni düzen
+            //Bottom App Bar Theme
+            bottomAppBarTheme: BottomAppBarThemeData(
+              color: AppColors.bottomNavBarBackground,
+              elevation: 0,
+              height: 75.h,
+              surfaceTintColor: Colors.transparent,
+              padding: EdgeInsets.zero,
             ),
+            //Scaffold Background Color
+            scaffoldBackgroundColor: AppColors.background,
+            //Divider Theme
+            dividerTheme: DividerThemeData(color: AppColors.white),
+            //Icon Theme
+            iconTheme: IconThemeData(color: AppColors.white, size: 24.sp),
+            //Text Theme
             textTheme: TextTheme(
               //Display
               displayLarge: TextStyle(
@@ -216,7 +219,7 @@ class _MyAppState extends State<MyApp> {
                 fontWeight: FontWeight.w800,
                 letterSpacing: -1.0,
                 height: 1.1,
-                color: Colors.white,
+                color: AppColors.white,
               ),
               //Headline
               headlineLarge: TextStyle(
@@ -224,38 +227,38 @@ class _MyAppState extends State<MyApp> {
                 fontWeight: FontWeight.w700,
                 letterSpacing: -0.5,
                 height: 1.2,
-                color: Colors.white,
+                color: AppColors.white,
               ),
               headlineMedium: TextStyle(
                 fontSize: 26.sp,
                 fontWeight: FontWeight.w600,
                 height: 1.2,
-                color: Colors.white,
+                color: AppColors.white,
               ),
               headlineSmall: TextStyle(
                 fontSize: 20.sp,
                 fontWeight: FontWeight.w600,
-                color: Colors.white,
+                color: AppColors.white,
               ),
               //Title
               titleLarge: TextStyle(
                 fontSize: 22.sp,
                 fontWeight: FontWeight.w700,
                 height: 1.3,
-                color: Colors.white,
+                color: AppColors.white,
               ),
               titleMedium: TextStyle(
                 fontSize: 16.sp,
                 fontWeight: FontWeight.w600,
                 letterSpacing: 0.15,
                 height: 1.4,
-                color: Colors.white,
+                color: AppColors.white,
               ),
               titleSmall: TextStyle(
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w600,
                 letterSpacing: 0.1,
-                color: Colors.white,
+                color: AppColors.white,
               ),
               //Body
               bodyLarge: TextStyle(
@@ -263,34 +266,34 @@ class _MyAppState extends State<MyApp> {
                 fontWeight: FontWeight.w400,
                 letterSpacing: 0.5,
                 height: 1.5,
-                color: Colors.white,
+                color: AppColors.white,
               ),
               bodyMedium: TextStyle(
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w400,
                 letterSpacing: 0.25,
                 height: 1.4,
-                color: Colors.white,
+                color: AppColors.white,
               ),
               bodySmall: TextStyle(
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w400,
                 letterSpacing: 0.4,
                 height: 1.4,
-                color: Colors.white.withValues(alpha: 0.7),
+                color: AppColors.white.withValues(alpha: 0.7),
               ),
               //Label
               labelLarge: TextStyle(
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w600,
                 letterSpacing: 1.1,
-                color: Colors.white,
+                color: AppColors.white,
               ),
               labelMedium: TextStyle(
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w500,
                 letterSpacing: 0.5,
-                color: Colors.white,
+                color: AppColors.white,
               ),
               labelSmall: TextStyle(
                 fontSize: 10.sp,
