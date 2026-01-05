@@ -2,12 +2,23 @@ import 'package:flutter/material.dart';
 
 final class NavigationService {
   NavigationService._();
-  static final NavigationService _instance = NavigationService._();
-  static NavigationService get instance => _instance;
+  static final NavigationService instance = NavigationService._();
 
-  void pushAndRemoveUntil(BuildContext context, Widget page, {String? routeName}) {
-    Navigator.pushAndRemoveUntil(
-      context,
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+  NavigatorState? get _state => navigatorKey.currentState;
+
+  void push(Widget page, {String? routeName}) {
+    _state?.push(
+      MaterialPageRoute(
+        settings: RouteSettings(name: routeName),
+        builder: (_) => page,
+      ),
+    );
+  }
+
+  void pushAndRemoveUntil(Widget page, {String? routeName}) {
+    _state?.pushAndRemoveUntil(
       MaterialPageRoute(
         settings: RouteSettings(name: routeName),
         builder: (_) => page,
@@ -16,19 +27,9 @@ final class NavigationService {
     );
   }
 
-  void push(BuildContext context, Widget page, {String? routeName}) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        settings: RouteSettings(name: routeName),
-        builder: (_) => page,
-      ),
-    );
-  }
-
-  void back(BuildContext context) {
-    if (Navigator.canPop(context)) {
-      Navigator.pop(context);
+  void back() {
+    if (_state?.canPop() ?? false) {
+      _state?.pop();
     }
   }
 }

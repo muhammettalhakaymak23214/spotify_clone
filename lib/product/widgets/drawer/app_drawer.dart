@@ -16,15 +16,17 @@ class CustomDrawer extends StatelessWidget {
     return Drawer(
       backgroundColor: AppColors.surfaceVariant,
       child: ListView(
-        padding: _Constants.paddingListView, 
+        padding: _Constants.paddingListView,
         children: [
           const _AccountHeaderListTile(),
           const Divider(),
-          ..._DrawerMenuItem.values.map((item) => _CustomListTile(
-                title: item.title(context),
-                icon: item.buildIcon(context),
-                onTap: () => item.onTap(context),
-              )),
+          ..._DrawerMenuItem.values.map(
+            (item) => _CustomListTile(
+              title: item.title(context),
+              icon: item.buildIcon(context),
+              onTap: () => item.onTap(context),
+            ),
+          ),
         ],
       ),
     );
@@ -136,17 +138,15 @@ extension _DrawerMenuItemExtension on _DrawerMenuItem {
     switch (this) {
       case _DrawerMenuItem.recentlyPlayed:
         Future.delayed(const Duration(milliseconds: 200), () {
-        if (!context.mounted) return;
-        Navigator.pop(context);
-        Future.delayed(const Duration(milliseconds: 200), () {
           if (!context.mounted) return;
-          NavigationService.instance.pushAndRemoveUntil(
-            context,
-            const MainTabView(initialIndex: 4),
-            routeName: '/main',
-          );
+          Navigator.pop(context);
+          Future.delayed(const Duration(milliseconds: 200), () {
+            NavigationService.instance.pushAndRemoveUntil(
+              const MainTabView(initialIndex: 4),
+              routeName: '/main_recently_played',
+            );
+          });
         });
-      });
         break;
       default:
         debugPrint("$this");
@@ -157,8 +157,10 @@ extension _DrawerMenuItemExtension on _DrawerMenuItem {
 
 abstract final class _Constants {
   //Padding
-  static EdgeInsets get paddingAccountHeader => EdgeInsets.only(top: 40.h, left: 20.w, right: 20.w);
-  static EdgeInsets get paddingListTile => EdgeInsets.symmetric(horizontal: 20.w);
+  static EdgeInsets get paddingAccountHeader =>
+      EdgeInsets.only(top: 40.h, left: 20.w, right: 20.w);
+  static EdgeInsets get paddingListTile =>
+      EdgeInsets.symmetric(horizontal: 20.w);
   static EdgeInsets get paddingListView => EdgeInsets.zero;
   //Size
   static double get avatarContainerSize => 40;

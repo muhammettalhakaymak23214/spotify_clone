@@ -9,6 +9,7 @@ import 'package:spotify_clone/core/enums/media_type.dart';
 import 'package:spotify_clone/core/l10n/generated/app_localizations.dart';
 
 import 'package:spotify_clone/core/services/audio_player_service.dart';
+import 'package:spotify_clone/core/services/navigation_service.dart';
 import 'package:spotify_clone/core/services/player_service.dart';
 import 'package:spotify_clone/core/services/recently_played_service.dart';
 import 'package:spotify_clone/core/services/service_locator.dart';
@@ -151,6 +152,7 @@ class _MyAppState extends State<MyApp> {
         return MaterialApp(
           title: 'Spotify clone',
           debugShowCheckedModeBanner: false,
+          navigatorKey: NavigationService.instance.navigatorKey,
 
           supportedLocales: AppLocalizations.supportedLocales,
 
@@ -194,6 +196,8 @@ class _MyAppState extends State<MyApp> {
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
+              iconColor: AppColors.white
+              
             ),
 
             //Yeni düzen

@@ -32,5 +32,6 @@ class AppColors {
   static const Color green = Colors.green;
   static const Color background = Color.fromARGB(255, 18, 18, 18);
   static const Color surfaceVariant = Color.fromARGB(255, 24, 24, 24);
-  static const Color bottomNavBarBackground = Color.fromARGB(199, 0, 0, 0);
+  static const Color cardBackground = Color.fromARGB(255, 45, 45, 45);
+  static const Color bottomNavBarBackground = Color.fromARGB(203, 0, 0, 0);
 }
