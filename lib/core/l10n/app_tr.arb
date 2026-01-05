@@ -129,6 +129,14 @@
     "createBlendTitle": "Blend",
     "createBlendSubtitle": "Arkadaşlarının zevklerini bir çalma listesinde buluştur",
     "createPlaylistViewDialogPlaylistNameHint": "Çalma listene bir isim ver",
+    "myPlaylistHint": "{count}. çalma listem",
+    "@myPlaylistHint": {
+        "placeholders": {
+            "count": {
+                "type": "String"
+            }
+        }
+    },
     "createPlaylistViewCancel": "İptal",
     "createPlaylistViewCreate": "Oluştur",
     "updatePlaylistViewChange": "Değiştir",

@@ -129,6 +129,14 @@
     "createBlendTitle": "Blend",
     "createBlendSubtitle": "اجمع بين ذوقك وذوق أصدقائك في قائمة أغاني واحدة",
     "createPlaylistViewDialogPlaylistNameHint": "اختر اسماً لقائمة الأغاني",
+    "myPlaylistHint": "قائمة التشغيل رقم {count}",
+    "@myPlaylistHint": {
+        "placeholders": {
+            "count": {
+                "type": "String"
+            }
+        }
+    },
     "createPlaylistViewCancel": "إلغاء",
     "createPlaylistViewCreate": "إنشاء",
     "updatePlaylistViewChange": "تغيير",

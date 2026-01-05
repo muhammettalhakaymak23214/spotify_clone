@@ -293,6 +293,11 @@ class AppLocalizationsAr extends AppLocalizations {
       'اختر اسماً لقائمة الأغاني';
 
   @override
+  String myPlaylistHint(String count) {
+    return 'قائمة التشغيل رقم $count';
+  }
+
+  @override
   String get createPlaylistViewCancel => 'إلغاء';
 
   @override

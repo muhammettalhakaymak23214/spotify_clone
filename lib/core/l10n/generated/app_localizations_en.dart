@@ -295,6 +295,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'Give your playlist a name';
 
   @override
+  String myPlaylistHint(String count) {
+    return 'My playlist #$count';
+  }
+
+  @override
   String get createPlaylistViewCancel => 'Cancel';
 
   @override

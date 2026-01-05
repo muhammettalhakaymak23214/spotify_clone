@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
-import 'package:spotify_clone/core/constants/app_strings.dart';
+import 'package:spotify_clone/core/l10n/generated/app_localizations.dart';
+import 'package:spotify_clone/core/services/navigation_service.dart';
 import 'package:spotify_clone/view/update_playlist_view.dart';
 import 'package:spotify_clone/view_model/create_playlist_view_model.dart';
-import 'package:spotify_clone/widgets/custom_widgets/custom_text.dart';
+import 'package:spotify_clone/widgets/custom_widgets/app_text.dart';
 
 class CreatePlaylistView extends StatefulWidget {
   const CreatePlaylistView({super.key});
@@ -13,33 +15,37 @@ class CreatePlaylistView extends StatefulWidget {
 }
 
 class _CreatePlaylistViewState extends State<CreatePlaylistView> {
-  //Controller
   final TextEditingController _controller = TextEditingController();
-  //ViewModel
   late CreatePlaylistViewModel viewModel;
-  //Variables
   bool _isReady = false;
-  String _defaultName = "";
 
   @override
   void initState() {
     super.initState();
     viewModel = CreatePlaylistViewModel();
-    _getTotalPlaylist();
+    _initializeView();
   }
 
-  Future<void> _getTotalPlaylist() async {
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  Future<void> _initializeView() async {
     await viewModel.getTotalPlaylist();
-    _defaultName = "${viewModel.totalPlaylist}. çalma listem";
-    setState(() {
-      _isReady = true;
-    });
+    if (mounted) {
+      setState(() {
+        _isReady = true;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     if (!_isReady) {
-      return SizedBox.shrink();
+      return const SizedBox.shrink();
     }
     return Scaffold(
       body: Container(
@@ -55,85 +61,73 @@ class _CreatePlaylistViewState extends State<CreatePlaylistView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CustomText(
-              data: AppStrings.setPlaylistName,
-              textSize: TextSize.extraLarge,
-              textWeight: TextWeight.bold,
+            AppText(
+              text: l10n.createPlaylistViewDialogPlaylistNameHint,
+              style: AppTextStyle.titleL,
+              color: _Constants.primaryTextColor,
             ),
-            SizedBox(height: 50),
-
+            SizedBox(height: _Constants.heightSizeBox),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
+              padding: _Constants.padding,
               child: TextField(
                 controller: _controller,
+                keyboardType: TextInputType.name,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
-                  color: AppColors.white,
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: _Constants.textFieldTextStyle(context),
                 decoration: InputDecoration(
-                  hintText: "${viewModel.totalPlaylist}. çalma listem",
-                  hintStyle: TextStyle(color: AppColors.white),
-                  enabledBorder: UnderlineInputBorder(
+                  hintText: l10n.myPlaylistHint(viewModel.totalPlaylist),
+                  hintStyle: _Constants.hintTextStyle(context),
+                  enabledBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(
-                      color: AppColors.textFiledEnabledLineColor,
+                      color: _Constants.enabledBorderColor,
                     ),
                   ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: AppColors.white),
+                  focusedBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: _Constants.focusedBorderColor,
+                    ),
                   ),
                 ),
               ),
             ),
-
-            SizedBox(height: 50),
+            SizedBox(height: _Constants.heightSizeBox),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 OutlinedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: CustomText(
-                    data: AppStrings.cancel,
-                    textSize: TextSize.large,
+                  onPressed: viewModel.isLoading ? null : () => NavigationService.instance.back(),
+                  child: AppText(
+                    text: l10n.createPlaylistViewCancel,
+                    style: AppTextStyle.bodyL,
+                    fontWeight: FontWeight.bold,
+                    color: _Constants.primaryTextColor,
                   ),
                 ),
-                SizedBox(width: 25),
+                SizedBox(width: _Constants.widthSizeBox),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.green,
+                    backgroundColor: _Constants.createButtonBackgroundColor,
                   ),
-                  onPressed: () async {
-                    bool success = false;
-                    String playlistName = "";
-                    if (_controller.text.isNotEmpty) {
-                      playlistName = _controller.text;
-                      success = await viewModel.createPlaylist(
-                        _controller.text,
-                      );
-                    } else {
-                      playlistName = _defaultName;
-                      success = await viewModel.createPlaylist(_defaultName);
-                    }
-                    if (success) {
-                      
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => UpdatePlaylistView(
-                            playlistId: viewModel.playlistId,
+                  onPressed: viewModel.isLoading
+                      ? null
+                      : () => viewModel.handleCreatePlaylist(
+                            name: _controller.text,
+                            fallbackName: l10n.myPlaylistHint(viewModel.totalPlaylist),
+                            onNotify: () => setState(() {}),
+                            onSuccess: () {
+                              if (mounted) {
+                                NavigationService.instance.push(
+                                  UpdatePlaylistView(playlistId: viewModel.playlistId),
+                                  routeName: 'UpdatePlaylistView',
+                                );
+                              }
+                            },
                           ),
-                        ),
-                      );
-                     
-                    }
-                  },
-                  child: CustomText(
-                    data: AppStrings.create,
-                    textSize: TextSize.large,
+                  child: AppText(
+                    text: l10n.createPlaylistViewCreate,
+                    style: AppTextStyle.bodyL,
                     color: AppColors.black,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
@@ -143,4 +137,22 @@ class _CreatePlaylistViewState extends State<CreatePlaylistView> {
       ),
     );
   }
+}
+
+abstract final class _Constants {
+  static double get heightSizeBox => 50.h;
+  static double get widthSizeBox => 25.w;
+  static EdgeInsets get padding => EdgeInsets.symmetric(horizontal: 40.w);
+  static const Color primaryTextColor = AppColors.white;
+  static const Color createButtonBackgroundColor = AppColors.green;
+  static const Color enabledBorderColor = AppColors.textFiledEnabledLineColor;
+  static const Color focusedBorderColor = AppColors.white;
+  static TextStyle? textFieldTextStyle(BuildContext context) =>
+      Theme.of(context).textTheme.titleMedium?.copyWith(
+            color: primaryTextColor,
+            fontSize: 22.sp,
+            fontWeight: FontWeight.bold,
+          );
+  static TextStyle? hintTextStyle(BuildContext context) =>
+      Theme.of(context).textTheme.titleMedium?.copyWith(color: primaryTextColor, fontSize: 22.sp);
 }

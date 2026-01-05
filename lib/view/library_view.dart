@@ -13,7 +13,7 @@ import 'package:spotify_clone/view/track_list_view.dart';
 import 'package:spotify_clone/view_model/library_view_model.dart';
 import 'package:spotify_clone/core/stores/player_view_model.dart';
 import 'package:spotify_clone/widgets/custom_widgets/custom_app_bar.dart';
-import 'package:spotify_clone/widgets/bottom_sheet/create_bottom_sheet.dart';
+import 'package:spotify_clone/product/widgets/bottom_sheets/create_bottom_sheet.dart';
 import 'package:spotify_clone/widgets/custom_widgets/custom_icon.dart';
 import 'package:spotify_clone/widgets/custom_widgets/custom_text.dart';
 

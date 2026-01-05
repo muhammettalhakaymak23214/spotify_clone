@@ -612,6 +612,12 @@ abstract class AppLocalizations {
   /// **'Çalma listene bir isim ver'**
   String get createPlaylistViewDialogPlaylistNameHint;
 
+  /// No description provided for @myPlaylistHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count}. çalma listem'**
+  String myPlaylistHint(String count);
+
   /// No description provided for @createPlaylistViewCancel.
   ///
   /// In tr, this message translates to:

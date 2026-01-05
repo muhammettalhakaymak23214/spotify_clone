@@ -129,6 +129,14 @@
     "createBlendTitle": "Blend",
     "createBlendSubtitle": "Combine your tastes with friends in a playlist",
     "createPlaylistViewDialogPlaylistNameHint": "Give your playlist a name",
+    "myPlaylistHint": "My playlist #{count}",
+    "@myPlaylistHint": {
+        "placeholders": {
+            "count": {
+                "type": "String"
+            }
+        }
+    },
     "createPlaylistViewCancel": "Cancel",
     "createPlaylistViewCreate": "Create",
     "updatePlaylistViewChange": "Change",

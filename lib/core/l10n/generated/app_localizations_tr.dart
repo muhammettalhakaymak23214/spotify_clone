@@ -296,6 +296,11 @@ class AppLocalizationsTr extends AppLocalizations {
       'Çalma listene bir isim ver';
 
   @override
+  String myPlaylistHint(String count) {
+    return '$count. çalma listem';
+  }
+
+  @override
   String get createPlaylistViewCancel => 'İptal';
 
   @override

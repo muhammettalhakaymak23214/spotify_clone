@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
 import 'package:spotify_clone/core/l10n/generated/app_localizations.dart';
-import 'package:spotify_clone/widgets/bottom_sheet/create_bottom_sheet.dart';
+import 'package:spotify_clone/product/widgets/bottom_sheets/create_bottom_sheet.dart';
 import 'package:spotify_clone/widgets/custom_widgets/app_text.dart';
 
 class AppBottomNavigationBar extends StatefulWidget {
