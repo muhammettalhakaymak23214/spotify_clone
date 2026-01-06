@@ -164,9 +164,13 @@
     "filterArtists": "Sanatçılar",
     "filterAlbums": "Albümler",
     "filterPlaylists": "Çalma Listelerin",
+    "filterDownloads": "İndirilenler",
     "homeViewYourPlaylists": "Çalma Listelerin",
     "homeViewNewReleases": "Yeni Çıkanlar",
-    "homeViewYourFavoriteArtists": "Sevdiğin Sanatçılar"
+    "homeViewYourFavoriteArtists": "Sevdiğin Sanatçılar",
+    "libraryViewEmtyDownloadedList": "Henüz şarkı indirmedin",
+    "libraryViewEmtyDownloadedList": "Sonuç bulunamadi"
+
     
     
 }

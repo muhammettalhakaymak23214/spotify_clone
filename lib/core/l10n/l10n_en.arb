@@ -164,7 +164,11 @@
     "filterArtists": "Artists",
     "filterAlbums": "Albums",
     "filterPlaylists": "Your Playlists",
+    "filterDownloads": "Downloads",
     "homeViewYourPlaylists": "Your Playlists",
     "homeViewNewReleases": "New Releases",
-    "homeViewYourFavoriteArtists": "Your Favorite Artists"
+    "homeViewYourFavoriteArtists": "Your Favorite Artists",
+    "libraryViewEmtyDownloadedList": "You haven't downloaded any songs yet",
+    "libraryViewEmtyDownloadedList": "No results found"
+    
 }

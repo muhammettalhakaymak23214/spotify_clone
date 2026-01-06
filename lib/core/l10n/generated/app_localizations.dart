@@ -744,6 +744,12 @@ abstract class AppLocalizations {
   /// **'Çalma Listelerin'**
   String get filterPlaylists;
 
+  /// No description provided for @filterDownloads.
+  ///
+  /// In tr, this message translates to:
+  /// **'İndirilenler'**
+  String get filterDownloads;
+
   /// No description provided for @homeViewYourPlaylists.
   ///
   /// In tr, this message translates to:
@@ -761,6 +767,12 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Sevdiğin Sanatçılar'**
   String get homeViewYourFavoriteArtists;
+
+  /// No description provided for @libraryViewEmtyDownloadedList.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sonuç bulunamadi'**
+  String get libraryViewEmtyDownloadedList;
 }
 
 class _AppLocalizationsDelegate

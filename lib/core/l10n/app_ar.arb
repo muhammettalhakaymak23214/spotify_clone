@@ -164,7 +164,11 @@
     "filterArtists": "فنانون",
     "filterAlbums": "ألبومات",
     "filterPlaylists": "قوائم الأغاني الخاصة بك",
+    "filterDownloads": "التنزيلات",
     "homeViewYourPlaylists": "قوائم التشغيل الخاصة بك",
     "homeViewNewReleases": "الإصدارات الجديدة",
-    "homeViewYourFavoriteArtists": "فنانوك المفضلون"
+    "homeViewYourFavoriteArtists": "فنانوك المفضلون",
+    "libraryViewEmtyDownloadedList": "لم تقم بتنزيل أي أغاني بعد",
+    "libraryViewEmtyDownloadedList": "لا توجد نتائج"
+    
 }

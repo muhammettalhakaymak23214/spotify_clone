@@ -374,6 +374,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get filterPlaylists => 'Your Playlists';
 
   @override
+  String get filterDownloads => 'Downloads';
+
+  @override
   String get homeViewYourPlaylists => 'Your Playlists';
 
   @override
@@ -381,4 +384,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get homeViewYourFavoriteArtists => 'Your Favorite Artists';
+
+  @override
+  String get libraryViewEmtyDownloadedList => 'No results found';
 }
