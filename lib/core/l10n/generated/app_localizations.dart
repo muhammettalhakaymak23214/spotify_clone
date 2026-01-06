@@ -388,6 +388,12 @@ abstract class AppLocalizations {
   /// **'Mevcut Planlar'**
   String get premiumViewCurrentPlansTitle;
 
+  /// No description provided for @premiumViewPromoShortWelcome.
+  ///
+  /// In tr, this message translates to:
+  /// **'{monthCount} ay boyunca {price}'**
+  String premiumViewPromoShortWelcome(int monthCount, String price);
+
   /// No description provided for @premiumViewTermsIndividualWelcome.
   ///
   /// In tr, this message translates to:

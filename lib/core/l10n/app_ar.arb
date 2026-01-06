@@ -69,6 +69,13 @@
     "premiumViewWhyFeatureGroupListening": "استمع مع أصدقائك في نفس الوقت",
     "premiumViewWhyFeatureQueueEditing": "تنظيم قائمة انتظار الاستماع",
     "premiumViewCurrentPlansTitle": "الخطط الحالية",
+    "premiumViewPromoShortWelcome": "{price} لـ {monthCount, plural, =1{شهر واحد} =2{شهرين} many{{monthCount} شهراً} other{{monthCount} أشهر}}",
+    "@premiumViewPromoShortWelcome": {
+        "placeholders": {
+        "monthCount": { "type": "int" },
+        "price": { "type": "String" }
+        }
+    },
     "premiumViewTermsIndividualWelcome": "أول {monthCount} أشهر مقابل {promoPrice}، ثم {standardPrice} شهرياً. عرض العودة إلى Premium Individual. متاح فقط للمستخدمين الذين لم يشتركوا في Premium لأكثر من 30 يوماً. قد تختلف العروض على Google Play.",
     "@premiumViewTermsIndividualWelcome": {
         "placeholders": {

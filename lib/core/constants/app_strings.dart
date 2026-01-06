@@ -1,4 +1,11 @@
 class AppStrings {
+  //Yeni Düzen
+  //Asset Path
+   static final String premiumViewAppBarImage = "assets/png/premiums.png";
+
+
+
+
   static final String emty = "";
   
   //Image Paths

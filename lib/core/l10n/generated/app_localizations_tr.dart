@@ -164,6 +164,11 @@ class AppLocalizationsTr extends AppLocalizations {
   String get premiumViewCurrentPlansTitle => 'Mevcut Planlar';
 
   @override
+  String premiumViewPromoShortWelcome(int monthCount, String price) {
+    return '$monthCount ay boyunca $price';
+  }
+
+  @override
   String premiumViewTermsIndividualWelcome(
     String monthCount,
     String promoPrice,

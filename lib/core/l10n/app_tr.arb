@@ -69,6 +69,13 @@
     "premiumViewWhyFeatureGroupListening": "Arkadaşlarınla aynı anda dinle",
     "premiumViewWhyFeatureQueueEditing": "Dinleme sıranı düzenle",
     "premiumViewCurrentPlansTitle": "Mevcut Planlar",
+    "premiumViewPromoShortWelcome": "{monthCount} ay boyunca {price}",
+    "@premiumViewPromoShortWelcome": {
+        "placeholders": {
+        "monthCount": { "type": "int" },
+        "price": { "type": "String" }
+        }
+    },
     "premiumViewTermsIndividualWelcome": "İlk {monthCount} ay boyunca {promoPrice}, sonra ayda {standardPrice}. Premium Bireysel için tekrar hoş geldin teklifi. Premium'a erişimi 30 günden uzun süre önce sona eren ve son 24 ay içinde hiçbir \"tekrar hoş geldin\" teklifinden yararlanmamış olan kullanıcılar tarafından kullanılabilir. Sadece Spotify aracılığıyla üye olan kişiler tekliften yararlanabilir. Google Play'de teklifler farklı olabilir.",
     "@premiumViewTermsIndividualWelcome": {
         "placeholders": {

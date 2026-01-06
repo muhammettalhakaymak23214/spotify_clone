@@ -164,6 +164,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get premiumViewCurrentPlansTitle => 'Current Plans';
 
   @override
+  String premiumViewPromoShortWelcome(int monthCount, String price) {
+    String _temp0 = intl.Intl.pluralLogic(
+      monthCount,
+      locale: localeName,
+      other: '$monthCount months',
+      one: '1 month',
+    );
+    return '$price for the first $_temp0';
+  }
+
+  @override
   String premiumViewTermsIndividualWelcome(
     String monthCount,
     String promoPrice,

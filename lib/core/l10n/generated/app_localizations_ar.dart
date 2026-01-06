@@ -164,6 +164,19 @@ class AppLocalizationsAr extends AppLocalizations {
   String get premiumViewCurrentPlansTitle => 'الخطط الحالية';
 
   @override
+  String premiumViewPromoShortWelcome(int monthCount, String price) {
+    String _temp0 = intl.Intl.pluralLogic(
+      monthCount,
+      locale: localeName,
+      other: '$monthCount أشهر',
+      many: '$monthCount شهراً',
+      two: 'شهرين',
+      one: 'شهر واحد',
+    );
+    return '$price لـ $_temp0';
+  }
+
+  @override
   String premiumViewTermsIndividualWelcome(
     String monthCount,
     String promoPrice,

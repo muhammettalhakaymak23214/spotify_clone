@@ -69,6 +69,13 @@
     "premiumViewWhyFeatureGroupListening": "Listen with friends in real time",
     "premiumViewWhyFeatureQueueEditing": "Organize your listening queue",
     "premiumViewCurrentPlansTitle": "Current Plans",
+    "premiumViewPromoShortWelcome": "{price} for the first {monthCount, plural, =1{1 month} other{{monthCount} months}}",
+    "@premiumViewPromoShortWelcome": {
+        "placeholders": {
+        "monthCount": { "type": "int" },
+        "price": { "type": "String" }
+        }
+    },
     "premiumViewTermsIndividualWelcome": "{promoPrice} for first {monthCount} months, then {standardPrice}/month. Welcome back offer for Premium Individual. Only available to users who haven't had Premium for more than 30 days and haven't used a 'welcome back' offer in the last 24 months. Only available through Spotify. Google Play offers may vary.",
     "@premiumViewTermsIndividualWelcome": {
         "placeholders": {
