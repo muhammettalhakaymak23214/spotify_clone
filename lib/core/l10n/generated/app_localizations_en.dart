@@ -372,4 +372,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get filterPlaylists => 'Your Playlists';
+
+  @override
+  String get homeViewYourPlaylists => 'Your Playlists';
+
+  @override
+  String get homeViewNewReleases => 'New Releases';
+
+  @override
+  String get homeViewYourFavoriteArtists => 'Your Favorite Artists';
 }

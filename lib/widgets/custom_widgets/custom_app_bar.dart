@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
-import 'package:spotify_clone/core/constants/app_paddings.dart';
-import 'package:spotify_clone/core/constants/app_sizes.dart';
+import 'package:spotify_clone/widgets/custom_widgets/app_text.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  CustomAppBar({
+  const CustomAppBar({
     super.key,
     this.title,
     this.leading,
@@ -15,11 +14,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.bottomButtonsData,
     this.actionButtonsData,
     this.onTap,
-    this.viewModel, required this.selectedIndex,
+    this.viewModel,
+    required this.selectedIndex,
   });
 
   final Widget? title;
-  final Image? leading;
+  final Widget? leading;
   final VoidCallback? onTap;
   final double? appBarHeight;
   final List<AppBarButtonData>? bottomButtonsData;
@@ -27,13 +27,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final dynamic viewModel;
   final int selectedIndex;
 
-  final Size minSize = Size(0, 30);
-
   @override
   Widget build(BuildContext context) {
     return AppBar(
       systemOverlayStyle: SystemUiOverlayStyle.light,
-      backgroundColor: AppColors.darkToneInk,
+      backgroundColor: _Constants.appBarBgColor,
       leading: _leading(),
       actions: (actionButtonsData != null && actionButtonsData!.isNotEmpty)
           ? actionButtonsData!.map((data) => _actions(data)).toList()
@@ -47,42 +45,34 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   PreferredSize _bottom(BuildContext context) {
     return PreferredSize(
-      preferredSize: AppSizes.bottomPreferredSize,
+      preferredSize: _Constants.bottomPreferredSize,
       child: Observer(
         builder: (context) {
           return Container(
-            padding: AppPaddings.horizontal10,
-            height: AppSizes.size50,
+            padding: _Constants.bottomContainerPadding,
+            height: _Constants.bottomContainerHeight,
             child: ListView(
-              padding: AppPaddings.all10,
+              padding: _Constants.bottomListPadding,
               scrollDirection: Axis.horizontal,
               children: bottomButtonsData!
                   .map(
                     (data) => Padding(
-                      padding: AppPaddings.right10,
+                      padding: _Constants.bottomButtonMargin,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: data.index == selectedIndex ? Colors.green   : AppColors.blackPanther,
-                          //backgroundColor: AppColors.blackPanther,
-
-                          padding: AppPaddings.horizontal10,
-                          minimumSize: minSize,
+                          backgroundColor: data.index == selectedIndex
+                              ? _Constants.activeButtonBgColor
+                              : _Constants.inactiveButtonBgColor,
+                          padding: _Constants.bottomButtonInternalPadding,
+                          minimumSize: _Constants.minButtonSize,
                           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          shape: const StadiumBorder(),
                         ),
-                        onPressed:
-                        (){
-                          debugPrint("selectedIndex : $selectedIndex");
-                          debugPrint("data index : ${data.index}");
-                          
-                          data.onPressed();
-                        },
-                        // data.onPressed,
-
-                        child: Text(
-                          // index.toString(),
-                          data.text,
-                          style: Theme.of(context).textTheme.bodyMedium
-                              ?.copyWith(color: AppColors.white),
+                        onPressed: data.onPressed,
+                        child: AppText(
+                          text: data.text,
+                          style: AppTextStyle.labelM,
+                          color: _Constants.buttonTextColor,
                         ),
                       ),
                     ),
@@ -95,34 +85,33 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  Padding _title() {
-    return Padding(padding: AppPaddings.top10, child: title ?? SizedBox());
+  Widget _title() {
+    return Padding(
+      padding: _Constants.titlePadding,
+      child: title ?? const SizedBox.shrink(),
+    );
   }
 
-  Padding _actions(AppBarButtonData data) {
+  Widget _actions(AppBarButtonData data) {
     return Padding(
-      padding: AppPaddings.actionsPadding,
+      padding: _Constants.actionPadding,
       child: IconButton(
-        color: AppColors.white,
         onPressed: data.onPressed,
-        icon: data.icon ?? FaIcon(FontAwesomeIcons.adn),
+        icon: data.icon ?? const SizedBox.shrink(),
       ),
     );
   }
 
-  Padding _leading() {
+  Widget _leading() {
     return Padding(
-      padding: AppPaddings.leadingPadding,
+      padding: _Constants.leadingPadding,
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-          width: AppSizes.avatarSize2,
-          height: AppSizes.avatarSize2,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-         //   color: AppColors.blackPanther,
-          ),
-          child: Center(child: leading ?? SizedBox.shrink()),
+          width: _Constants.avatarSize,
+          height: _Constants.avatarSize,
+          decoration: _Constants.avatarDecoration,
+          child: Center(child: leading ?? const SizedBox.shrink()),
         ),
       ),
     );
@@ -133,15 +122,41 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 }
 
 class AppBarButtonData {
-  AppBarButtonData( {required this.index,
+  AppBarButtonData({
+    required this.index,
     this.type = "Boş",
-    this.icon,
+    this.icon, 
     this.text = "Boş",
     required this.onPressed,
   });
   final String text;
-  final Icon? icon;
+  final Widget? icon;
   final VoidCallback onPressed;
   final String type;
   final int index;
+}
+
+abstract final class _Constants {
+  //Color
+  static Color get appBarBgColor => AppColors.background;
+  static Color get activeButtonBgColor => Colors.green;
+  static Color get inactiveButtonBgColor => AppColors.cardBackground;
+  static Color get buttonTextColor => AppColors.white;
+  //Size
+  static Size get bottomPreferredSize => Size.fromHeight(50.h);
+  static double get bottomContainerHeight => 50.h;
+  static Size get minButtonSize => Size(0, 30.h);
+  static double get avatarSize => 35.sp;
+  //Padding
+  static EdgeInsetsGeometry get leadingPadding => EdgeInsetsDirectional.only(start: 16.w);
+  static EdgeInsetsGeometry get titlePadding => EdgeInsets.only(top: 10.h);
+  static EdgeInsetsGeometry get actionPadding => EdgeInsetsDirectional.only(end: 8.w);
+  static EdgeInsetsGeometry get bottomContainerPadding => EdgeInsets.symmetric(horizontal: 10.w);
+  static EdgeInsetsGeometry get bottomListPadding => EdgeInsets.all(10.w);
+  static EdgeInsetsGeometry get bottomButtonMargin => EdgeInsetsDirectional.only(end: 10.w);
+  static EdgeInsetsGeometry get bottomButtonInternalPadding => EdgeInsets.symmetric(horizontal: 15.w);
+  //Decoration
+  static BoxDecoration get avatarDecoration => const BoxDecoration(
+        shape: BoxShape.circle,
+      );
 }

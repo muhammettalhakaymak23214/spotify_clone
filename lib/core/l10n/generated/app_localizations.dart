@@ -743,6 +743,24 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Çalma Listelerin'**
   String get filterPlaylists;
+
+  /// No description provided for @homeViewYourPlaylists.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çalma Listelerin'**
+  String get homeViewYourPlaylists;
+
+  /// No description provided for @homeViewNewReleases.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni Çıkanlar'**
+  String get homeViewNewReleases;
+
+  /// No description provided for @homeViewYourFavoriteArtists.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sevdiğin Sanatçılar'**
+  String get homeViewYourFavoriteArtists;
 }
 
 class _AppLocalizationsDelegate

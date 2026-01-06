@@ -163,5 +163,8 @@
     "filterPodcasts": "Podcasts",
     "filterArtists": "Artists",
     "filterAlbums": "Albums",
-    "filterPlaylists": "Your Playlists"
+    "filterPlaylists": "Your Playlists",
+    "homeViewYourPlaylists": "Your Playlists",
+    "homeViewNewReleases": "New Releases",
+    "homeViewYourFavoriteArtists": "Your Favorite Artists"
 }

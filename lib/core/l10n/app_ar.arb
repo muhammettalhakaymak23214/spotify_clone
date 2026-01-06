@@ -163,5 +163,8 @@
     "filterPodcasts": "بودكاست",
     "filterArtists": "فنانون",
     "filterAlbums": "ألبومات",
-    "filterPlaylists": "قوائم الأغاني الخاصة بك"
+    "filterPlaylists": "قوائم الأغاني الخاصة بك",
+    "homeViewYourPlaylists": "قوائم التشغيل الخاصة بك",
+    "homeViewNewReleases": "الإصدارات الجديدة",
+    "homeViewYourFavoriteArtists": "فنانوك المفضلون"
 }

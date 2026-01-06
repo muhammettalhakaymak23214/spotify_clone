@@ -373,4 +373,13 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get filterPlaylists => 'قوائم الأغاني الخاصة بك';
+
+  @override
+  String get homeViewYourPlaylists => 'قوائم التشغيل الخاصة بك';
+
+  @override
+  String get homeViewNewReleases => 'الإصدارات الجديدة';
+
+  @override
+  String get homeViewYourFavoriteArtists => 'فنانوك المفضلون';
 }

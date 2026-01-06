@@ -163,7 +163,10 @@
     "filterPodcasts": "Podcast'ler",
     "filterArtists": "Sanatçılar",
     "filterAlbums": "Albümler",
-    "filterPlaylists": "Çalma Listelerin"
+    "filterPlaylists": "Çalma Listelerin",
+    "homeViewYourPlaylists": "Çalma Listelerin",
+    "homeViewNewReleases": "Yeni Çıkanlar",
+    "homeViewYourFavoriteArtists": "Sevdiğin Sanatçılar"
     
 }
 

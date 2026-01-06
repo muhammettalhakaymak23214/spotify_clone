@@ -368,4 +368,13 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get filterPlaylists => 'Çalma Listelerin';
+
+  @override
+  String get homeViewYourPlaylists => 'Çalma Listelerin';
+
+  @override
+  String get homeViewNewReleases => 'Yeni Çıkanlar';
+
+  @override
+  String get homeViewYourFavoriteArtists => 'Sevdiğin Sanatçılar';
 }

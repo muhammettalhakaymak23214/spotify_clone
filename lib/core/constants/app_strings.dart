@@ -2,8 +2,10 @@ class AppStrings {
   //Yeni Düzen
   //Asset Path
    static final String premiumViewAppBarImage = "assets/png/premiums.png";
+   static final String profilePhotoImage = "assets/png/profile_photo.png";
+    
 
-
+ 
 
 
   static final String emty = "";
