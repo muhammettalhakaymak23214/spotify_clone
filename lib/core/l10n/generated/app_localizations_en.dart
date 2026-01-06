@@ -387,4 +387,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get libraryViewEmtyDownloadedList => 'No results found';
+
+  @override
+  String get mediaTypePlaylist => 'PLAYING FROM PLAYLIST';
+
+  @override
+  String get mediaTypeAlbum => 'PLAYING FROM ALBUM';
+
+  @override
+  String get mediaTypeArtist => 'PLAYING FROM ARTIST';
+
+  @override
+  String get mediaTypeShow => 'PLAYING FROM PODCAST';
+
+  @override
+  String get mediaTypeDownloaded => 'PLAYING FROM DOWNLOADS';
 }

@@ -206,7 +206,7 @@ abstract final class _Constants {
   static double get profileImageSize => 35.w;
   static double get filterButtonHeight => 30.h;
   static Size get filterButtonMinSize => Size(0, 30.h);
-  static double get sectionListHeight => 210.h;
+  static double get sectionListHeight => 230.h;
   static double get cardWidth => 155.w;
   static double get cardImageSize => 155.w;
   static double get bottomSpaceHeight => 10.h;

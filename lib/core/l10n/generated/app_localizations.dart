@@ -773,6 +773,36 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Sonuç bulunamadi'**
   String get libraryViewEmtyDownloadedList;
+
+  /// No description provided for @mediaTypePlaylist.
+  ///
+  /// In tr, this message translates to:
+  /// **'ÇALMA LİSTESİNDEN ÇALINIYOR'**
+  String get mediaTypePlaylist;
+
+  /// No description provided for @mediaTypeAlbum.
+  ///
+  /// In tr, this message translates to:
+  /// **'ALBUMDEN ÇALINIYOR'**
+  String get mediaTypeAlbum;
+
+  /// No description provided for @mediaTypeArtist.
+  ///
+  /// In tr, this message translates to:
+  /// **'SANATÇILARDAN ÇALINIYOR'**
+  String get mediaTypeArtist;
+
+  /// No description provided for @mediaTypeShow.
+  ///
+  /// In tr, this message translates to:
+  /// **'PODCAST\'TEN ÇALINIYOR'**
+  String get mediaTypeShow;
+
+  /// No description provided for @mediaTypeDownloaded.
+  ///
+  /// In tr, this message translates to:
+  /// **'İNDİRİLENLERDEN ÇALINIYOR'**
+  String get mediaTypeDownloaded;
 }
 
 class _AppLocalizationsDelegate

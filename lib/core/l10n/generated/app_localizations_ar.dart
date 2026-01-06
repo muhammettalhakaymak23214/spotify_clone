@@ -388,4 +388,19 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get libraryViewEmtyDownloadedList => 'لا توجد نتائج';
+
+  @override
+  String get mediaTypePlaylist => 'جارٍ التشغيل من قائمة التشغيل';
+
+  @override
+  String get mediaTypeAlbum => 'جارٍ التشغيل من الألبوم';
+
+  @override
+  String get mediaTypeArtist => 'جارٍ التشغيل من الفنانين';
+
+  @override
+  String get mediaTypeShow => 'جارٍ التشغيل من البودكاست';
+
+  @override
+  String get mediaTypeDownloaded => 'جارٍ التشغيل من التنزيلات';
 }

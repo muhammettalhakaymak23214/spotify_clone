@@ -1,15 +1,15 @@
 class AppStrings {
   //Yeni Düzen
   //Asset Path
-   static final String premiumViewAppBarImage = "assets/png/premiums.png";
-   static final String profilePhotoImage = "assets/png/profile_photo.png";
-    
-
- 
-
+  static final String premiumViewAppBarImage = "assets/png/premiums.png";
+  static final String profilePhotoImage = "assets/png/profile_photo.png";
+  static final String suffleImage = "assets/png/suffle.png";
+  static final String activeSuffleImage = "assets/png/active_suffle.png";
+  static final String loopImage = "assets/png/loop.png";
+  static final String activeLoopImage = "assets/png/active_loop.png";
 
   static final String emty = "";
-  
+
   //Image Paths
   static final String profileImagePath = "assets/png/profile_photo.png";
 
@@ -31,7 +31,7 @@ class AppStrings {
 
   static final String emtyDownloadedList = "Henüz şarkı indirmedin";
 
-/*
+  /*
   static const String nextTrack = "Sonraki parça";
   static const String previousTrack = "Önceki parça";
 */
@@ -41,7 +41,7 @@ class AppStrings {
   static final String searchBar = "Ne dinlemek istiyorsun?";
   //SliverAppBar
   static final String searchBarTitle = "Ne dinlemek istiyorsun?";
-/*
+  /*
     static final String profileView = "Profili görüntüle";
   static final String addAccount = "Hesap ekle";
   static final String updates = "Yenilikler";
@@ -50,17 +50,17 @@ class AppStrings {
   static final String notifications = "Güncellemelerin";
   static final String settingsPrivacy = "Ayarlar ve gizlilik";
 */
-    static final String planButtonTitle1 = "Premium'u edin";
+  static final String planButtonTitle1 = "Premium'u edin";
   static final String planButtonTitle2 = "Premium Öğrenci planını edin";
   static final String planButtonTitle3 = "Premium Duo planını edin";
   static final String planButtonTitle4 = "Premium Aile planını edin";
 
-    static final String planSubtitle1 = "Bireysel";
+  static final String planSubtitle1 = "Bireysel";
   static final String planSubtitle2 = "Öğrenci";
   static final String planSubtitle3 = "Duo";
   static final String planSubtitle4 = "Aile";
 
-    static final String planPackageDetails1_1 = "1 Premium hesabı";
+  static final String planPackageDetails1_1 = "1 Premium hesabı";
   static final String planPackageDetails1_2 = "İstediğin zaman iptal et";
   static final String planPackageDetails2_1 = "Doğrulanmış 1 Premium hesabı";
   static final String planPackageDetails2_2 =
@@ -73,13 +73,13 @@ class AppStrings {
       "Sansürsüz olarak işaretlenen içerikleri kontrol et";
   static final String planPackageDetails4_3 = "İstediğin zaman iptal et";
 
-    static final String planPrice1 = "2 ay boyunca \u20BA45";
+  static final String planPrice1 = "2 ay boyunca \u20BA45";
   static final String planPriceDescription1 = "Sonra ayda \u20BA99";
   static final String planPrice2 = "\u20BA55\\ay";
   static final String planPrice3 = "\u20BA135\\ay";
   static final String planPrice4 = "\u20BA165\\ay";
 
-    static final String whyPremiumSection1 = "Neden Premium'a katılmalısın?";
+  static final String whyPremiumSection1 = "Neden Premium'a katılmalısın?";
   static final String whyPremiumSection2 = "Reklamsız müzik dinle";
   static final String whyPremiumSection3 = "İndir ve çevrimdışı dinle";
   static final String whyPremiumSection4 = "Şarkıları istediğin sırada çal";
@@ -87,15 +87,14 @@ class AppStrings {
   static final String whyPremiumSection6 = "Arkadaşlarınla aynı anda dinle";
   static final String whyPremiumSection7 = "Dinleme sıranı düzenle";
 
-    static final String currentPlans = "Mevcut Planlar";
+  static final String currentPlans = "Mevcut Planlar";
 
-      static final String premium = "Premium";
+  static final String premium = "Premium";
   static final String premiumButtonTitle = "Premium'u edin";
   static final String premiumPageTitle =
       "Premium'a geri dön: Spotify'a üye olduğunda ilk 2 ay boyunca \u20BA45,00*";
   static final String premiumPageSubtitle = "Sınırlı süreli teklif";
 
-  
   static final String getPremium1 =
       "İlk 2 ay boyunca \u20BA45, sonra ayda \u20BA99. Premium Bireysel için tekrar hoş geldin teklifi. Premium'a erişimi 30 günden uzun süre önce sona eren ve son 24 ay içinde hiçbir \"tekrar hoş geldin\" teklifinden yararlanmamış olan kullanıcılar tarafından kullanılabilir. Sadece Spotify aracılığıyla üye olan kişiler tekliften yararlanabilir. Google Play'de teklifler farklı olabilir.";
 
@@ -103,7 +102,7 @@ class AppStrings {
   static final String getPremium3 =
       "\nTeklif 31 Aralık 2025 tarihinde sona erecek.";
 
-        static final String planConditions1_1 =
+  static final String planConditions1_1 =
       "İlk 2 ay boyunca \u20BA45, sonra ayda \u20BA99. Premium Bireysel için tekrar hoş geldin teklifi. Premium'a erişimi 30 günden uzun süre önce sona eren ve son 24 ay içinde hiçbir \"tekrar hoş geldin\" teklifinden yararlanmamış olan kullanıcılar tarafından kullanılabilir. Sadece Spotify aracılığıyla üye olan kişiler tekliften yararlanabilir. Google Play'de teklifler farklı olabilir.";
   static final String planConditions1_2 = " Koşullar geçerlidir.";
   static final String planConditions1_3 =
@@ -117,8 +116,7 @@ class AppStrings {
       "Aynı adreste oturan en fazla 6 aile üyesi için.";
   static final String planConditions4_2 = " Koşullar geçerlidir.";
 
-
-    //Player View / Song Bottom Sheet
+  //Player View / Song Bottom Sheet
   static final String download = "İndir";
   static final String delete = "İndirilenlerden Kaldır";
   static final String share = "Paylaş";
@@ -143,7 +141,7 @@ class AppStrings {
   static final String bsMixPlay = "Karışık çal";
   static final String bsPlayInOrder = "Sırayla çal";
 
-    //Create BottomSheet
+  //Create BottomSheet
   static final String title1 = "Çalma listesi";
   static final String title2 = "Ortak çalma listesi";
   static final String title3 = "Blend";
@@ -154,7 +152,7 @@ class AppStrings {
   static final String subtitle3 =
       "Arkadaşlarının zevklerini bir çalma listesinde buluştur";
 
-       //Create Playlist View
+  //Create Playlist View
   static final String setPlaylistName = "Çalma listene bir isim ver";
   static final String cancel = "İptal";
   static final String create = "Oluştur";
@@ -166,7 +164,7 @@ class AppStrings {
   static final String refresh = "Yenile";
   static final String nullDataRecommendedSongs = "Önerilebilecek şarkı yok";
 
-    //Playlist Change Visibility ShowDialog
+  //Playlist Change Visibility ShowDialog
   static final String sDChangeVisibilityTitle =
       "Çalma listesini başkalarıyla paylaşmak ister misin?";
   static final String sDChangeVisibilitySubTitle =
@@ -174,17 +172,11 @@ class AppStrings {
   static final String sDChangeVisibilityDoPrivate = "Paylaşılabilir yap";
   static final String sDChangeVisibilityCancel = "İptal";
 
-   
-
-  
-
   //Playlist Delete ShowDialog
   static final String sDDeletePlaylistTitle = "Çalma listesini sil";
   static final String sDCancel = "İptal edildi";
   static final String sDDelete = "Sil";
 
-
-  
   //CustomAppBar
   static final String artists = "Sanatçılar";
   static final String albums = "Albümler";

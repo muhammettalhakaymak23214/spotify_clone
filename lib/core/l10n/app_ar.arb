@@ -169,6 +169,11 @@
     "homeViewNewReleases": "الإصدارات الجديدة",
     "homeViewYourFavoriteArtists": "فنانوك المفضلون",
     "libraryViewEmtyDownloadedList": "لم تقم بتنزيل أي أغاني بعد",
-    "libraryViewEmtyDownloadedList": "لا توجد نتائج"
+    "libraryViewEmtyDownloadedList": "لا توجد نتائج",
+    "mediaTypePlaylist": "جارٍ التشغيل من قائمة التشغيل",
+    "mediaTypeAlbum": "جارٍ التشغيل من الألبوم",
+    "mediaTypeArtist": "جارٍ التشغيل من الفنانين",
+    "mediaTypeShow": "جارٍ التشغيل من البودكاست",
+    "mediaTypeDownloaded": "جارٍ التشغيل من التنزيلات"
     
 }

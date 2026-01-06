@@ -1,18 +1,23 @@
+import 'package:flutter/material.dart';
+import 'package:spotify_clone/core/l10n/generated/app_localizations.dart';
+
 enum MediaType { playlist, album, artist ,show , downloaded }
 
 extension MediaTypeText on MediaType {
-  String get title {
+  String  title(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     switch (this) {
+      
       case MediaType.playlist:
-        return "ÇALMA LİSTESİNDEN ÇALINIYOR";
+        return l10n.mediaTypePlaylist;
       case MediaType.album:
-        return "ALBUMDEN ÇALINIYOR";
+        return l10n.mediaTypeAlbum;
       case MediaType.artist:
-        return "SANATÇILARDAN ÇALINIYOR";
+        return l10n.mediaTypeArtist;
       case MediaType.show:
-        return "PODCAST'TEN ÇALINIYOR";
+        return l10n.mediaTypeShow;
       case MediaType.downloaded:
-        return "İNDİRİLENLERDEN ÇALINIYOR";
+        return l10n.mediaTypeDownloaded;
     }
   }
 

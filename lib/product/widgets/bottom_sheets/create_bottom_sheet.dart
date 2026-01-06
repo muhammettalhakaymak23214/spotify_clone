@@ -96,7 +96,7 @@ abstract final class _Constants {
   //Size
   static double get iconSize => 22.sp;
   static double get avatarContainerSize => 48.w;
-  static double get sheetHeight => 300.h;
+  static double get sheetHeight => 310.h;
   static double get sheetWidth => 0.95.sw;
   static double get borderRadius => 20.r;
   //Decoration

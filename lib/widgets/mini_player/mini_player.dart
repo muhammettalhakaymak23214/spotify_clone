@@ -9,7 +9,8 @@ import 'package:spotify_clone/core/services/service_locator.dart';
 import 'package:spotify_clone/main.dart';
 import 'package:spotify_clone/view/player_view.dart';
 import 'package:spotify_clone/core/stores/player_view_model.dart';
-import 'package:spotify_clone/widgets/custom_widgets/custom_icon.dart';
+import 'package:spotify_clone/widgets/custom_widgets/app_icon.dart';
+import 'package:spotify_clone/widgets/custom_widgets/app_text.dart';
 import 'package:spotify_clone/widgets/custom_widgets/auto_scrolling_text.dart';
 import 'package:spotify_clone/widgets/progress_bars/mini_player_progress_bar.dart';
 
@@ -31,43 +32,43 @@ class MiniPlayer extends StatelessWidget {
             margin: _Constants.emptyMargin,
           );
         }
-
-        return GestureDetector(
-          onTap: () => _openPlayerView(context),
-          child: _MiniPlayerBackground(
-            item: item,
-            child: Column(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: _Constants.contentPadding,
-                    child: Row(
-                      children: [
-                        _MiniPlayerAlbumArt(
-                          item: item,
-                          currentType: player.currentType,
+        return Directionality(
+            textDirection: TextDirection.ltr,
+            child: GestureDetector(
+              onTap: () => _openPlayerView(context),
+              child: _MiniPlayerBackground(
+                item: item,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: _Constants.contentPadding,
+                        child: Row(
+                          children: [
+                            _MiniPlayerAlbumArt(
+                              item: item,
+                              currentType: player.currentType,
+                            ),
+                            SizedBox(width: _Constants.gapWidth),
+                            Expanded(
+                              child: SwipeableTextArea(
+                                player: player,
+                                currentItem: item,
+                              ),
+                            ),
+                            _MiniPlayerControls(player: player),
+                          ],
                         ),
-                        SizedBox(width: _Constants.gapWidth),
-                        Expanded(
-                          child: SwipeableTextArea(
-                           
-                            player: player,
-                            currentItem: item,
-                          ),
-                        ),
-                        _MiniPlayerControls(player: player),
-                      ],
+                      ),
                     ),
-                  ),
+                    Padding(
+                      padding: _Constants.progressBarPadding,
+                      child: MiniPlayerProgressBar(player: player),
+                    ),
+                  ],
                 ),
-                Padding(
-                  padding: _Constants.progressBarPadding,
-                  child: MiniPlayerProgressBar(player: player),
-                ),
-              ],
-            ),
-          ),
-        );
+              ),
+            ));
       },
     );
   }
@@ -94,6 +95,28 @@ class SwipeableTextArea extends StatefulWidget {
 
   @override
   State<SwipeableTextArea> createState() => _SwipeableTextAreaState();
+}
+
+class _SwipeActionLabel extends StatelessWidget {
+  final double xOffset;
+  final String text;
+
+  const _SwipeActionLabel({required this.xOffset, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Transform.translate(
+      offset: Offset(xOffset, 0),
+      child: Container(
+        alignment: Alignment.centerLeft,
+        child: AppText(
+          text: text,
+          style: AppTextStyle.bodyM,
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
 }
 
 class _SwipeableTextAreaState extends State<SwipeableTextArea>
@@ -163,7 +186,9 @@ class _SwipeableTextAreaState extends State<SwipeableTextArea>
     if (_drag.abs() > _Constants.swipeThresholdRatio) {
       setState(() {
         _isSwiping = true;
-        _helperText = _drag < 0 ? AppLocalizations.of(context)!.miniPlayerNextTrack : AppLocalizations.of(context)!.miniPlayerPreviousTrack;
+        _helperText = _drag < 0
+            ? AppLocalizations.of(context)!.miniPlayerNextTrack
+            : AppLocalizations.of(context)!.miniPlayerPreviousTrack;
       });
 
       _controller.forward(from: 0.0).then((_) {
@@ -181,8 +206,7 @@ class _SwipeableTextAreaState extends State<SwipeableTextArea>
   Widget _buildSwipeContent(double width) {
     double mainX = _drag * width;
     if (_isSwiping) {
-      mainX =
-          _drag * width * (1 - _controller.value) -
+      mainX = _drag * width * (1 - _controller.value) -
           (_controller.value * (_drag < 0 ? width : -width));
     }
 
@@ -196,7 +220,9 @@ class _SwipeableTextAreaState extends State<SwipeableTextArea>
           xOffset: helperX,
           text: _isSwiping
               ? _helperText
-              : (_drag < 0 ? AppLocalizations.of(context)!.miniPlayerNextTrack : AppLocalizations.of(context)!.miniPlayerPreviousTrack),
+              : (_drag < 0
+                  ? AppLocalizations.of(context)!.miniPlayerNextTrack
+                  : AppLocalizations.of(context)!.miniPlayerPreviousTrack),
         ),
         Transform.translate(
           offset: Offset(mainX, 0),
@@ -228,25 +254,28 @@ class _MiniPlayerAlbumArt extends StatelessWidget {
         child: albumArt == null || albumArt.isEmpty
             ? const ColoredBox(
                 color: Colors.grey,
-                child: Icon(Icons.music_note),
+                child: AppIcon(icon: Icons.music_note, size: AppIconSize.small),
               )
             : currentType != MediaType.downloaded
-            ? Image.network(
-                albumArt,
-                fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => _buildErrorWidget(),
-              )
-            : Image.file(
-                File(albumArt),
-                fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => _buildErrorWidget(),
-              ),
+                ? Image.network(
+                    albumArt,
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, __, ___) => _buildErrorWidget(),
+                  )
+                : Image.file(
+                    File(albumArt),
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, __, ___) => _buildErrorWidget(),
+                  ),
       ),
     );
   }
 
   Widget _buildErrorWidget() {
-    return const ColoredBox(color: Colors.grey, child: Icon(Icons.music_note));
+    return const ColoredBox(
+      color: Colors.grey,
+      child: AppIcon(icon: Icons.music_note, size: AppIconSize.small),
+    );
   }
 }
 
@@ -291,7 +320,7 @@ class _MiniPlayerIconButton extends StatelessWidget {
       borderRadius: BorderRadius.circular(20.r),
       child: Padding(
         padding: EdgeInsets.all(8.w),
-        child: CustomIcon(iconData: icon, iconSize: IconSize.medium),
+        child: AppIcon(icon: icon, size: AppIconSize.medium),
       ),
     );
   }
@@ -339,9 +368,8 @@ class _MiniPlayerBackground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final int? argb = item.extras?['color'] as int?;
-    final Color bgColor = argb != null
-        ? Color(argb).darken(0.50)
-        : Colors.black;
+    final Color bgColor =
+        argb != null ? Color(argb).darken(0.50) : Colors.black;
 
     return Container(
       height: _Constants.miniPlayerHeight,
@@ -351,27 +379,6 @@ class _MiniPlayerBackground extends StatelessWidget {
         borderRadius: _Constants.playerRadius,
       ),
       child: child,
-    );
-  }
-}
-
-class _SwipeActionLabel extends StatelessWidget {
-  final double xOffset;
-  final String text;
-
-  const _SwipeActionLabel({required this.xOffset, required this.text});
-
-  @override
-  Widget build(BuildContext context) {
-    return Transform.translate(
-      offset: Offset(xOffset, 0),
-      child: Container(
-        alignment: Alignment.centerLeft,
-        child: Text(
-          text,
-          style: TextStyle(color: Colors.white, fontSize: 14.sp),
-        ),
-      ),
     );
   }
 }

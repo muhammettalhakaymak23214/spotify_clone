@@ -383,4 +383,19 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get libraryViewEmtyDownloadedList => 'Sonuç bulunamadi';
+
+  @override
+  String get mediaTypePlaylist => 'ÇALMA LİSTESİNDEN ÇALINIYOR';
+
+  @override
+  String get mediaTypeAlbum => 'ALBUMDEN ÇALINIYOR';
+
+  @override
+  String get mediaTypeArtist => 'SANATÇILARDAN ÇALINIYOR';
+
+  @override
+  String get mediaTypeShow => 'PODCAST\'TEN ÇALINIYOR';
+
+  @override
+  String get mediaTypeDownloaded => 'İNDİRİLENLERDEN ÇALINIYOR';
 }

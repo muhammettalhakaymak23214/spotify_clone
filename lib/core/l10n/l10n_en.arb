@@ -169,6 +169,11 @@
     "homeViewNewReleases": "New Releases",
     "homeViewYourFavoriteArtists": "Your Favorite Artists",
     "libraryViewEmtyDownloadedList": "You haven't downloaded any songs yet",
-    "libraryViewEmtyDownloadedList": "No results found"
+    "libraryViewEmtyDownloadedList": "No results found",
+    "mediaTypePlaylist": "PLAYING FROM PLAYLIST",
+    "mediaTypeAlbum": "PLAYING FROM ALBUM",
+    "mediaTypeArtist": "PLAYING FROM ARTIST",
+    "mediaTypeShow": "PLAYING FROM PODCAST",
+    "mediaTypeDownloaded": "PLAYING FROM DOWNLOADS"
     
 }

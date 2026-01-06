@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
+import 'package:spotify_clone/core/constants/app_strings.dart';
 import 'package:spotify_clone/core/enums/media_type.dart';
 import 'package:spotify_clone/core/services/service_locator.dart';
 import 'package:spotify_clone/main.dart';
@@ -12,6 +13,8 @@ import 'package:spotify_clone/core/stores/player_view_model.dart';
 import 'package:spotify_clone/widgets/bottom_sheet/listen_mode_bottom_sheet.dart';
 import 'package:spotify_clone/widgets/bottom_sheet/song_bottom_sheet.dart';
 import 'package:spotify_clone/widgets/progress_bars/player_view_progress_bar.dart';
+import 'package:spotify_clone/widgets/custom_widgets/app_text.dart';
+import 'package:spotify_clone/widgets/custom_widgets/app_icon.dart';
 
 class PlayerView extends StatefulWidget {
   final String title;
@@ -67,7 +70,7 @@ class _PlayerViewState extends State<PlayerView> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+      backgroundColor: _Constants.scaffoldBgColor,
       body: Observer(
         builder: (context) {
           final track = viewModel.playlist[viewModel.currentIndex.value];
@@ -79,48 +82,41 @@ class _PlayerViewState extends State<PlayerView> {
             builder: (context, snapshot) {
               final item = snapshot.data;
               final int? argb = item?.extras?['color'] as int?;
-              final Color color = argb != null ? Color(argb) : Colors.amber;
+              final Color color = argb != null
+                  ? Color(argb)
+                  : _Constants.defaultThemeColor;
 
               return Container(
                 width: 1.sw,
                 height: 1.sh,
-                decoration: _boxDecoration(color),
+                decoration: _Constants.boxDecoration(color),
                 child: SafeArea(
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 25.w),
+                    padding: _Constants.pagePadding,
                     child: Column(
                       children: [
-                        SizedBox(height: 45.h),
+                        SizedBox(height: _Constants.appBarTopGap),
                         _CustomAppBar(
                           viewModel: viewModel,
                           widget: widget,
                           track: track,
                           title: widget.title,
                         ),
-
-                        const Spacer(flex: 2),
-
+                        const Spacer(flex: _Constants.spacerFlex),
                         _CoverImage(track: track, type: widget.type),
-
-                        SizedBox(height: 60.h),
-
+                        SizedBox(height: _Constants.sectionGapLarge),
                         _Row1(track: track),
-
-                        SizedBox(height: 40.h),
-
+                        SizedBox(height: _Constants.sectionGapMedium),
                         PlayerViewProgresBar(player: viewModel),
-                        SizedBox(height: 40.h),
-
+                        SizedBox(height: _Constants.sectionGapMedium),
                         _Row2(
                           viewModel: viewModel,
                           otoNextValue: otoNextValue,
                           otoLoopValue: otoLoopValue,
                         ),
-
-                        SizedBox(height: 40.h),
+                        SizedBox(height: _Constants.sectionGapMedium),
                         const _Row3(),
-
-                        SizedBox(height: 20.h),
+                        SizedBox(height: _Constants.bottomGap),
                       ],
                     ),
                   ),
@@ -132,24 +128,6 @@ class _PlayerViewState extends State<PlayerView> {
       ),
     );
   }
-
-  BoxDecoration _boxDecoration(Color backgroundColor) {
-    return BoxDecoration(
-      borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(30.r),
-        topRight: Radius.circular(30.r),
-      ),
-      gradient: LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: [
-          backgroundColor.withOpacity(1),
-          AppColors.black.withOpacity(0.95),
-        ],
-        stops: const [0.0, 0.85],
-      ),
-    );
-  }
 }
 
 class _Row3 extends StatelessWidget {
@@ -158,11 +136,23 @@ class _Row3 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(Icons.devices, color: Colors.white, size: 22.w),
+        AppIcon(
+          icon: Icons.devices,
+          color: Colors.white,
+          customSize: _Constants.smallIconSize,
+        ),
         const Spacer(),
-        Icon(Icons.share, color: Colors.white, size: 22.w),
-        SizedBox(width: 25.w),
-        Icon(Icons.queue_music, color: Colors.white, size: 24.w),
+        AppIcon(
+          icon: Icons.share,
+          color: Colors.white,
+          customSize: _Constants.smallIconSize,
+        ),
+        SizedBox(width: _Constants.row3IconGap),
+        AppIcon(
+          icon: Icons.queue_music,
+          color: Colors.white,
+          customSize: _Constants.mediumIconSize,
+        ),
       ],
     );
   }
@@ -185,51 +175,59 @@ class _Row2 extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         _WhiteCircleButton(
-          size: 42.w,
+          size: _Constants.controlBtnSizeSmall,
           onTap: () => ListenModeBottomSheet.show(context, viewModel),
           child: Image.asset(
             otoNextValue
-                ? "assets/png/active_suffle.png"
-                : "assets/png/suffle.png",
-            width: 20.w,
+                ? _Constants.pathActiveShuffle
+                : _Constants.pathShuffle,
+            width: _Constants.shuffleIconWidth,
           ),
         ),
         _WhiteCircleButton(
-          size: 48.w,
+          size: _Constants.controlBtnSizeMedium,
           onTap: () => viewModel.indexPrevious(),
-          child: Icon(Icons.skip_previous, color: Colors.black, size: 28.w),
+          child: AppIcon(
+            icon: Icons.skip_previous,
+            color: Colors.black,
+            customSize: _Constants.skipIconSize,
+          ),
         ),
         StreamBuilder<bool>(
           stream: viewModel.playingStream,
           builder: (context, snapshot) {
             final isPlaying = snapshot.data ?? false;
             return _WhiteCircleButton(
-              size: 65.w,
+              size: _Constants.controlBtnSizeLarge,
               onTap: () =>
                   isPlaying ? viewModel.playerPause() : viewModel.playerPlay(),
-              child: Icon(
-                isPlaying ? Icons.pause : Icons.play_arrow,
+              child: AppIcon(
+                icon: isPlaying ? Icons.pause : Icons.play_arrow,
                 color: Colors.black,
-                size: 38.w,
+                customSize: _Constants.playIconSize,
               ),
             );
           },
         ),
         _WhiteCircleButton(
-          size: 48.w,
+          size: _Constants.controlBtnSizeMedium,
           onTap: () => viewModel.indexNext(),
-          child: Icon(Icons.skip_next, color: Colors.black, size: 28.w),
+          child: AppIcon(
+            icon: Icons.skip_next,
+            color: Colors.black,
+            customSize: _Constants.skipIconSize,
+          ),
         ),
         _WhiteCircleButton(
-          size: 42.w,
+          size: _Constants.controlBtnSizeSmall,
           onTap: () async {
             await viewModel.setOtoLoop();
             viewModel.getOtoLoop();
             viewModel.getOtoNext();
           },
           child: Image.asset(
-            otoLoopValue ? "assets/png/active_loop.png" : "assets/png/loop.png",
-            width: 20.w,
+            otoLoopValue ? _Constants.pathActiveLoop : _Constants.pathLoop,
+            width: _Constants.shuffleIconWidth,
           ),
         ),
       ],
@@ -254,10 +252,7 @@ class _WhiteCircleButton extends StatelessWidget {
       child: Container(
         width: size,
         height: size,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          shape: BoxShape.circle,
-        ),
+        decoration: _Constants.circleDecoration,
         child: Center(child: child),
       ),
     );
@@ -280,30 +275,26 @@ class _Row1 extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    item?.title ?? "",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24.sp,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  AppText(
+                    text: item?.title ?? "",
+                    style: AppTextStyle.h2,
+                    color: Colors.white,
                     maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
                   ),
-                  Text(
-                    item?.artist ?? "",
-                    style: TextStyle(
-                      color: Colors.white.withOpacity(0.7),
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w400,
-                    ),
+                  AppText(
+                    text: item?.artist ?? "",
+                    style: AppTextStyle.bodyL,
+                    color: Colors.white.withOpacity(0.7),
                     maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
                   ),
                 ],
               ),
             ),
-            Icon(Icons.add_circle_outline, color: Colors.white, size: 30.w),
+            AppIcon(
+              icon: Icons.add_circle_outline,
+              color: Colors.white,
+              customSize: _Constants.addIconSize,
+            ),
           ],
         );
       },
@@ -318,14 +309,14 @@ class _CoverImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double imageSize = 0.85.sw;
+    final double imageSize = _Constants.albumArtSize;
     return StreamBuilder<MediaItem?>(
       stream: audioHandler.mediaItem,
       builder: (context, snapshot) {
         final item = snapshot.data;
         final albumArt = item?.album;
         return ClipRRect(
-          borderRadius: BorderRadius.circular(15.r),
+          borderRadius: _Constants.albumArtRadius,
           child: albumArt != null && albumArt.isNotEmpty
               ? (type != MediaType.downloaded
                     ? Image.network(
@@ -344,10 +335,10 @@ class _CoverImage extends StatelessWidget {
                   width: imageSize,
                   height: imageSize,
                   color: AppColors.grey,
-                  child: Icon(
-                    Icons.music_note,
+                  child: AppIcon(
+                    icon: Icons.music_note,
                     color: Colors.white,
-                    size: 80.w,
+                    customSize: _Constants.placeholderIconSize,
                   ),
                 ),
         );
@@ -379,10 +370,10 @@ class _CustomAppBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             IconButton(
-              icon: Icon(
-                Icons.keyboard_arrow_down,
+              icon: AppIcon(
+                icon: Icons.keyboard_arrow_down,
                 color: Colors.white,
-                size: 35.w,
+                customSize: _Constants.appBarArrowSize,
               ),
               onPressed: () => Navigator.pop(context),
             ),
@@ -390,24 +381,17 @@ class _CustomAppBar extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
-                    widget.type.title.toUpperCase(),
-                    style: TextStyle(
-                      color: Colors.white.withOpacity(0.6),
-                      fontSize: 12.sp,
-                      letterSpacing: 1.2,
-                    ),
+                  AppText(
+                    text: widget.type.title(context).toUpperCase(),
+                    style: AppTextStyle.labelS,
+                    color: Colors.white.withOpacity(0.6),
                   ),
-                  Text(
-                    item?.title ?? "",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15.sp,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  AppText(
+                    text: item?.title ?? "",
+                    style: AppTextStyle.titleS,
+                    color: Colors.white,
                     textAlign: TextAlign.center,
                     maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
                   ),
                 ],
               ),
@@ -427,11 +411,71 @@ class _CustomAppBar extends StatelessWidget {
                   item,
                 );
               },
-              icon: Icon(Icons.more_vert, color: Colors.white, size: 28.w),
+              icon: AppIcon(
+                icon: Icons.more_vert,
+                color: Colors.white,
+                customSize: _Constants.appBarMoreSize,
+              ),
             ),
           ],
         );
       },
     );
   }
+}
+
+abstract final class _Constants {
+  // Colors & Decorations
+  static const Color scaffoldBgColor = Color.fromARGB(255, 0, 0, 0);
+  static const Color defaultThemeColor = Colors.amber;
+  static BoxDecoration boxDecoration(Color color) => BoxDecoration(
+    borderRadius: BorderRadius.only(
+      topLeft: Radius.circular(30.r),
+      topRight: Radius.circular(30.r),
+    ),
+    gradient: LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [color, AppColors.black.withOpacity(0.95)],
+      stops: const [0.0, 0.85],
+    ),
+  );
+  static const BoxDecoration circleDecoration = BoxDecoration(
+    color: Colors.white,
+    shape: BoxShape.circle,
+  );
+
+  // Paddings & Gaps
+  static EdgeInsets get pagePadding => EdgeInsets.symmetric(horizontal: 25.w);
+  static double get appBarTopGap => 45.h;
+  static double get sectionGapLarge => 60.h;
+  static double get sectionGapMedium => 40.h;
+  static double get bottomGap => 20.h;
+  static double get row3IconGap => 25.w;
+  static const int spacerFlex = 2;
+
+  // Icon & Button Sizes
+  static double get appBarArrowSize => 35.w;
+  static double get appBarMoreSize => 28.w;
+  static double get smallIconSize => 22.w;
+  static double get mediumIconSize => 24.w;
+  static double get addIconSize => 30.w;
+  static double get placeholderIconSize => 80.w;
+  static double get skipIconSize => 28.w;
+  static double get playIconSize => 38.w;
+  static double get shuffleIconWidth => 20.w;
+
+  static double get controlBtnSizeSmall => 42.w;
+  static double get controlBtnSizeMedium => 48.w;
+  static double get controlBtnSizeLarge => 65.w;
+
+  // Album Art
+  static double get albumArtSize => 0.85.sw;
+  static BorderRadius get albumArtRadius => BorderRadius.circular(20.r);
+
+  //Paths
+  static String pathShuffle = AppStrings.suffleImage;
+  static String pathActiveShuffle = AppStrings.activeSuffleImage;
+  static String pathLoop = AppStrings.loopImage;
+  static String pathActiveLoop = AppStrings.activeLoopImage;
 }

@@ -2,9 +2,10 @@ import 'dart:io';
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
-import 'package:spotify_clone/core/constants/app_strings.dart';
+//import 'package:spotify_clone/core/constants/app_strings.dart';
 import 'package:spotify_clone/core/enums/media_type.dart';
 import 'package:spotify_clone/core/helpers/song_data_manager.dart';
+import 'package:spotify_clone/core/l10n/generated/app_localizations.dart';
 import 'package:spotify_clone/core/services/file_manager_service.dart';
 import 'package:spotify_clone/models/player_model.dart';
 import 'package:spotify_clone/view/main_tab_view.dart';
@@ -106,6 +107,7 @@ final BorderRadiusGeometry _borderRadius = BorderRadius.vertical(
       maxChildSize: 0.90,
       expand: false,
       builder: (context, scrollController) {
+        final l10n = AppLocalizations.of(context)!;
         return Container(
           decoration:  BoxDecoration(
             color: AppColors.bottomSheetBgColor,
@@ -120,7 +122,7 @@ final BorderRadiusGeometry _borderRadius = BorderRadius.vertical(
               Divider(color: AppColors.grey),
               !widget.isDownloaded
                   ? _CustomListTile(
-                      title: AppStrings.download,
+                      title: l10n.playerViewMenuDownload,
                       iconData: Icons.download,
                       onPressed: () async {
                         if (widget.type != MediaType.downloaded) {
@@ -133,7 +135,7 @@ final BorderRadiusGeometry _borderRadius = BorderRadius.vertical(
                       },
                     )
                   : _CustomListTile(
-                      title: AppStrings.delete,
+                      title: l10n.playerViewMenuDeleteDownload,
                       iconData: Icons.delete,
                       onPressed: () async {
                         if (!isLoading) {
@@ -149,7 +151,7 @@ final BorderRadiusGeometry _borderRadius = BorderRadius.vertical(
                       },
                     ),
               _CustomListTile(
-                title: AppStrings.share,
+                title: l10n.playerViewMenuShare,
                 iconData: Icons.person_2_outlined,
                 color: AppColors.grey,
                 onPressed: () async {
@@ -165,7 +167,7 @@ final BorderRadiusGeometry _borderRadius = BorderRadius.vertical(
                 },
               ),
               _CustomListTile(
-                title: AppStrings.addPlaylist,
+                title: l10n.playerViewMenuAddPlaylist,
                 iconData: Icons.add_circle_outline,
                 color: AppColors.grey,
                 onPressed: () async {
@@ -175,62 +177,62 @@ final BorderRadiusGeometry _borderRadius = BorderRadius.vertical(
                 },
               ),
               _CustomListTile(
-                title: AppStrings.hideAlbum,
+                title: l10n.playerViewMenuHideAlbum,
                 iconData: Icons.close,
                 color: AppColors.grey,
               ),
               _CustomListTile(
-                title: AppStrings.adFree,
+                title: l10n.playerViewMenuAdFree,
                 iconData: Icons.diamond_outlined,
                 color: AppColors.grey,
               ),
               _CustomListTile(
-                title: AppStrings.addQueue,
+                title: l10n.playerViewMenuAddQueue,
                 iconData: Icons.queue_music,
                 color: AppColors.grey,
               ),
               _CustomListTile(
-                title: AppStrings.goQueue,
+                title: l10n.playerViewMenuGoQueue,
                 iconData: Icons.view_list,
                 color: AppColors.grey,
               ),
               _CustomListTile(
-                title: AppStrings.goAlbum,
+                title: l10n.playerViewMenuGoAlbum,
                 iconData: Icons.album,
                 color: AppColors.grey,
               ),
               _CustomListTile(
-                title: AppStrings.goArtist,
+                title: l10n.playerViewMenuGoArtist,
                 iconData: Icons.person,
                 color: AppColors.grey,
               ),
               _CustomListTile(
-                title: AppStrings.startJam,
+                title: l10n.playerViewMenuStartJam,
                 iconData: Icons.group,
                 color: AppColors.grey,
               ),
               _CustomListTile(
-                title: AppStrings.excludeTaste,
+                title: l10n.playerViewMenuExcludeTaste,
                 iconData: Icons.close,
                 color: AppColors.grey,
               ),
               _CustomListTile(
-                title: AppStrings.sleepTimer,
+                title: l10n.playerViewMenuSleepTimer,
                 iconData: Icons.timer_outlined,
                 color: AppColors.grey,
               ),
               _CustomListTile(
-                title: AppStrings.songRadio,
+                title: l10n.playerViewMenuSongRadio,
                 iconData: Icons.podcasts,
                 color: AppColors.grey,
               ),
               _CustomListTile(
-                title: AppStrings.contributors,
+                title: l10n.playerViewMenuContributors,
                 iconData: Icons.music_note,
                 color: AppColors.grey,
               ),
               _CustomListTile(
-                title: AppStrings.spotifyCode,
+                title: l10n.playerViewMenuSpotifyCode,
                 iconData: Icons.graphic_eq,
                 color: AppColors.grey,
               ),

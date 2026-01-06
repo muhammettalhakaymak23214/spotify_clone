@@ -169,7 +169,13 @@
     "homeViewNewReleases": "Yeni Çıkanlar",
     "homeViewYourFavoriteArtists": "Sevdiğin Sanatçılar",
     "libraryViewEmtyDownloadedList": "Henüz şarkı indirmedin",
-    "libraryViewEmtyDownloadedList": "Sonuç bulunamadi"
+    "libraryViewEmtyDownloadedList": "Sonuç bulunamadi",
+    "mediaTypePlaylist": "ÇALMA LİSTESİNDEN ÇALINIYOR",
+    "mediaTypeAlbum": "ALBUMDEN ÇALINIYOR",
+    "mediaTypeArtist": "SANATÇILARDAN ÇALINIYOR",
+    "mediaTypeShow": "PODCAST'TEN ÇALINIYOR",
+    "mediaTypeDownloaded": "İNDİRİLENLERDEN ÇALINIYOR"
+    
 
     
     
