@@ -180,6 +180,7 @@
     "trackListViewNoData": "No data",
     "trackListViewAlbum": "Album",
     "durationHoursMinutes": "{hours} hr {minutes} min",
-    "durationMinutes": "{minutes} min"
+    "durationMinutes": "{minutes} min",
+    "recentlyPlayedViewRecentlyPlayed": "Recently played"
     
 }

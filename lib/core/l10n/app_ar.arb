@@ -180,6 +180,7 @@
     "trackListViewNoData": "لا توجد بيانات",
     "trackListViewAlbum": "ألبوم",
     "durationHoursMinutes": "{hours} ساعة {minutes} دقيقة",
-    "durationMinutes": "{minutes} دقيقة"
+    "durationMinutes": "{minutes} دقيقة",
+    "recentlyPlayedViewRecentlyPlayed": "تم تشغيله مؤخراً"
     
 }

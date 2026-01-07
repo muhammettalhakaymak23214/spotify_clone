@@ -180,7 +180,8 @@
     "trackListViewNoData": "Veri yok",
     "trackListViewAlbum": "Album",
     "durationHoursMinutes": "{hours} sa {minutes} dk",
-    "durationMinutes": "{minutes} dk"
+    "durationMinutes": "{minutes} dk",
+    "recentlyPlayedViewRecentlyPlayed": "Son çalınanlar"
     
 
     

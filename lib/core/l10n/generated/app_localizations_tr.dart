@@ -420,4 +420,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String durationMinutes(Object minutes) {
     return '$minutes dk';
   }
+
+  @override
+  String get recentlyPlayedViewRecentlyPlayed => 'Son çalınanlar';
 }

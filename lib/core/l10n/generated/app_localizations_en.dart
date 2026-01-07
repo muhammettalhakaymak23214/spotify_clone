@@ -424,4 +424,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String durationMinutes(Object minutes) {
     return '$minutes min';
   }
+
+  @override
+  String get recentlyPlayedViewRecentlyPlayed => 'Recently played';
 }

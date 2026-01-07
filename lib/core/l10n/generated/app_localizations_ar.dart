@@ -425,4 +425,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String durationMinutes(Object minutes) {
     return '$minutes دقيقة';
   }
+
+  @override
+  String get recentlyPlayedViewRecentlyPlayed => 'تم تشغيله مؤخراً';
 }

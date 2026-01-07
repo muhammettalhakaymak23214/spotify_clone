@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
+import 'package:spotify_clone/core/l10n/generated/app_localizations.dart';
 import 'package:spotify_clone/view_model/recently_played_view_model.dart';
-import 'package:spotify_clone/widgets/custom_widgets/custom_icon.dart';
-import 'package:spotify_clone/widgets/custom_widgets/custom_text.dart';
+import 'package:spotify_clone/widgets/custom_widgets/app_icon.dart';
+import 'package:spotify_clone/widgets/custom_widgets/app_text.dart';
 
 class RecentlyPlayedView extends StatefulWidget {
   const RecentlyPlayedView({super.key});
@@ -13,33 +15,23 @@ class RecentlyPlayedView extends StatefulWidget {
 }
 
 class _RecentlyPlayedViewState extends State<RecentlyPlayedView> {
-  //ViewModel
   late RecentlyPlayedViewModel viewModel;
-  //ScrollController
   final ScrollController _scrollController = ScrollController();
-  //Variables
   bool _isAtBottom = false;
-  Map<String, bool> _isExpanded = {};
-
-  void _onScrollEnd() {
-    debugPrint("Ekran sonu!");
-    getRecentlyPlayedTracks();
-  }
+  final Map<String, bool> _isExpanded = {};
 
   @override
   void initState() {
     super.initState();
     viewModel = RecentlyPlayedViewModel();
     getRecentlyPlayedTracks();
+    
     _scrollController.addListener(() {
-      if (_scrollController.position.pixels ==
-          _scrollController.position.maxScrollExtent) {
+      final isBottom = _scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent;
+      if (_isAtBottom != isBottom) {
         setState(() {
-          _isAtBottom = true;
-        });
-      } else {
-        setState(() {
-          _isAtBottom = false;
+          _isAtBottom = isBottom;
         });
       }
     });
@@ -48,32 +40,40 @@ class _RecentlyPlayedViewState extends State<RecentlyPlayedView> {
   void getRecentlyPlayedTracks() async {
     viewModel.getNowDate();
     await viewModel.getRecentlyPlayedTracks();
-    viewModel.grupla();
+    if (mounted) {
+      final locale = Localizations.localeOf(context).languageCode;
+      viewModel.grupla(locale);
+    }
   }
 
   void _scrollToTop() {
     _scrollController.animateTo(
       0.0,
-      duration: Duration(milliseconds: 300),
+      duration: _Constants.scrollDuration,
       curve: Curves.slowMiddle,
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.darkToneInk,
-        surfaceTintColor: AppColors.darkToneInk,
+        backgroundColor: _Constants.appBarBgColor,
+        surfaceTintColor: _Constants.appBarBgColor,
         centerTitle: true,
-        title: CustomText(
-          data: "Son çalınanlar",
-          textSize: TextSize.large,
-          textWeight: TextWeight.bold,
+        title: AppText(
+          text: l10n.recentlyPlayedViewRecentlyPlayed,
+          style: AppTextStyle.titleL,
+      
         ),
       ),
       body: Observer(
         builder: (context) {
+          final currentLocale = Localizations.localeOf(context).languageCode;
+          viewModel.grupla(currentLocale);
+
           return ListView(
             controller: _scrollController,
             children: viewModel.groupedByDate.keys.map((date) {
@@ -82,25 +82,23 @@ class _RecentlyPlayedViewState extends State<RecentlyPlayedView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 10,
-                    ),
+                    padding: _Constants.headerPadding,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        CustomText(
-                          data: date,
-                          textSize: TextSize.extraLarge,
-                          textWeight: TextWeight.bold,
+                        AppText(
+                          text: date,
+                          style: AppTextStyle.h2,
+                         
                         ),
                         IconButton(
                           icon: AnimatedRotation(
-                            turns: isExpanded ? 0.5 : 0.0,
-                            duration: Duration(milliseconds: 300),
-                            child: CustomIcon(
-                              iconData: Icons.arrow_drop_down,
-                              iconSize: IconSize.extraLarge,
+                            turns: isExpanded ? _Constants.turnsOpen : _Constants.turnsClosed,
+                            duration: _Constants.animationDuration,
+                            child: AppIcon(
+                              icon: Icons.arrow_drop_down,
+                               size: AppIconSize.large,
+                         
                             ),
                           ),
                           onPressed: () {
@@ -114,31 +112,36 @@ class _RecentlyPlayedViewState extends State<RecentlyPlayedView> {
                   ),
                   AnimatedCrossFade(
                     firstChild: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Divider(color: AppColors.grey),
+                      padding: _Constants.dividerPadding,
+                      child: Divider(color: _Constants.dividerColor),
                     ),
                     secondChild: Column(
                       children: viewModel.groupedByDate[date]!.map((track) {
                         return ListTile(
-                          title: CustomText(
-                            data: track.name,
-                            textSize: TextSize.medium,
-                            textWeight: TextWeight.bold,
+                          title: AppText(
+                            text: track.name ?? "",
+                            style: AppTextStyle.bodyL,
+                        
                           ),
                           leading: ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: Image.network(track.imageUrl ?? ""),
+                            borderRadius: _Constants.imageRadius,
+                            child: Image.network(
+                              track.imageUrl ?? "",
+                              width: _Constants.imageSize,
+                              height: _Constants.imageSize,
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                          subtitle: CustomText(
-                            data: track.artistName,
-                            textSize: TextSize.small,
-                            textWeight: TextWeight.normal,
-                            color: AppColors.grey,
+                          subtitle: AppText(
+                            text: track.artistName ?? "",
+                            style: AppTextStyle.bodyM,
+                  
+                            color: _Constants.subtitleColor,
                           ),
                         );
                       }).toList(),
                     ),
-                    duration: Duration(milliseconds: 300),
+                    duration: _Constants.animationDuration,
                     crossFadeState: isExpanded
                         ? CrossFadeState.showSecond
                         : CrossFadeState.showFirst,
@@ -151,20 +154,21 @@ class _RecentlyPlayedViewState extends State<RecentlyPlayedView> {
       ),
       floatingActionButton: _isAtBottom
           ? Padding(
-              padding: const EdgeInsets.only(right: 10, bottom: 120),
+              padding: _Constants.fabPadding,
               child: InkWell(
                 onTap: _scrollToTop,
                 child: Container(
-                  height: 40,
-                  width: 40,
+                  height: _Constants.fabSize,
+                  width: _Constants.fabSize,
                   decoration: BoxDecoration(
-                    color: Colors.green,
-                    borderRadius: BorderRadius.circular(50),
+                    color: _Constants.fabColor,
+                    borderRadius: _Constants.fabRadius,
                   ),
-                  child: CustomIcon(
-                    iconData: Icons.arrow_upward_outlined,
+                  child: AppIcon(
+                    icon: Icons.arrow_upward_outlined,
                     color: Colors.white,
-                    iconSize: IconSize.large,
+                    size: AppIconSize.large,
+              
                   ),
                 ),
               ),
@@ -172,4 +176,35 @@ class _RecentlyPlayedViewState extends State<RecentlyPlayedView> {
           : null,
     );
   }
+}
+
+abstract final class _Constants {
+  //Colors
+  static const Color appBarBgColor = AppColors.background;
+  static const Color dividerColor = AppColors.grey;
+  static const Color subtitleColor = AppColors.grey;
+  static const Color fabColor = AppColors.green;
+  //Padding & Margin
+  static final EdgeInsets headerPadding = EdgeInsets.symmetric(
+    horizontal: 20.w, 
+    vertical: 10.h,
+  );
+  static final EdgeInsets dividerPadding = EdgeInsets.symmetric(
+    horizontal: 20.w,
+  );
+  static  EdgeInsets fabPadding = EdgeInsets.only(
+    right: 5.w, 
+    bottom: 180.h, 
+    left: 5.w,
+  );
+  //Sizes & Radius
+  static final double fabSize = 40.w;
+  static final double imageSize = 50.w;
+  static final BorderRadius imageRadius = BorderRadius.circular(10.r);
+  static final BorderRadius fabRadius = BorderRadius.circular(50.r);
+  //Animation Values
+  static const double turnsOpen = 0.5;
+  static const double turnsClosed = 0.0;
+  static const Duration animationDuration = Duration(milliseconds: 300);
+  static const Duration scrollDuration = Duration(milliseconds: 300);
 }

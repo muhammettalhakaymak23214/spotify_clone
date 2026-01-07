@@ -839,6 +839,12 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'{minutes} dk'**
   String durationMinutes(Object minutes);
+
+  /// No description provided for @recentlyPlayedViewRecentlyPlayed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Son çalınanlar'**
+  String get recentlyPlayedViewRecentlyPlayed;
 }
 
 class _AppLocalizationsDelegate
