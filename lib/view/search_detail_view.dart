@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
-import 'package:spotify_clone/core/constants/app_strings.dart';
+import 'package:spotify_clone/core/l10n/generated/app_localizations.dart';
 import 'package:spotify_clone/view_model/search_detail_view_model.dart';
 
 class SearchDetailView extends StatefulWidget {
@@ -21,9 +21,10 @@ class _SearchDetailViewState extends State<SearchDetailView> {
     viewModel = SearchDetailViewModel();
     viewModel.fetchRecentlyPlayed();
   }
-
+  
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
         title: TextField(
@@ -32,7 +33,7 @@ class _SearchDetailViewState extends State<SearchDetailView> {
           cursorColor: AppColors.white,
           style: TextStyle(color: AppColors.white),
           decoration: InputDecoration(
-            hintText: AppStrings.searchBar,
+            hintText: l10n.searchViewSearchBarText,
             hintStyle: TextStyle(color: AppColors.grey),
             border: InputBorder.none,
           ),

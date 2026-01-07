@@ -402,4 +402,26 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mediaTypeDownloaded => 'PLAYING FROM DOWNLOADS';
+
+  @override
+  String get trackListViewSave => 'Saves';
+
+  @override
+  String get trackListViewTotalListener => 'Total listeners';
+
+  @override
+  String get trackListViewNoData => 'No data';
+
+  @override
+  String get trackListViewAlbum => 'Album';
+
+  @override
+  String durationHoursMinutes(Object hours, Object minutes) {
+    return '$hours hr $minutes min';
+  }
+
+  @override
+  String durationMinutes(Object minutes) {
+    return '$minutes min';
+  }
 }

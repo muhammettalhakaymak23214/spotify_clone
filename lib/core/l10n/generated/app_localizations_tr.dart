@@ -398,4 +398,26 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get mediaTypeDownloaded => 'İNDİRİLENLERDEN ÇALINIYOR';
+
+  @override
+  String get trackListViewSave => 'Kaydetme';
+
+  @override
+  String get trackListViewTotalListener => 'Toplam dinleyici';
+
+  @override
+  String get trackListViewNoData => 'Veri yok';
+
+  @override
+  String get trackListViewAlbum => 'Album';
+
+  @override
+  String durationHoursMinutes(Object hours, Object minutes) {
+    return '$hours sa $minutes dk';
+  }
+
+  @override
+  String durationMinutes(Object minutes) {
+    return '$minutes dk';
+  }
 }

@@ -174,7 +174,13 @@
     "mediaTypeAlbum": "ALBUMDEN ÇALINIYOR",
     "mediaTypeArtist": "SANATÇILARDAN ÇALINIYOR",
     "mediaTypeShow": "PODCAST'TEN ÇALINIYOR",
-    "mediaTypeDownloaded": "İNDİRİLENLERDEN ÇALINIYOR"
+    "mediaTypeDownloaded": "İNDİRİLENLERDEN ÇALINIYOR",
+    "trackListViewSave": "Kaydetme",
+    "trackListViewTotalListener": "Toplam dinleyici",
+    "trackListViewNoData": "Veri yok",
+    "trackListViewAlbum": "Album",
+    "durationHoursMinutes": "{hours} sa {minutes} dk",
+    "durationMinutes": "{minutes} dk"
     
 
     

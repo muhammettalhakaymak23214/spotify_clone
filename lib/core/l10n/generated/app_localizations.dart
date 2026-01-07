@@ -803,6 +803,42 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'İNDİRİLENLERDEN ÇALINIYOR'**
   String get mediaTypeDownloaded;
+
+  /// No description provided for @trackListViewSave.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaydetme'**
+  String get trackListViewSave;
+
+  /// No description provided for @trackListViewTotalListener.
+  ///
+  /// In tr, this message translates to:
+  /// **'Toplam dinleyici'**
+  String get trackListViewTotalListener;
+
+  /// No description provided for @trackListViewNoData.
+  ///
+  /// In tr, this message translates to:
+  /// **'Veri yok'**
+  String get trackListViewNoData;
+
+  /// No description provided for @trackListViewAlbum.
+  ///
+  /// In tr, this message translates to:
+  /// **'Album'**
+  String get trackListViewAlbum;
+
+  /// No description provided for @durationHoursMinutes.
+  ///
+  /// In tr, this message translates to:
+  /// **'{hours} sa {minutes} dk'**
+  String durationHoursMinutes(Object hours, Object minutes);
+
+  /// No description provided for @durationMinutes.
+  ///
+  /// In tr, this message translates to:
+  /// **'{minutes} dk'**
+  String durationMinutes(Object minutes);
 }
 
 class _AppLocalizationsDelegate

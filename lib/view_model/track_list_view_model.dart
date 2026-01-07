@@ -23,6 +23,10 @@ class TrackListViewModel {
   Observable<bool> isLoading = Observable<bool>(false);
   Observable<Color> bgColor = Observable<Color>(Colors.black);
 
+  // EKLEDİĞİMİZ HAM VERİLER
+  Observable<int> totalHours = Observable(0);
+  Observable<int> totalMinutes = Observable(0);
+
 //--------------
 //final AudioHandler audioHandler;
 /*
@@ -156,6 +160,8 @@ class TrackListViewModel {
       final albumTracks = await _trackListService.getAlbumTracks(albumId);
       tracks.clear();
       tracks.addAll(albumTracks);
+      // SÜRE HESAPLA
+      calculateDuration();
     } catch (e) {
       debugPrint("[loadAlbumTracks]: $e");
     } finally {
@@ -179,7 +185,8 @@ class TrackListViewModel {
       debugPrint("[loadPlaylistTracks]: $e");
     } finally {
       runInAction(() {
-        getTotalDuration();
+   
+        calculateDuration();
         isLoading.value = false;
       });
     }
@@ -243,22 +250,17 @@ class TrackListViewModel {
     return track;
   }
 
-  void getTotalDuration() {
+  
+  void calculateDuration() {
     int totalMs = 0;
-
     for (var item in tracks) {
-      totalMs += item.durationMs!;
+      totalMs += item.durationMs ?? 0;
     }
-
-    int totalMinutes = totalMs ~/ 60000;
-    int hours = totalMinutes ~/ 60;
-    int minutes = totalMinutes % 60;
-
-    if (hours > 0) {
-      duration.value = "$hours sa $minutes dk";
-    } else {
-      duration.value = "$minutes dk";
-    }
+    int totalMinutesVal = totalMs ~/ 60000;
+    runInAction(() {
+      totalHours.value = totalMinutesVal ~/ 60;
+      totalMinutes.value = totalMinutesVal % 60;
+    });
   }
 
   Future<void> fullDownload() async {

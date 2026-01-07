@@ -174,6 +174,12 @@
     "mediaTypeAlbum": "جارٍ التشغيل من الألبوم",
     "mediaTypeArtist": "جارٍ التشغيل من الفنانين",
     "mediaTypeShow": "جارٍ التشغيل من البودكاست",
-    "mediaTypeDownloaded": "جارٍ التشغيل من التنزيلات"
+    "mediaTypeDownloaded": "جارٍ التشغيل من التنزيلات",
+    "trackListViewSave": "حفظ",
+    "trackListViewTotalListener": "إجمالي المستمعين",
+    "trackListViewNoData": "لا توجد بيانات",
+    "trackListViewAlbum": "ألبوم",
+    "durationHoursMinutes": "{hours} ساعة {minutes} دقيقة",
+    "durationMinutes": "{minutes} دقيقة"
     
 }

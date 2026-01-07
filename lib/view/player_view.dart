@@ -40,7 +40,9 @@ class PlayerView extends StatefulWidget {
     return showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: _Constants.backgroundColor,
+      barrierColor: _Constants.barrierColor,
+
       enableDrag: true,
       builder: (context) => PlayerView(
         title: title,
@@ -70,7 +72,7 @@ class _PlayerViewState extends State<PlayerView> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      backgroundColor: _Constants.scaffoldBgColor,
+      backgroundColor: _Constants.backgroundColor,
       body: Observer(
         builder: (context) {
           final track = viewModel.playlist[viewModel.currentIndex.value];
@@ -171,66 +173,70 @@ class _Row2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        _WhiteCircleButton(
-          size: _Constants.controlBtnSizeSmall,
-          onTap: () => ListenModeBottomSheet.show(context, viewModel),
-          child: Image.asset(
-            otoNextValue
-                ? _Constants.pathActiveShuffle
-                : _Constants.pathShuffle,
-            width: _Constants.shuffleIconWidth,
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          _WhiteCircleButton(
+            size: _Constants.controlBtnSizeSmall,
+            onTap: () => ListenModeBottomSheet.show(context, viewModel),
+            child: Image.asset(
+              otoNextValue
+                  ? _Constants.pathActiveShuffle
+                  : _Constants.pathShuffle,
+              width: _Constants.shuffleIconWidth,
+            ),
           ),
-        ),
-        _WhiteCircleButton(
-          size: _Constants.controlBtnSizeMedium,
-          onTap: () => viewModel.indexPrevious(),
-          child: AppIcon(
-            icon: Icons.skip_previous,
-            color: Colors.black,
-            customSize: _Constants.skipIconSize,
+          _WhiteCircleButton(
+            size: _Constants.controlBtnSizeMedium,
+            onTap: () => viewModel.indexPrevious(),
+            child: AppIcon(
+              icon: Icons.skip_previous,
+              color: Colors.black,
+              customSize: _Constants.skipIconSize,
+            ),
           ),
-        ),
-        StreamBuilder<bool>(
-          stream: viewModel.playingStream,
-          builder: (context, snapshot) {
-            final isPlaying = snapshot.data ?? false;
-            return _WhiteCircleButton(
-              size: _Constants.controlBtnSizeLarge,
-              onTap: () =>
-                  isPlaying ? viewModel.playerPause() : viewModel.playerPlay(),
-              child: AppIcon(
-                icon: isPlaying ? Icons.pause : Icons.play_arrow,
-                color: Colors.black,
-                customSize: _Constants.playIconSize,
-              ),
-            );
-          },
-        ),
-        _WhiteCircleButton(
-          size: _Constants.controlBtnSizeMedium,
-          onTap: () => viewModel.indexNext(),
-          child: AppIcon(
-            icon: Icons.skip_next,
-            color: Colors.black,
-            customSize: _Constants.skipIconSize,
+          StreamBuilder<bool>(
+            stream: viewModel.playingStream,
+            builder: (context, snapshot) {
+              final isPlaying = snapshot.data ?? false;
+              return _WhiteCircleButton(
+                size: _Constants.controlBtnSizeLarge,
+                onTap: () => isPlaying
+                    ? viewModel.playerPause()
+                    : viewModel.playerPlay(),
+                child: AppIcon(
+                  icon: isPlaying ? Icons.pause : Icons.play_arrow,
+                  color: Colors.black,
+                  customSize: _Constants.playIconSize,
+                ),
+              );
+            },
           ),
-        ),
-        _WhiteCircleButton(
-          size: _Constants.controlBtnSizeSmall,
-          onTap: () async {
-            await viewModel.setOtoLoop();
-            viewModel.getOtoLoop();
-            viewModel.getOtoNext();
-          },
-          child: Image.asset(
-            otoLoopValue ? _Constants.pathActiveLoop : _Constants.pathLoop,
-            width: _Constants.shuffleIconWidth,
+          _WhiteCircleButton(
+            size: _Constants.controlBtnSizeMedium,
+            onTap: () => viewModel.indexNext(),
+            child: AppIcon(
+              icon: Icons.skip_next,
+              color: Colors.black,
+              customSize: _Constants.skipIconSize,
+            ),
           ),
-        ),
-      ],
+          _WhiteCircleButton(
+            size: _Constants.controlBtnSizeSmall,
+            onTap: () async {
+              await viewModel.setOtoLoop();
+              viewModel.getOtoLoop();
+              viewModel.getOtoNext();
+            },
+            child: Image.asset(
+              otoLoopValue ? _Constants.pathActiveLoop : _Constants.pathLoop,
+              width: _Constants.shuffleIconWidth,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -426,6 +432,8 @@ class _CustomAppBar extends StatelessWidget {
 
 abstract final class _Constants {
   // Colors & Decorations
+  static Color get  backgroundColor => AppColors.transparent;
+  static Color get  barrierColor => AppColors.black;
   static const Color scaffoldBgColor = Color.fromARGB(255, 0, 0, 0);
   static const Color defaultThemeColor = Colors.amber;
   static BoxDecoration boxDecoration(Color color) => BoxDecoration(
@@ -478,4 +486,5 @@ abstract final class _Constants {
   static String pathActiveShuffle = AppStrings.activeSuffleImage;
   static String pathLoop = AppStrings.loopImage;
   static String pathActiveLoop = AppStrings.activeLoopImage;
+
 }

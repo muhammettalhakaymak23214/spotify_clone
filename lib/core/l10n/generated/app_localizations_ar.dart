@@ -403,4 +403,26 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get mediaTypeDownloaded => 'جارٍ التشغيل من التنزيلات';
+
+  @override
+  String get trackListViewSave => 'حفظ';
+
+  @override
+  String get trackListViewTotalListener => 'إجمالي المستمعين';
+
+  @override
+  String get trackListViewNoData => 'لا توجد بيانات';
+
+  @override
+  String get trackListViewAlbum => 'ألبوم';
+
+  @override
+  String durationHoursMinutes(Object hours, Object minutes) {
+    return '$hours ساعة $minutes دقيقة';
+  }
+
+  @override
+  String durationMinutes(Object minutes) {
+    return '$minutes دقيقة';
+  }
 }

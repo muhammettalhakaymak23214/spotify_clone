@@ -4,6 +4,7 @@ import 'package:lottie/lottie.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
 import 'package:spotify_clone/core/constants/app_strings.dart';
 import 'package:spotify_clone/core/enums/media_type.dart';
+import 'package:spotify_clone/core/l10n/generated/app_localizations.dart';
 import 'package:spotify_clone/core/services/service_locator.dart';
 import 'package:spotify_clone/models/player_model.dart';
 import 'package:spotify_clone/models/track_list_model.dart';
@@ -14,6 +15,7 @@ import 'package:spotify_clone/view_model/track_list_view_model.dart';
 import 'package:spotify_clone/widgets/custom_widgets/custom_icon.dart';
 import 'package:spotify_clone/widgets/custom_widgets/custom_point.dart';
 import 'package:spotify_clone/widgets/custom_widgets/custom_text.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TrackListView extends StatefulWidget {
   final String id;
@@ -38,8 +40,8 @@ class _TrackListViewState extends State<TrackListView> {
   late TrackListViewModel viewModel;
   late ScrollController scrollController;
   double offset = 0;
-  double maxSize = 230;
-  double minSize = 80;
+  double maxSize = _Constants.maxSize;
+  double minSize = _Constants.minSize;
 
   List<PlayTrackItem> playlist = [];
 
@@ -60,6 +62,8 @@ class _TrackListViewState extends State<TrackListView> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     double size = (maxSize - offset).clamp(minSize, maxSize);
 
     return Scaffold(
@@ -83,7 +87,7 @@ class _TrackListViewState extends State<TrackListView> {
               children: [
                 SizedBox(
                   width: double.infinity,
-                  height: 400,
+                  height: _Constants.headerHeight,
                   child: Stack(
                     children: [
                       Observer(
@@ -95,9 +99,9 @@ class _TrackListViewState extends State<TrackListView> {
                       ),
                       _CoverImage(imageUrl: widget.imageUrl!, size: size),
                       Padding(
-                        padding: const EdgeInsets.only(bottom: 115, left: 20),
+                        padding: _Constants.titlePadding,
                         child: Container(
-                          alignment: Alignment.bottomLeft,
+                          alignment: AlignmentDirectional.bottomStart,
                           child: CustomText(
                             data: widget.title,
                             textSize: TextSize.extraLarge,
@@ -120,26 +124,45 @@ class _TrackListViewState extends State<TrackListView> {
                               },
                             ),
                       widget.type == MediaType.playlist
-                          ? Observer(
-                              builder: (_) {
-                                final int? total =
-                                    viewModel.detail.value?.total;
-                                final String totalData = "$total kaydetme";
-                                final String duration =
-                                    viewModel.duration.value;
-                                return _RowPlaylist(
-                                  duration: duration,
-                                  total: totalData,
-                                );
-                              },
-                            )
+          ? Observer(
+              builder: (_) {
+                final int? total = viewModel.detail.value?.total;
+                final String totalData = "${total ?? 0} ${l10n.trackListViewSave}";
+
+                
+                String durationText;
+                if (viewModel.totalHours.value > 0) {
+                  durationText = l10n.durationHoursMinutes(
+                    viewModel.totalHours.value.toString(),
+                    viewModel.totalMinutes.value.toString(),
+                  );
+                } else {
+                  durationText = l10n.durationMinutes(viewModel.totalMinutes.value.toString());
+                }
+
+                return _RowPlaylist(
+                  duration: durationText,
+                  total: totalData,
+                );
+              },
+            )
+          : widget.type == MediaType.album
+              ? Observer(
+                  builder: (_) {
+                    final String? releaseDate = viewModel.detail.value?.releaseDate;
+                    return _RowAlbum(
+                      releaseDate: releaseDate ?? l10n.trackListViewNoData,
+                    );
+                  },
+                )
                           : widget.type == MediaType.album
                           ? Observer(
                               builder: (_) {
                                 final String? releaseDate =
                                     viewModel.detail.value?.releaseDate;
                                 return _RowAlbum(
-                                  releaseDate: releaseDate ?? "no data",
+                                  releaseDate:
+                                      releaseDate ?? l10n.trackListViewNoData,
                                 );
                               },
                             )
@@ -156,7 +179,6 @@ class _TrackListViewState extends State<TrackListView> {
               ],
             ),
           ),
-
           Observer(
             builder: (_) {
               if (viewModel.isLoading.value) {
@@ -171,7 +193,6 @@ class _TrackListViewState extends State<TrackListView> {
                       textSize: TextSize.extraLarge,
                     ),
                   ),
-                  
                 );
               }
 
@@ -181,7 +202,7 @@ class _TrackListViewState extends State<TrackListView> {
                   (context, index) {
                     final track = viewModel.tracks[index];
                     return Padding(
-                      padding: const EdgeInsets.only(left: 2.0),
+                      padding: _Constants.trackPadding,
                       child: _CustomListTile(
                         track: track,
                         viewModel: viewModel,
@@ -197,10 +218,7 @@ class _TrackListViewState extends State<TrackListView> {
               );
             },
           ),
-          SliverToBoxAdapter(
-  child: SizedBox(height: 200),
-),
-        
+          SliverToBoxAdapter(child: SizedBox(height: _Constants.bottomSpace)),
         ],
       ),
     );
@@ -214,17 +232,18 @@ class _CustomListTile extends StatelessWidget {
     required this.title,
     required this.type,
     required this.index,
-    required this.player, required this.id,
+    required this.player,
+    required this.id,
   });
   final String title;
   final MediaType type;
   final TrackItem track;
   final TrackListViewModel viewModel;
-  final double imageSize = 50;
+  final double imageSize = _Constants.tileImageSize;
   final EdgeInsetsGeometry padding = EdgeInsets.all(0);
   final int index;
   final PlayerStore player;
-   final String id;
+  final String id;
 
   List<PlayTrackItem> playlist = [];
 
@@ -239,23 +258,19 @@ class _CustomListTile extends StatelessWidget {
               fit: BoxFit.cover,
             )
           : null,
-
       title: CustomText(data: track.name, textSize: TextSize.large),
-
       subtitle: CustomText(
         data: track.artistsName?.join(", "),
         textSize: TextSize.small,
         color: AppColors.grey,
       ),
-
       trailing: Padding(
-        padding: const EdgeInsets.only(right: 5),
+        padding: _Constants.tileTrailingPadding,
         child: CustomIcon(
           iconData: Icons.more_vert_outlined,
           iconSize: IconSize.large,
         ),
       ),
-
       onTap: () async {
         showDialog(
           context: context,
@@ -267,22 +282,12 @@ class _CustomListTile extends StatelessWidget {
         );
         Navigator.pop(context);
         final playlist = await Future.wait(futures);
-        /*
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => PlayerView(
-              playlist: playlist,
-              title: title,
-              type: type,
-              currentIndex: index,
-            ),
-          ),
-        );*/
-        // player.playlist.addAll(widget.playlist);
-        // player.playlist.addAll(playlist);
-        // player.playerPlay();
-        player.playFromPlaylist(list: playlist, index: index, type: type , id: id);
+        player.playFromPlaylist(
+          list: playlist,
+          index: index,
+          type: type,
+          id: id,
+        );
       },
     );
   }
@@ -290,7 +295,7 @@ class _CustomListTile extends StatelessWidget {
 
 class _CustomCircularProgressIndicator extends StatelessWidget {
   _CustomCircularProgressIndicator();
-  final EdgeInsetsGeometry padding = EdgeInsets.only(top: 100);
+  final EdgeInsetsGeometry padding = _Constants.loadingPadding;
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
@@ -319,9 +324,9 @@ class _CustomSliverAppBar extends StatelessWidget {
       backgroundColor: color,
       pinned: true,
       stretch: true,
-      expandedHeight: 50,
+      expandedHeight: _Constants.appBarHeight,
       elevation: 0,
-      title: offset > 110 ? Text(title) : const SizedBox(),
+      title: offset > _Constants.appBarOffset ? Text(title) : const SizedBox(),
       centerTitle: true,
     );
   }
@@ -344,7 +349,7 @@ class _BackgroundColor extends StatelessWidget {
               color.withValues(alpha: 1),
               AppColors.darkToneInk.withValues(alpha: 1),
             ],
-            stops: [0.3, 0.95],
+            stops: _Constants.gradientStops,
           ),
         ),
       ),
@@ -361,11 +366,11 @@ class _CoverImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 170),
+      padding: _Constants.coverPadding,
       child: Container(
         alignment: Alignment.bottomCenter,
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: _Constants.commonRadius,
           child: imageUrl.isEmpty
               ? Container(
                   width: size,
@@ -389,45 +394,40 @@ class _CoverImage extends StatelessWidget {
 }
 
 class _Row2 extends StatelessWidget {
-  const _Row2({required this.user, this.isImage = true});
+  _Row2({required this.user, this.isImage = true});
 
   final UserModel? user;
-  final String defaultProfileImage = "assets/png/default_profile_image.png";
-  final double imageSize = 20;
+  final String defaultProfileImage = _Constants.defaultProfilePath;
+  final double imageSize = _Constants.row2ImageSize;
   final bool isImage;
-  final EdgeInsetsGeometry padding = const EdgeInsets.only(bottom: 90);
+  final EdgeInsetsGeometry padding = _Constants.row2Padding;
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Padding(
       padding: padding,
       child: Container(
-        alignment: Alignment.bottomLeft,
+        alignment: AlignmentDirectional.bottomStart,
         child: Row(
           children: [
             isImage
-                ? Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: SizedBox(
-                      height: imageSize,
-                      width: imageSize,
-                      child: ClipOval(
-                        child: user?.imageUrl != null
-                            ? Image.network(
-                                "${user?.imageUrl}",
-                                fit: BoxFit.cover,
-                              )
-                            : Image.asset(
-                                defaultProfileImage,
-                                fit: BoxFit.cover,
-                              ),
-                      ),
+                ? SizedBox(
+                    height: imageSize,
+                    width: imageSize,
+                    child: ClipOval(
+                      child: user?.imageUrl != null
+                          ? Image.network(
+                              "${user?.imageUrl}",
+                              fit: BoxFit.cover,
+                            )
+                          : Image.asset(defaultProfileImage, fit: BoxFit.cover),
                     ),
                   )
                 : SizedBox.shrink(),
             isImage
                 ? Padding(
-                    padding: const EdgeInsets.only(left: 5),
+                    padding: _Constants.row2TextPadding,
                     child: CustomText(
                       data: user?.displayName ?? "",
                       textSize: TextSize.medium,
@@ -435,9 +435,10 @@ class _Row2 extends StatelessWidget {
                     ),
                   )
                 : Padding(
-                    padding: const EdgeInsets.only(left: 5),
+                    padding: _Constants.row2TextPadding,
                     child: CustomText(
-                      data: "Toplam dinleyici : ${user?.total}",
+                      data:
+                          "${l10n.trackListViewTotalListener} : ${user?.total}",
                       textSize: TextSize.small,
                       textWeight: TextWeight.normal,
                       color: AppColors.grey,
@@ -459,9 +460,9 @@ class _RowPlaylist extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20, bottom: 60),
+      padding: _Constants.playlistRowPadding,
       child: Container(
-        alignment: Alignment.bottomLeft,
+        alignment: AlignmentDirectional.bottomStart,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -471,11 +472,11 @@ class _RowPlaylist extends StatelessWidget {
               iconSize: IconSize.medium,
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 5),
+              padding: _Constants.rowTextStartPadding,
               child: CustomText(data: total, color: AppColors.grey),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5),
+              padding: _Constants.horizontal5Padding,
               child: Point(color: AppColors.grey),
             ),
             CustomText(data: duration, color: AppColors.grey),
@@ -493,16 +494,17 @@ class _RowAlbum extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Padding(
-      padding: const EdgeInsets.only(left: 10, bottom: 60),
+      padding: _Constants.albumRowPadding,
       child: Container(
-        alignment: Alignment.bottomLeft,
+        alignment: AlignmentDirectional.bottomStart,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            CustomText(data: "Album", color: AppColors.grey),
+            CustomText(data: l10n.trackListViewAlbum, color: AppColors.grey),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5.0),
+              padding: _Constants.horizontal5Padding,
               child: Point(color: AppColors.grey),
             ),
             CustomText(data: releaseDate, color: AppColors.grey),
@@ -522,28 +524,28 @@ class _RowButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20, bottom: 0),
+      padding: _Constants.buttonsRowPadding,
       child: Container(
-        alignment: Alignment.bottomLeft,
+        alignment: AlignmentDirectional.bottomStart,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SizedBox(
-              height: 50,
-              width: 200,
+              height: _Constants.buttonBoxSize,
+              width: _Constants.buttonBoxWidth,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: 30,
-                    height: 40,
+                    width: _Constants.miniImageWidth,
+                    height: _Constants.miniImageHeight,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: AppColors.white, width: 1),
+                      borderRadius: _Constants.commonRadius,
+                      border: Border.all(color: AppColors.white, width: 1.w),
                     ),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: _Constants.commonRadius,
                       child: Image.network(imageUrl, fit: BoxFit.cover),
                     ),
                   ),
@@ -564,7 +566,7 @@ class _RowButtons extends StatelessWidget {
                         builder: (_) => Center(
                           child: SizedBox(
                             child: Lottie.asset(
-                              'assets/lottie/lottie_loading.json',
+                              _Constants.loadingLottie,
                               fit: BoxFit.contain,
                             ),
                           ),
@@ -578,13 +580,13 @@ class _RowButtons extends StatelessWidget {
                         builder: (_) => Center(
                           child: SizedBox(
                             child: Lottie.asset(
-                              'assets/lottie/lottie_success.json',
+                              _Constants.successLottie,
                               fit: BoxFit.contain,
                             ),
                           ),
                         ),
                       );
-                      await Future.delayed(const Duration(milliseconds: 3400));
+                      await Future.delayed(_Constants.lottieDuration);
                       Navigator.pop(context);
                     },
                   ),
@@ -597,13 +599,13 @@ class _RowButtons extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 15),
+              padding: _Constants.playButtonPadding,
               child: Container(
-                height: 50,
-                width: 50,
+                height: _Constants.buttonBoxSize,
+                width: _Constants.buttonBoxSize,
                 decoration: BoxDecoration(
                   color: Colors.green,
-                  borderRadius: BorderRadius.circular(100),
+                  borderRadius: _Constants.circleRadius,
                 ),
                 child: CustomIcon(
                   color: AppColors.black,
@@ -617,4 +619,73 @@ class _RowButtons extends StatelessWidget {
       ),
     );
   }
+}
+
+abstract final class _Constants {
+  static double maxSize = 230.h;
+  static double minSize = 80.h;
+  static double headerHeight = 400.h;
+  static double appBarHeight = 50.h;
+  static double appBarOffset = 110.h;
+  static double tileImageSize = 50.w;
+  static double row2ImageSize = 20.w;
+  static double buttonBoxSize = 50.w;
+  static double buttonBoxWidth = 200.w;
+  static double miniImageWidth = 30.w;
+  static double miniImageHeight = 40.h;
+  static double bottomSpace = 200.h;
+
+  static EdgeInsetsDirectional titlePadding = EdgeInsetsDirectional.only(
+    bottom: 115.h,
+    start: 20.w,
+  );
+  static EdgeInsetsDirectional coverPadding = EdgeInsetsDirectional.only(
+    bottom: 170.h,
+  );
+  static EdgeInsetsDirectional trackPadding = EdgeInsetsDirectional.only(
+    start: 2.w,
+  );
+  static EdgeInsetsDirectional tileTrailingPadding = EdgeInsetsDirectional.only(
+    end: 5.w,
+  );
+  static EdgeInsetsDirectional loadingPadding = EdgeInsetsDirectional.only(
+    top: 100.h,
+  );
+  static EdgeInsetsDirectional row2Padding = EdgeInsetsDirectional.only(
+    start: 15.w,
+    bottom: 90.h,
+  );
+  static EdgeInsetsDirectional row2TextPadding = EdgeInsetsDirectional.only(
+    start: 5.w,
+  );
+  static EdgeInsetsDirectional playlistRowPadding = EdgeInsetsDirectional.only(
+    start: 20.w,
+    bottom: 60.h,
+  );
+  static EdgeInsetsDirectional albumRowPadding = EdgeInsetsDirectional.only(
+    start: 20.w,
+    bottom: 60.h,
+  );
+  static EdgeInsetsDirectional buttonsRowPadding = EdgeInsetsDirectional.only(
+    start: 20.w,
+    bottom: 0,
+  );
+  static EdgeInsetsDirectional playButtonPadding = EdgeInsetsDirectional.only(
+    end: 15.w,
+  );
+  static EdgeInsets horizontal5Padding = EdgeInsets.symmetric(horizontal: 5.w);
+  static EdgeInsetsDirectional rowTextStartPadding = EdgeInsetsDirectional.only(
+    start: 5.w,
+  );
+
+  static final BorderRadius commonRadius = BorderRadius.circular(10.r);
+  static final BorderRadius circleRadius = BorderRadius.circular(100.r);
+  static const List<double> gradientStops = [0.3, 0.95];
+
+  //Path
+  static String defaultProfilePath = AppStrings.defaultProfileImage;
+  static String loadingLottie = AppStrings.loadingLottie;
+  static String successLottie = AppStrings.successLottie;
+  //Duration
+  static const Duration lottieDuration = Duration(milliseconds: 3400);
 }
