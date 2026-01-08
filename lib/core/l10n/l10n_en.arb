@@ -146,8 +146,6 @@
     },
     "createPlaylistViewCancel": "Cancel",
     "createPlaylistViewCreate": "Create",
-    "updatePlaylistViewChange": "Change",
-    "updatePlaylistViewRefresh": "Refresh",
     "updatePlaylistViewPlaylistAddToThis": "Add to this playlist",
     "updatePlaylistViewPlaylistRecommendedTitle": "Recommended Songs",
     "updatePlaylistViewPlaylistNoRecommendations": "No songs to recommend",
@@ -169,7 +167,6 @@
     "homeViewNewReleases": "New Releases",
     "homeViewYourFavoriteArtists": "Your Favorite Artists",
     "libraryViewEmtyDownloadedList": "You haven't downloaded any songs yet",
-    "libraryViewEmtyDownloadedList": "No results found",
     "mediaTypePlaylist": "PLAYING FROM PLAYLIST",
     "mediaTypeAlbum": "PLAYING FROM ALBUM",
     "mediaTypeArtist": "PLAYING FROM ARTIST",
@@ -181,6 +178,38 @@
     "trackListViewAlbum": "Album",
     "durationHoursMinutes": "{hours} hr {minutes} min",
     "durationMinutes": "{minutes} min",
-    "recentlyPlayedViewRecentlyPlayed": "Recently played"
-    
+    "recentlyPlayedViewRecentlyPlayed": "Recently played",
+    "updatePlaylistViewRefresh": "Refresh",
+    "updatePlaylistViewRefreshError": "No songs to recommend",
+    "updatePlaylistViewRecommendedSongs": "Recommended Songs",
+    "updatePlaylistViewThisAddPlaylist": "Add to this playlist",
+    "updatePlaylistViewAdd": "Add",
+    "updatePlaylistViewGoPlaylist": "Go to playlist",
+    "updatePlaylistViewChange": "Change",
+    "updatePlaylistViewSave": "Save",
+    "updatePlaylistViewCancel": "Cancel",
+    "bsUpdatePlaylistViewNameAndDesciription": "Name and details",
+    "bsUpdatePlaylistViewMakePublic": "Make public",
+    "bsUpdatePlaylistViewMakePrivate": "Make private for other users",
+    "bsUpdatePlaylistViewDeletePlaylist": "Delete playlist",
+    "bsUpdatePlaylistViewMakePublicAreYouSure": "Do you want to share the playlist with others?",
+    "bsUpdatePlaylistViewMakePubliDesciription": "People you invite to this playlist can add and remove songs.",
+    "bsUpdatePlaylistViewMakePublicButton": "Make shareable",
+    "bsUpdatePlaylistViewDeletePlaylistAreYouSure": "Are you sure you want to delete {count}?",
+    "@bsUpdatePlaylistViewDeletePlaylistAreYouSure": {
+        "placeholders": {
+            "count": {
+                "type": "String"
+            }
+        }
+    },
+    "bsUpdatePlaylistViewDelete": "Delete",
+    "bsUpdatePlaylistViewCancel": "Cancel",
+    "changePlaylistImageViewChangeCover": "Change cover image.",
+    "changePlaylistImageViewRemove": "Remove",
+    "changePlaylistImageViewConfirm": "Confirm",
+    "bschangePlaylistImageViewErrorImageSize": "File size is too large",
+    "bschangePlaylistImageViewPleaseSmallImage": "Please select a smaller image.",
+    "bschangePlaylistImageViewOKey": "OK",
+    "trackListViewEmptyList": "List is empty"
 }

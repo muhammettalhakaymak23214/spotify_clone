@@ -637,7 +637,7 @@ abstract final class _Constants {
     borderRadius: BorderRadius.circular(20.r),
   );
   static BoxDecoration get decorationWhyPremiumSection => BoxDecoration(
-    color: AppColors.planSectionColor,
+    color: AppColors.cardBackground,
     borderRadius: BorderRadius.circular(10.r),
   );
   static BoxDecoration get decoration => BoxDecoration(

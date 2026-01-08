@@ -189,7 +189,7 @@ class _TrackListViewState extends State<TrackListView> {
                 return SliverToBoxAdapter(
                   child: Center(
                     child: CustomText(
-                      data: AppStrings.emtyListMessage,
+                      data: l10n.trackListViewEmptyList,
                       textSize: TextSize.extraLarge,
                     ),
                   ),
@@ -347,7 +347,7 @@ class _BackgroundColor extends StatelessWidget {
             end: Alignment.bottomCenter,
             colors: [
               color.withValues(alpha: 1),
-              AppColors.darkToneInk.withValues(alpha: 1),
+              AppColors.background.withValues(alpha: 1),
             ],
             stops: _Constants.gradientStops,
           ),

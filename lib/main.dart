@@ -176,7 +176,7 @@ class _MyAppState extends State<MyApp> {
           theme: ThemeData(
             appBarTheme: AppBarThemeData(
               foregroundColor: AppColors.white,
-              backgroundColor: AppColors.blackPanther,
+              backgroundColor: AppColors.background,
               actionsPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               titleSpacing: 10,
               titleTextStyle: TextStyle(

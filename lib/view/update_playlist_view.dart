@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
 import 'package:spotify_clone/core/constants/app_strings.dart';
 import 'package:spotify_clone/core/enums/media_type.dart';
+import 'package:spotify_clone/core/l10n/generated/app_localizations.dart';
 import 'package:spotify_clone/view/main_tab_view.dart';
 import 'package:spotify_clone/view/playlist_add_tracks_search_view.dart';
 import 'package:spotify_clone/view/track_list_view.dart';
 import 'package:spotify_clone/view_model/update_playlist_view_model.dart';
-import 'package:spotify_clone/widgets/custom_widgets/custom_icon.dart';
-import 'package:spotify_clone/widgets/custom_widgets/custom_text.dart';
+import 'package:spotify_clone/widgets/custom_widgets/app_icon.dart';
+import 'package:spotify_clone/widgets/custom_widgets/app_text.dart';
 import 'package:spotify_clone/widgets/bottom_sheet/update_playlist_bottom_sheet.dart';
 
 class UpdatePlaylistView extends StatefulWidget {
@@ -21,15 +23,7 @@ class UpdatePlaylistView extends StatefulWidget {
 }
 
 class _UpdatePlaylistViewState extends State<UpdatePlaylistView> {
-  //Variables
-  final String _profilePhotoPath = "assets/png/profile_photo.png";
-  //ViewModel
   late UpdatePlaylistViewModel viewModel;
-  //Variables
-  final double topContainerHeight = 250;
-  final double height1 = 150;
-  final EdgeInsetsGeometry padding1 = EdgeInsets.symmetric(horizontal: 20);
-
   @override
   void initState() {
     super.initState();
@@ -56,15 +50,14 @@ class _UpdatePlaylistViewState extends State<UpdatePlaylistView> {
 
   @override
   Widget build(BuildContext context) {
-    //MediaQuery
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        backgroundColor: AppColors.planSectionColor,
+        backgroundColor: _Constants.cardColor,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const AppIcon(icon: Icons.arrow_back),
           onPressed: () {
             _onBackPressed(context);
           },
@@ -74,7 +67,7 @@ class _UpdatePlaylistViewState extends State<UpdatePlaylistView> {
           builder: (context) {
             final String playlistName = viewModel.playlistName.value;
             return SizedBox(
-              width: 200,
+              width: _Constants.w200,
               child: _AppBarTitleSection(playlistName: playlistName),
             );
           },
@@ -85,21 +78,15 @@ class _UpdatePlaylistViewState extends State<UpdatePlaylistView> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [AppColors.planSectionColor, AppColors.darkToneInk],
-                ),
-              ),
-              height: topContainerHeight,
+              decoration: _Constants.topDecoration,
+              height: _Constants.topContainerHeight,
               width: double.infinity,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: padding1,
+                    padding: _Constants.padding20h,
                     child: SizedBox(
                       width: double.infinity,
                       child: Row(
@@ -114,35 +101,34 @@ class _UpdatePlaylistViewState extends State<UpdatePlaylistView> {
                             },
                           ),
                           SizedBox(
-                            width: screenWidth - (210),
-                            height: height1,
+                            width: screenWidth - (_Constants.w210),
+                            height: _Constants.h150,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                SizedBox(height: 10),
+                                SizedBox(height: _Constants.h10),
                                 SizedBox(
-                                  width: 150,
+                                //  width: _Constants.w150,
                                   child: Observer(
                                     builder: (context) {
                                       final String playlistName =
                                           viewModel.playlistName.value;
-                                      return CustomText(
-                                        data: playlistName,
-                                        textSize: TextSize.large,
-                                        textWeight: TextWeight.bold,
+                                      return AppText(
+                                        text: playlistName,
+                                        style: AppTextStyle.titleM,
                                       );
                                     },
                                   ),
                                 ),
                                 _ProfileRowSection(
-                                  profilePhotoPath: _profilePhotoPath,
+                                  profilePhotoPath: _Constants.profilePhotoImagePath,
                                 ),
                                 _ChangeButton(
                                   widget: widget,
                                   viewModel: viewModel,
                                 ),
-                                SizedBox(height: 10),
+                                SizedBox(height: _Constants.h10),
                               ],
                             ),
                           ),
@@ -151,34 +137,34 @@ class _UpdatePlaylistViewState extends State<UpdatePlaylistView> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: Container(
-                      height: 50,
+                    padding: EdgeInsets.only(top: _Constants.h10),
+                    child: SizedBox(
+                      height: _Constants.h50,
                       width: double.infinity,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           IconButton(
-                            padding: EdgeInsets.only(left: 20),
+                            padding: _Constants.paddingStart10,
                             onPressed: () {},
-                            icon: CustomIcon(
-                              iconData: Icons.public_outlined,
-                              color: AppColors.grey,
-                              iconSize: IconSize.medium,
+                            icon: AppIcon(
+                              icon: Icons.public_outlined,
+                              color: _Constants.greyColor,
+                              size: AppIconSize.small,
                             ),
                           ),
                           IconButton(
                             onPressed: () {},
-                            icon: CustomIcon(
-                              iconData: Icons.more_vert_outlined,
-                              color: AppColors.grey,
-                              iconSize: IconSize.medium,
+                            icon: AppIcon(
+                              icon: Icons.more_vert_outlined,
+                              size: AppIconSize.small,
+                              color: _Constants.greyColor,
                             ),
                           ),
                           Observer(
                             builder: (context) {
                               return AnimatedSwitcher(
-                                duration: const Duration(milliseconds: 350),
+                                duration: _Constants.duration350,
                                 switchInCurve: Curves.easeOutCubic,
                                 switchOutCurve: Curves.easeInCubic,
                                 transitionBuilder: (child, animation) {
@@ -212,11 +198,11 @@ class _UpdatePlaylistViewState extends State<UpdatePlaylistView> {
                 ],
               ),
             ),
-            SizedBox(height: 5),
+            SizedBox(height: _Constants.h5),
             Observer(
               builder: (context) {
                 return AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 350),
+                  duration: _Constants.duration350,
                   switchInCurve: Curves.easeOutCubic,
                   switchOutCurve: Curves.easeInCubic,
                   transitionBuilder: (child, animation) {
@@ -235,7 +221,6 @@ class _UpdatePlaylistViewState extends State<UpdatePlaylistView> {
                   },
                   child: viewModel.playlistInTracks.isEmpty
                       ? SizedBox(
-                          width: 200,
                           child: _Deneme(
                             screenWidth: screenWidth,
                             widget: widget,
@@ -250,7 +235,7 @@ class _UpdatePlaylistViewState extends State<UpdatePlaylistView> {
               },
             ),
             SizedBox(
-              height: 650,
+              height: _Constants.h650,
               width: double.infinity,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -261,24 +246,25 @@ class _UpdatePlaylistViewState extends State<UpdatePlaylistView> {
                       final double topPadding =
                           viewModel.playlistInTracks.isEmpty ? 20 : 0;
                       return AnimatedPadding(
-                        duration: const Duration(milliseconds: 300),
+                        duration: _Constants.duration300,
                         curve: Curves.easeInOut,
                         padding: EdgeInsets.only(
                           top: topPadding,
                           left: 20,
                           bottom: 10,
+                          right: 20,
                         ),
-                        child: _RecommendedSongsTitleSection(),
+                        child: const _RecommendedSongsTitleSection(),
                       );
                     },
                   ),
                   SizedBox(
-                    height: 370,
+                    height: _Constants.h370,
                     width: double.infinity,
                     child: Observer(
                       builder: (context) {
                         return viewModel.tracks.isEmpty
-                            ? _NullDataRecommendedSongs()
+                            ? const _NullDataRecommendedSongs()
                             : _UserTopTracksListViewBuilder(
                                 viewModel: viewModel,
                                 widget: widget,
@@ -322,6 +308,7 @@ class _Deneme extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return ElevatedButton.icon(
       onPressed: () async {
         if (viewModel.isAddingTrack == false) {
@@ -339,9 +326,7 @@ class _Deneme extends StatelessWidget {
           await viewModel.getPlaylistDetail(playlistId: widget.playlistId);
           await viewModel.getPlaylistTracks(playlistId: widget.playlistId);
           int sayac = 0;
-          debugPrint(" count2 : ${viewModel.count}");
           while (sayac < viewModel.count) {
-            debugPrint("girdi");
             var index1 = viewModel.playlistInTracks.length;
             index1 = index1 - (viewModel.count - sayac);
             viewModel.listKey.currentState?.insertItem(index1);
@@ -349,12 +334,11 @@ class _Deneme extends StatelessWidget {
           }
         }
       },
-      icon: CustomIcon(iconData: Icons.add, color: AppColors.black),
-      label: CustomText(
-        data: AppStrings.thisPlaylistAdd,
-        color: AppColors.black,
-        textSize: TextSize.small,
-        textWeight: TextWeight.bold,
+      icon: AppIcon(icon: Icons.add, color: _Constants.blackColor),
+      label: AppText(
+        text: l10n.updatePlaylistViewThisAddPlaylist,
+        color: _Constants.blackColor,
+        style: AppTextStyle.titleS,
       ),
     );
   }
@@ -372,13 +356,13 @@ class _ListNotEmptySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    final l10n = AppLocalizations.of(context)!;
+    return SizedBox(
       height: 50,
       child: Row(
         children: [
           SizedBox(
-            height: 30,
-            width: 100,
+            height: _Constants.h30,
             child: ElevatedButton.icon(
               onPressed: () async {
                 if (viewModel.isAddingTrack == false) {
@@ -401,9 +385,7 @@ class _ListNotEmptySection extends StatelessWidget {
                     playlistId: widget.playlistId,
                   );
                   int sayac = 0;
-                  debugPrint(" count2 : ${viewModel.count}");
                   while (sayac < viewModel.count) {
-                    debugPrint("girdi");
                     var index1 = viewModel.playlistInTracks.length;
                     index1 = index1 - (viewModel.count - sayac);
                     viewModel.listKey.currentState?.insertItem(index1);
@@ -411,22 +393,21 @@ class _ListNotEmptySection extends StatelessWidget {
                   }
                 }
               },
-              icon: CustomIcon(iconData: Icons.add, color: AppColors.black),
-              label: CustomText(
-                data: "Ekle",
-                color: AppColors.black,
-                textSize: TextSize.small,
-                textWeight: TextWeight.bold,
+              icon: AppIcon(icon: Icons.add, color: _Constants.blackColor, size: AppIconSize.small),
+              label: AppText(
+                text: l10n.updatePlaylistViewAdd,
+                color: _Constants.blackColor,
+                style: AppTextStyle.titleS,
               ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 10),
+            padding: EdgeInsetsDirectional.only(start: _Constants.w10),
             child: SizedBox(
-              height: 30,
+              height: _Constants.h30,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.green,
+                  backgroundColor: _Constants.greenColor,
                 ),
                 onPressed: () {
                   if (viewModel.isAddingTrack == false) {
@@ -443,7 +424,7 @@ class _ListNotEmptySection extends StatelessWidget {
                     );
                   }
                 },
-                child: CustomText(data: "Çalma listesine git"),
+                child: AppText(text: l10n.updatePlaylistViewGoPlaylist, style: AppTextStyle.titleS),
               ),
             ),
           ),
@@ -476,19 +457,17 @@ class _PlaylistAddedTracksState extends State<_PlaylistAddedTracks> {
         return SizeTransition(
           sizeFactor: animation,
           child: ListTile(
-            title: CustomText(
-              data: track.trackName,
-              textSize: TextSize.medium,
-              textWeight: TextWeight.bold,
+            title: AppText(
+              text: track.trackName ?? "",
+              style: AppTextStyle.titleM
             ),
-            subtitle: CustomText(
-              data: track.artistName,
-              textSize: TextSize.small,
-              textWeight: TextWeight.normal,
-              color: AppColors.grey,
+            subtitle: AppText(
+              text: track.artistName ?? "",
+              style:AppTextStyle.titleS,
+              color: _Constants.greyColor,
             ),
             leading: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: _Constants.radius10,
               child: Image.network(track.image ?? ""),
             ),
             trailing: IconButton(
@@ -497,31 +476,26 @@ class _PlaylistAddedTracksState extends State<_PlaylistAddedTracks> {
                   widget.viewModel.isAddingTrack = true;
                   if (!widget.viewModel.isPressedRemove) {
                     widget.viewModel.isPressedRemove = true;
-
                     final removedTrack =
                         widget.viewModel.playlistInTracks[index];
-
                     widget.viewModel.playlistInTracks.removeAt(index);
                     widget.viewModel.listKey.currentState?.removeItem(
                       index,
                       (context, animation) => SizeTransition(
                         sizeFactor: animation,
                         child: ListTile(
-                          title: CustomText(
-                            data: removedTrack.trackName,
-                            textSize: TextSize.medium,
-                            textWeight: TextWeight.bold,
+                          title: AppText(
+                            text: removedTrack.trackName ?? "",
+                            style:AppTextStyle.titleM,
                           ),
-                          subtitle: CustomText(
-                            data: removedTrack.artistName,
-                            textSize: TextSize.small,
-                            textWeight: TextWeight.normal,
-                            color: AppColors.grey,
+                          subtitle: AppText(
+                            text: removedTrack.artistName ?? "",
+                            style:AppTextStyle.titleS,
+                            color: _Constants.greyColor,
                           ),
                         ),
                       ),
                     );
-
                     await widget.viewModel.deleteTracksToPlaylist(
                       playlistId: widget.widget.playlistId,
                       trackUri: "spotify:track:${removedTrack.id}",
@@ -537,9 +511,8 @@ class _PlaylistAddedTracksState extends State<_PlaylistAddedTracks> {
                   widget.viewModel.isAddingTrack = false;
                 }
               },
-              icon: CustomIcon(
-                iconData: Icons.remove,
-                iconSize: IconSize.large,
+              icon: AppIcon(
+                icon: Icons.remove,
               ),
             ),
           ),
@@ -549,7 +522,6 @@ class _PlaylistAddedTracksState extends State<_PlaylistAddedTracks> {
   }
 }
 
-//
 class _RefreshButton extends StatelessWidget {
   const _RefreshButton({required this.screenWidth, required this.viewModel});
 
@@ -558,27 +530,25 @@ class _RefreshButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Padding(
-      padding: EdgeInsets.only(left: screenWidth / 2 - (50)),
-      child: SizedBox(
-        width: 100,
-        child: ElevatedButton(
-          onPressed: () async {
-            if (viewModel.isAddingTrack == false) {
-              viewModel.offset = viewModel.offset + 5;
-              viewModel.tracks.clear();
-              await viewModel.getUserTopTracks(
-                consumedCount: viewModel.offset,
-                limit: 5,
-              );
-            }
-          },
-          child: CustomText(
-            data: AppStrings.refresh,
-            color: AppColors.black,
-            textSize: TextSize.medium,
-            textWeight: TextWeight.bold,
-          ),
+      padding: EdgeInsetsDirectional.only(start: screenWidth / 2 - (50)),
+      child: ElevatedButton(
+        onPressed: () async {
+          if (viewModel.isAddingTrack == false) {
+            viewModel.offset = viewModel.offset + 5;
+            viewModel.tracks.clear();
+            await viewModel.getUserTopTracks(
+              consumedCount: viewModel.offset,
+              limit: 5,
+            );
+          }
+        },
+        child: AppText(
+          text: l10n.updatePlaylistViewRefresh,
+         style:AppTextStyle.titleM,
+          color: _Constants.blackColor,
+
         ),
       ),
     );
@@ -602,19 +572,18 @@ class _UserTopTracksListViewBuilder extends StatelessWidget {
       itemBuilder: (context, index) {
         final track = viewModel.tracks[index];
         return ListTile(
-          title: CustomText(
-            data: track.trackName,
-            textSize: TextSize.medium,
-            textWeight: TextWeight.bold,
+          title: AppText(
+            text: track.trackName ?? "",
+           style:AppTextStyle.titleM,
           ),
-          subtitle: CustomText(
-            data: track.artistName,
-            textSize: TextSize.small,
-            textWeight: TextWeight.normal,
-            color: AppColors.grey,
+          subtitle: AppText(
+            text: track.artistName ?? "",
+           style:AppTextStyle.titleS,
+
+            color: _Constants.greyColor,
           ),
           leading: ClipRRect(
-            borderRadius: BorderRadiusGeometry.circular(10),
+            borderRadius: _Constants.radius10,
             child: Image.network(track.image ?? ""),
           ),
           trailing: IconButton(
@@ -624,9 +593,6 @@ class _UserTopTracksListViewBuilder extends StatelessWidget {
                 if (!viewModel.isPressedAdd) {
                   final _index1 = viewModel.playlistInTracks.length;
                   viewModel.isPressedAdd = true;
-                  List<String> trackUris = [];
-                  trackUris.add("spotify:track:${track.id}");
-
                   await viewModel.getPlaylistTracks(
                     playlistId: widget.playlistId,
                   );
@@ -637,7 +603,7 @@ class _UserTopTracksListViewBuilder extends StatelessWidget {
                   if (!any) {
                     await viewModel.addTracksToPlaylist(
                       playlistId: widget.playlistId,
-                      trackUris: trackUris,
+                      trackUris: ["spotify:track:$id"],
                     );
                     viewModel.tracks.removeAt(index);
                     viewModel.offset++;
@@ -651,16 +617,16 @@ class _UserTopTracksListViewBuilder extends StatelessWidget {
                     await viewModel.getPlaylistTracks(
                       playlistId: widget.playlistId,
                     );
-
                     viewModel.listKey.currentState?.insertItem(_index1);
                   }
-
                   viewModel.isPressedAdd = false;
                 }
                 viewModel.isAddingTrack = false;
               }
             },
-            icon: CustomIcon(iconData: Icons.add, iconSize: IconSize.large),
+            icon: AppIcon(icon: Icons.add, //iconSize: IconSize.large
+            
+            ),
           ),
         );
       },
@@ -673,11 +639,12 @@ class _NullDataRecommendedSongs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Center(
-      child: CustomText(
-        data: AppStrings.nullDataRecommendedSongs,
-        color: AppColors.grey,
-        textSize: TextSize.large,
+      child: AppText(
+        text: l10n.updatePlaylistViewRefreshError,
+        color: _Constants.greyColor,
+       // textSize: TextSize.large,
       ),
     );
   }
@@ -688,13 +655,10 @@ class _RecommendedSongsTitleSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(),
-      child: CustomText(
-        data: AppStrings.recommendedSongs,
-        textSize: TextSize.extraLarge,
-        textWeight: TextWeight.bold,
-      ),
+    final l10n = AppLocalizations.of(context)!;
+    return AppText(
+      text: l10n.updatePlaylistViewRecommendedSongs,
+      style: AppTextStyle.titleL,
     );
   }
 }
@@ -707,8 +671,9 @@ class _ChangeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return ElevatedButton(
-      style: ElevatedButton.styleFrom(backgroundColor: AppColors.darkToneInk),
+      style: ElevatedButton.styleFrom(backgroundColor: _Constants.backgroundColor),
       onPressed: () {
         if (viewModel.isAddingTrack == false) {
           UpdatePlaylistBottomSheet().updatePlaylistBottomSheet(
@@ -718,19 +683,17 @@ class _ChangeButton extends StatelessWidget {
           );
         }
       },
-      child: CustomText(data: AppStrings.change, textWeight: TextWeight.bold),
+      child: AppText(text: l10n.updatePlaylistViewChange),
     );
   }
 }
 
 class _ProfileRowSection extends StatelessWidget {
   const _ProfileRowSection({required String profilePhotoPath})
-    : _profilePhotoPath = profilePhotoPath;
+      : _profilePhotoPath = profilePhotoPath;
 
   final String _profilePhotoPath;
   final String userName = "muhammet";
-  final double containerSize = 24;
-  final double sizeBoxSize = 50;
 
   @override
   Widget build(BuildContext context) {
@@ -738,39 +701,39 @@ class _ProfileRowSection extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         SizedBox(
-          width: sizeBoxSize,
-          height: sizeBoxSize,
+          width: _Constants.w50,
+          height: _Constants.h50,
           child: Stack(
             alignment: AlignmentGeometry.center,
             children: [
               Positioned(
-                right: 10,
+                right: _Constants.w10,
                 child: Container(
-                  width: containerSize,
-                  height: containerSize,
-                  decoration: BoxDecoration(shape: BoxShape.circle),
+                  width: _Constants.w24,
+                  height: _Constants.h24,
+                  decoration: const BoxDecoration(shape: BoxShape.circle),
                   child: Image.asset(_profilePhotoPath),
                 ),
               ),
               Positioned(
                 left: 0,
                 child: Container(
-                  width: containerSize,
-                  height: containerSize,
+                  width: _Constants.w24,
+                  height: _Constants.h24,
                   decoration: BoxDecoration(
-                    color: AppColors.blackPanther,
+                    color: _Constants.cardColor,
                     shape: BoxShape.circle,
                   ),
-                  child: CustomIcon(iconData: Icons.add),
+                  child: AppIcon(icon: Icons.add, size: AppIconSize.small),
                 ),
               ),
             ],
           ),
         ),
-        CustomText(
-          data: userName,
-          textSize: TextSize.small,
-          textWeight: TextWeight.bold,
+        AppText(
+          text: userName,
+          style: AppTextStyle.bodyS,
+          color: Colors.white,
         ),
       ],
     );
@@ -785,27 +748,27 @@ class _PlaylistCoverImageSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 20),
+      padding: EdgeInsetsDirectional.only(end: _Constants.w20),
       child: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 1200),
+        duration: _Constants.duration1200,
         switchInCurve: Curves.easeOut,
         switchOutCurve: Curves.easeIn,
         child: Container(
           key: ValueKey(playlistCoverImage),
           decoration: BoxDecoration(
-            color: AppColors.grey,
-            borderRadius: BorderRadius.circular(10),
+            color: _Constants.greyColor,
+            borderRadius: _Constants.radius10,
           ),
-          height: 150,
-          width: 150,
+          height: _Constants.w148,
+          width: _Constants.w148,
           child: playlistCoverImage.isEmpty
-              ? CustomIcon(
-                  iconData: Icons.music_note,
-                  iconSize: IconSize.mega,
-                  color: AppColors.planSectionColor,
+              ? AppIcon(
+                  icon: Icons.music_note,
+                  size: AppIconSize.huge,
+                  color: _Constants.planColor,
                 )
               : ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: _Constants.radius10,
                   child: Image.network(playlistCoverImage, fit: BoxFit.cover),
                 ),
         ),
@@ -818,18 +781,67 @@ class _AppBarTitleSection extends StatelessWidget {
   const _AppBarTitleSection({required this.playlistName});
 
   final String playlistName;
-  final double appBarTitleFontSize = 24;
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      textAlign: TextAlign.center,
-      playlistName,
-      overflow: TextOverflow.fade,
-      style: TextStyle(
-        fontSize: appBarTitleFontSize,
-        fontWeight: FontWeight.bold,
-      ),
-    );
+    return AppText(
+        textAlign: TextAlign.center,
+        text: playlistName,
+        overflow: TextOverflow.fade,
+        style: AppTextStyle.titleL);
   }
+}
+
+abstract final class _Constants {
+  //Paths
+  static String get profilePhotoImagePath => AppStrings.profilePhotoImage;
+
+  //Sizes
+  static double get topContainerHeight => 250.h;
+  static double get h150 => 150.h;
+  static double get h50 => 50.h;
+  static double get h30 => 30.h;
+  static double get h10 => 10.h;
+  static double get h5 => 5.h;
+  static double get h650 => 650.h;
+  static double get h370 => 370.h;
+  static double get h24 => 24.h;
+
+  static double get w200 => 200.w;
+  static double get w210 => 210.w;
+  static double get w150 => 150.w;
+  static double get w24 => 24.w;
+  static double get w50 => 50.w;
+  static double get w10 => 10.w;
+  static double get w20 => 20.w;
+  static double get w148 => 148.w;
+
+  //Padding
+  static EdgeInsetsGeometry get padding20h => EdgeInsets.symmetric(horizontal: 20.w);
+  static EdgeInsetsDirectional get paddingStart10 => EdgeInsetsDirectional.only(start: 10.w);
+
+  //Colors
+  static Color get cardColor => AppColors.cardBackground;
+  static Color get backgroundColor => AppColors.background;
+  static Color get greyColor => AppColors.grey;
+  static Color get blackColor => AppColors.black;
+  static Color get greenColor => AppColors.green;
+  static Color get planColor => AppColors.cardBackground;
+
+  //Decoration
+  static BoxDecoration get topDecoration => BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [AppColors.cardBackground, AppColors.background],
+        ),
+      );
+
+  //Radius
+  static BorderRadius get radius10 => BorderRadius.circular(10.r);
+
+  //Durations
+  static Duration get duration350 => const Duration(milliseconds: 350);
+  static Duration get duration300 => const Duration(milliseconds: 300);
+  static Duration get duration1200 => const Duration(milliseconds: 1200);
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
+import 'package:spotify_clone/core/l10n/generated/app_localizations.dart';
 import 'package:spotify_clone/widgets/custom_widgets/custom_text.dart';
 
 class FileSizeWarningAlertDialog extends StatelessWidget {
@@ -7,18 +8,19 @@ class FileSizeWarningAlertDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return AlertDialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10), 
       ),
       title: CustomText(
-        data: "Dosya boyutu çok büyük!",
+        data: l10n.bschangePlaylistImageViewErrorImageSize,
         color: AppColors.black,
         textSize: TextSize.large,
         textWeight: TextWeight.bold,
       ),
       content: CustomText(
-        data: "Lütfen daha küçük bir resim seçin.",
+        data: l10n.bschangePlaylistImageViewPleaseSmallImage,
         color: AppColors.black,
         textSize: TextSize.medium,
       ),
@@ -28,7 +30,7 @@ class FileSizeWarningAlertDialog extends StatelessWidget {
             Navigator.of(context).pop(); 
           },
           child: CustomText(
-            data: "Tamam",
+            data: l10n.bschangePlaylistImageViewOKey,
             color: AppColors.green,
             textSize: TextSize.medium,
           ),

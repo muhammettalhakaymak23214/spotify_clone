@@ -317,12 +317,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get createPlaylistViewCreate => 'Create';
 
   @override
-  String get updatePlaylistViewChange => 'Change';
-
-  @override
-  String get updatePlaylistViewRefresh => 'Refresh';
-
-  @override
   String get updatePlaylistViewPlaylistAddToThis => 'Add to this playlist';
 
   @override
@@ -386,7 +380,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeViewYourFavoriteArtists => 'Your Favorite Artists';
 
   @override
-  String get libraryViewEmtyDownloadedList => 'No results found';
+  String get libraryViewEmtyDownloadedList =>
+      'You haven\'t downloaded any songs yet';
 
   @override
   String get mediaTypePlaylist => 'PLAYING FROM PLAYLIST';
@@ -427,4 +422,88 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get recentlyPlayedViewRecentlyPlayed => 'Recently played';
+
+  @override
+  String get updatePlaylistViewRefresh => 'Refresh';
+
+  @override
+  String get updatePlaylistViewRefreshError => 'No songs to recommend';
+
+  @override
+  String get updatePlaylistViewRecommendedSongs => 'Recommended Songs';
+
+  @override
+  String get updatePlaylistViewThisAddPlaylist => 'Add to this playlist';
+
+  @override
+  String get updatePlaylistViewAdd => 'Add';
+
+  @override
+  String get updatePlaylistViewGoPlaylist => 'Go to playlist';
+
+  @override
+  String get updatePlaylistViewChange => 'Change';
+
+  @override
+  String get updatePlaylistViewSave => 'Save';
+
+  @override
+  String get updatePlaylistViewCancel => 'Cancel';
+
+  @override
+  String get bsUpdatePlaylistViewNameAndDesciription => 'Name and details';
+
+  @override
+  String get bsUpdatePlaylistViewMakePublic => 'Make public';
+
+  @override
+  String get bsUpdatePlaylistViewMakePrivate => 'Make private for other users';
+
+  @override
+  String get bsUpdatePlaylistViewDeletePlaylist => 'Delete playlist';
+
+  @override
+  String get bsUpdatePlaylistViewMakePublicAreYouSure =>
+      'Do you want to share the playlist with others?';
+
+  @override
+  String get bsUpdatePlaylistViewMakePubliDesciription =>
+      'People you invite to this playlist can add and remove songs.';
+
+  @override
+  String get bsUpdatePlaylistViewMakePublicButton => 'Make shareable';
+
+  @override
+  String bsUpdatePlaylistViewDeletePlaylistAreYouSure(String count) {
+    return 'Are you sure you want to delete $count?';
+  }
+
+  @override
+  String get bsUpdatePlaylistViewDelete => 'Delete';
+
+  @override
+  String get bsUpdatePlaylistViewCancel => 'Cancel';
+
+  @override
+  String get changePlaylistImageViewChangeCover => 'Change cover image.';
+
+  @override
+  String get changePlaylistImageViewRemove => 'Remove';
+
+  @override
+  String get changePlaylistImageViewConfirm => 'Confirm';
+
+  @override
+  String get bschangePlaylistImageViewErrorImageSize =>
+      'File size is too large';
+
+  @override
+  String get bschangePlaylistImageViewPleaseSmallImage =>
+      'Please select a smaller image.';
+
+  @override
+  String get bschangePlaylistImageViewOKey => 'OK';
+
+  @override
+  String get trackListViewEmptyList => 'List is empty';
 }

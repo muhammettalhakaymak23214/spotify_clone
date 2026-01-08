@@ -317,12 +317,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get createPlaylistViewCreate => 'إنشاء';
 
   @override
-  String get updatePlaylistViewChange => 'تغيير';
-
-  @override
-  String get updatePlaylistViewRefresh => 'تحديث';
-
-  @override
   String get updatePlaylistViewPlaylistAddToThis => 'إضافة إلى هذه القائمة';
 
   @override
@@ -387,7 +381,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get homeViewYourFavoriteArtists => 'فنانوك المفضلون';
 
   @override
-  String get libraryViewEmtyDownloadedList => 'لا توجد نتائج';
+  String get libraryViewEmtyDownloadedList => 'لم تقم بتنزيل أي أغاني بعد';
 
   @override
   String get mediaTypePlaylist => 'جارٍ التشغيل من قائمة التشغيل';
@@ -428,4 +422,88 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get recentlyPlayedViewRecentlyPlayed => 'تم تشغيله مؤخراً';
+
+  @override
+  String get updatePlaylistViewRefresh => 'تحديث';
+
+  @override
+  String get updatePlaylistViewRefreshError => 'لا توجد أغاني مقترحة';
+
+  @override
+  String get updatePlaylistViewRecommendedSongs => 'أغاني مقترحة';
+
+  @override
+  String get updatePlaylistViewThisAddPlaylist => 'إضافة إلى هذه القائمة';
+
+  @override
+  String get updatePlaylistViewAdd => 'إضافة';
+
+  @override
+  String get updatePlaylistViewGoPlaylist => 'الذهاب إلى قائمة التشغيل';
+
+  @override
+  String get updatePlaylistViewChange => 'تغيير';
+
+  @override
+  String get updatePlaylistViewSave => 'حفظ';
+
+  @override
+  String get updatePlaylistViewCancel => 'إلغاء';
+
+  @override
+  String get bsUpdatePlaylistViewNameAndDesciription => 'الاسم والتفاصيل';
+
+  @override
+  String get bsUpdatePlaylistViewMakePublic => 'اجعلها علنية';
+
+  @override
+  String get bsUpdatePlaylistViewMakePrivate =>
+      'اجعلها خاصة للمستخدمين الآخرين';
+
+  @override
+  String get bsUpdatePlaylistViewDeletePlaylist => 'حذف قائمة التشغيل';
+
+  @override
+  String get bsUpdatePlaylistViewMakePublicAreYouSure =>
+      'هل تريد مشاركة قائمة التشغيل مع الآخرين؟';
+
+  @override
+  String get bsUpdatePlaylistViewMakePubliDesciription =>
+      'يمكن للأشخاص الذين تدعوهم إلى هذه القائمة إضافة الأغاني وإزالتها.';
+
+  @override
+  String get bsUpdatePlaylistViewMakePublicButton => 'اجعلها قابلة للمشاركة';
+
+  @override
+  String bsUpdatePlaylistViewDeletePlaylistAreYouSure(String count) {
+    return 'هل أنت متأكد أنك تريد حذف $count؟';
+  }
+
+  @override
+  String get bsUpdatePlaylistViewDelete => 'حذف';
+
+  @override
+  String get bsUpdatePlaylistViewCancel => 'إلغاء';
+
+  @override
+  String get changePlaylistImageViewChangeCover => 'تغيير صورة الغلاف.';
+
+  @override
+  String get changePlaylistImageViewRemove => 'إزالة';
+
+  @override
+  String get changePlaylistImageViewConfirm => 'تأكيد';
+
+  @override
+  String get bschangePlaylistImageViewErrorImageSize => 'حجم الملف كبير جداً';
+
+  @override
+  String get bschangePlaylistImageViewPleaseSmallImage =>
+      'يرجى اختيار صورة أصغر.';
+
+  @override
+  String get bschangePlaylistImageViewOKey => 'موافق';
+
+  @override
+  String get trackListViewEmptyList => 'القائمة فارغة';
 }

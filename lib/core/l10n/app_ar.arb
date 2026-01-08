@@ -146,8 +146,6 @@
     },
     "createPlaylistViewCancel": "إلغاء",
     "createPlaylistViewCreate": "إنشاء",
-    "updatePlaylistViewChange": "تغيير",
-    "updatePlaylistViewRefresh": "تحديث",
     "updatePlaylistViewPlaylistAddToThis": "إضافة إلى هذه القائمة",
     "updatePlaylistViewPlaylistRecommendedTitle": "أغانٍ مقترحة",
     "updatePlaylistViewPlaylistNoRecommendations": "لا توجد أغانٍ مقترحة",
@@ -169,7 +167,6 @@
     "homeViewNewReleases": "الإصدارات الجديدة",
     "homeViewYourFavoriteArtists": "فنانوك المفضلون",
     "libraryViewEmtyDownloadedList": "لم تقم بتنزيل أي أغاني بعد",
-    "libraryViewEmtyDownloadedList": "لا توجد نتائج",
     "mediaTypePlaylist": "جارٍ التشغيل من قائمة التشغيل",
     "mediaTypeAlbum": "جارٍ التشغيل من الألبوم",
     "mediaTypeArtist": "جارٍ التشغيل من الفنانين",
@@ -181,6 +178,38 @@
     "trackListViewAlbum": "ألبوم",
     "durationHoursMinutes": "{hours} ساعة {minutes} دقيقة",
     "durationMinutes": "{minutes} دقيقة",
-    "recentlyPlayedViewRecentlyPlayed": "تم تشغيله مؤخراً"
-    
+    "recentlyPlayedViewRecentlyPlayed": "تم تشغيله مؤخراً",
+    "updatePlaylistViewRefresh": "تحديث",
+    "updatePlaylistViewRefreshError": "لا توجد أغاني مقترحة",
+    "updatePlaylistViewRecommendedSongs": "أغاني مقترحة",
+    "updatePlaylistViewThisAddPlaylist": "إضافة إلى هذه القائمة",
+    "updatePlaylistViewAdd": "إضافة",
+    "updatePlaylistViewGoPlaylist": "الذهاب إلى قائمة التشغيل",
+    "updatePlaylistViewChange": "تغيير",
+    "updatePlaylistViewSave": "حفظ",
+    "updatePlaylistViewCancel": "إلغاء",
+    "bsUpdatePlaylistViewNameAndDesciription": "الاسم والتفاصيل",
+    "bsUpdatePlaylistViewMakePublic": "اجعلها علنية",
+    "bsUpdatePlaylistViewMakePrivate": "اجعلها خاصة للمستخدمين الآخرين",
+    "bsUpdatePlaylistViewDeletePlaylist": "حذف قائمة التشغيل",
+    "bsUpdatePlaylistViewMakePublicAreYouSure": "هل تريد مشاركة قائمة التشغيل مع الآخرين؟",
+    "bsUpdatePlaylistViewMakePubliDesciription": "يمكن للأشخاص الذين تدعوهم إلى هذه القائمة إضافة الأغاني وإزالتها.",
+    "bsUpdatePlaylistViewMakePublicButton": "اجعلها قابلة للمشاركة",
+    "bsUpdatePlaylistViewDeletePlaylistAreYouSure": "هل أنت متأكد أنك تريد حذف {count}؟",
+    "@bsUpdatePlaylistViewDeletePlaylistAreYouSure": {
+        "placeholders": {
+            "count": {
+                "type": "String"
+            }
+        }
+    },
+    "bsUpdatePlaylistViewDelete": "حذف",
+    "bsUpdatePlaylistViewCancel": "إلغاء",
+    "changePlaylistImageViewChangeCover": "تغيير صورة الغلاف.",
+    "changePlaylistImageViewRemove": "إزالة",
+    "changePlaylistImageViewConfirm": "تأكيد",
+    "bschangePlaylistImageViewErrorImageSize": "حجم الملف كبير جداً",
+    "bschangePlaylistImageViewPleaseSmallImage": "يرجى اختيار صورة أصغر.",
+    "bschangePlaylistImageViewOKey": "موافق",
+    "trackListViewEmptyList": "القائمة فارغة"
 }

@@ -203,7 +203,7 @@ abstract final class _Constants {
 
   // Decoration
   static BoxDecoration get sheetDecoration => BoxDecoration(
-        color: AppColors.bottomSheetBgColor,
+        color: AppColors.background,
         borderRadius: sheetRadius,
       );
   static BoxDecoration get iconContainerDecoration => BoxDecoration(

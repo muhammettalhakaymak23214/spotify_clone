@@ -146,8 +146,6 @@
     },
     "createPlaylistViewCancel": "İptal",
     "createPlaylistViewCreate": "Oluştur",
-    "updatePlaylistViewChange": "Değiştir",
-    "updatePlaylistViewRefresh": "Yenile",
     "updatePlaylistViewPlaylistAddToThis": "Bu çalma listesine ekle",
     "updatePlaylistViewPlaylistRecommendedTitle": "Önerilen Şarkılar",
     "updatePlaylistViewPlaylistNoRecommendations": "Önerilebilecek şarkı yok",
@@ -169,7 +167,6 @@
     "homeViewNewReleases": "Yeni Çıkanlar",
     "homeViewYourFavoriteArtists": "Sevdiğin Sanatçılar",
     "libraryViewEmtyDownloadedList": "Henüz şarkı indirmedin",
-    "libraryViewEmtyDownloadedList": "Sonuç bulunamadi",
     "mediaTypePlaylist": "ÇALMA LİSTESİNDEN ÇALINIYOR",
     "mediaTypeAlbum": "ALBUMDEN ÇALINIYOR",
     "mediaTypeArtist": "SANATÇILARDAN ÇALINIYOR",
@@ -181,11 +178,40 @@
     "trackListViewAlbum": "Album",
     "durationHoursMinutes": "{hours} sa {minutes} dk",
     "durationMinutes": "{minutes} dk",
-    "recentlyPlayedViewRecentlyPlayed": "Son çalınanlar"
-    
-
-    
-    
+    "recentlyPlayedViewRecentlyPlayed": "Son çalınanlar",
+    "updatePlaylistViewRefresh": "Yenile",
+    "updatePlaylistViewRefreshError": "Önerilebilecek şarkı yok",  
+    "updatePlaylistViewRecommendedSongs": "Önerilen Şarkılar", 
+    "updatePlaylistViewThisAddPlaylist": "Bu çalma listesine ekle", 
+    "updatePlaylistViewAdd": "Ekle", 
+    "updatePlaylistViewGoPlaylist": "Çalma listesine git", 
+    "updatePlaylistViewChange": "Değiştir", 
+    "updatePlaylistViewSave": "Kaydet", 
+    "updatePlaylistViewCancel": "İptal", 
+    "bsUpdatePlaylistViewNameAndDesciription": "Ad ve ayrıntılar", 
+    "bsUpdatePlaylistViewMakePublic": "Herkese açık yap", 
+    "bsUpdatePlaylistViewMakePrivate": "Başka kullanıcılar için erişimi engelle", 
+    "bsUpdatePlaylistViewDeletePlaylist": "Çalma listesini sil", 
+    "bsUpdatePlaylistViewMakePublicAreYouSure": "Çalma listesini başkalarıyla paylaşmak ister misin?", 
+    "bsUpdatePlaylistViewMakePubliDesciription": "Bu çalma listesine davet ettiğin kişiler şarkı ekleyebilir ve çıkarabilir.", 
+    "bsUpdatePlaylistViewMakePublicButton": "Paylaşılabilir yap", 
+    "bsUpdatePlaylistViewDeletePlaylistAreYouSure": "{count} adlı öğeyi silmek isteğine emin misin?", 
+    "@bsUpdatePlaylistViewDeletePlaylistAreYouSure": {
+        "placeholders": {
+            "count": {
+                "type": "String"
+            }
+        }
+    },
+    "bsUpdatePlaylistViewDelete": "Sil", 
+    "bsUpdatePlaylistViewCancel": "İptal", 
+    "changePlaylistImageViewChangeCover": "Kapak görselini değiştir.", 
+    "changePlaylistImageViewRemove": "Kaldır", 
+    "changePlaylistImageViewConfirm": "Onayla", 
+    "bschangePlaylistImageViewErrorImageSize": "Dosya boyutu çok büyük", 
+    "bschangePlaylistImageViewPleaseSmallImage": "Lütfen daha küçük bir resim seçin.", 
+    "bschangePlaylistImageViewOKey": "Tamam",
+    "trackListViewEmptyList": "Liste boş"
 }
 
 

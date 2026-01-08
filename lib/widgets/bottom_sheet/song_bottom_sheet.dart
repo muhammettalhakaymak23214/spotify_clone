@@ -110,7 +110,7 @@ final BorderRadiusGeometry _borderRadius = BorderRadius.vertical(
         final l10n = AppLocalizations.of(context)!;
         return Container(
           decoration:  BoxDecoration(
-            color: AppColors.bottomSheetBgColor,
+            color: AppColors.background,
             borderRadius: _borderRadius,
           ),
           child: ListView(

@@ -1,6 +1,7 @@
 class AppStrings {
   //Yeni Düzen
   //Image Path
+  static final String profileImagePath = "assets/png/profile_photo.png";
   static final String premiumViewAppBarImage = "assets/png/premiums.png";
   static final String profilePhotoImage = "assets/png/profile_photo.png";
   static final String suffleImage = "assets/png/suffle.png";
@@ -12,10 +13,16 @@ class AppStrings {
   static final String loadingLottie = 'assets/lottie/lottie_loading.json';
   static final String successLottie = 'assets/lottie/lottie_success.json';
 
-  static final String emty = "";
+   static final String emty = "";
+
+   // static final String emtyListMessage = "Liste boş!";
+
+    static final String accountHeader = "muhammet";
+/*
+ 
 
   //Image Paths
-  static final String profileImagePath = "assets/png/profile_photo.png";
+  
 
   static final String search = "Ara";
   static final String library = "Kitaplığın";
@@ -24,14 +31,14 @@ class AppStrings {
       "https://img.freepik.com/free-vector/gradient-album-cover-template_23-2150597431.jpg?semt=ais_hybrid&w=740&q=80";
 
   //drawer
-  static final String accountHeader = "muhammet";
+  
 
   //Premium Page
 
   static final String planTitle1 = "2 ay boyunca \u20BA45";
 
   //Track List View
-  static final String emtyListMessage = "Liste boş!";
+ 
 
   static final String emtyDownloadedList = "Henüz şarkı indirmedin";
 
@@ -165,7 +172,7 @@ class AppStrings {
   static final String change = "Değiştir";
   static final String thisPlaylistAdd = "Bu çalma listesine ekle";
   static final String recommendedSongs = "Önerilen Şarkılar";
-  static final String refresh = "Yenile";
+  //static final String refresh = "Yenile";
   static final String nullDataRecommendedSongs = "Önerilebilecek şarkı yok";
 
   //Playlist Change Visibility ShowDialog
@@ -187,5 +194,5 @@ class AppStrings {
   static final String playlist = "Çalma Listelerin";
   static final String podcasts = "Podcast'ler";
   static final String all = "Tümü";
-  static final String music = "Müzik";
+  static final String music = "Müzik";*/
 }

@@ -15,7 +15,7 @@ class CustomDragHandle extends StatelessWidget {
         width: dragWidth,
         height: dragHeight,
         decoration: BoxDecoration(
-          color: AppColors.dragColor,
+          color: AppColors.white,
           borderRadius: borderRadius,
         ),
       ),

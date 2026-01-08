@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
 import 'package:spotify_clone/core/helpers/image_picker_helper.dart';
+import 'package:spotify_clone/core/l10n/generated/app_localizations.dart';
 import 'package:spotify_clone/view_model/update_playlist_view_model.dart';
 import 'package:spotify_clone/widgets/custom_widgets/custom_icon.dart';
 import 'package:spotify_clone/widgets/custom_widgets/custom_text.dart';
@@ -39,6 +40,7 @@ class _PlaylistImageChangeViewState extends State<PlaylistImageChangeView> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return PopScope(
       canPop: false,
       child: Scaffold(
@@ -46,7 +48,7 @@ class _PlaylistImageChangeViewState extends State<PlaylistImageChangeView> {
           leading: IconButton( onPressed: () {
             Navigator.pop(context);
           } ,icon: CustomIcon(iconData: Icons.arrow_back , iconSize: IconSize.large,)),
-          backgroundColor: AppColors.darkToneInk),
+          backgroundColor: AppColors.background),
         body: SizedBox(
           height: double.infinity,
           width: double.infinity,
@@ -79,7 +81,7 @@ class _PlaylistImageChangeViewState extends State<PlaylistImageChangeView> {
                         }
                       },
                       child: CustomText(
-                        data: "Kapak görselini değiştir",
+                        data: l10n.changePlaylistImageViewChangeCover,
                         color: AppColors.black,
                         textSize: TextSize.medium,
                         textWeight: TextWeight.bold,
@@ -116,7 +118,7 @@ class _PlaylistImageChangeViewState extends State<PlaylistImageChangeView> {
                         }
                       },
                       child: CustomText(
-                        data: "Onayla",
+                        data: l10n.changePlaylistImageViewConfirm,
                         color: AppColors.black,
                         textSize: TextSize.medium,
                         textWeight: TextWeight.bold,
@@ -159,7 +161,7 @@ class _PlaylistImageChangeViewState extends State<PlaylistImageChangeView> {
                         }
                       },
                       child: CustomText(
-                        data: "Kaldır",
+                        data: l10n.changePlaylistImageViewRemove,
                         color: AppColors.black,
                         textSize: TextSize.medium,
                         textWeight: TextWeight.bold,
@@ -186,7 +188,7 @@ class _PlaylistImageChangeViewState extends State<PlaylistImageChangeView> {
     return CustomIcon(
       iconData: Icons.music_note,
       iconSize: IconSize.mega,
-      color: AppColors.planSectionColor,
+      color: AppColors.cardBackground,
     );
   }
 }

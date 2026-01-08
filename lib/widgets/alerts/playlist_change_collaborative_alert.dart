@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
 import 'package:spotify_clone/core/constants/app_strings.dart';
+import 'package:spotify_clone/core/l10n/generated/app_localizations.dart';
 import 'package:spotify_clone/view_model/update_playlist_view_model.dart';
 import 'package:spotify_clone/widgets/custom_widgets/custom_text.dart';
 
@@ -10,7 +11,9 @@ class PlaylistChangeCollaborativeAlert {
     required UpdatePlaylistViewModel viewModel,
     required String playlistId,
   }) {
+    final l10n = AppLocalizations.of(context)!;
     return showDialog(
+      
       context: context,
       builder: (context) {
         return AlertDialog(
@@ -19,7 +22,7 @@ class PlaylistChangeCollaborativeAlert {
           ),
           backgroundColor: AppColors.white,
           title: CustomText(
-            data: AppStrings.sDChangeVisibilityTitle,
+            data: l10n.bsUpdatePlaylistViewMakePublicAreYouSure,
             textSize: TextSize.large,
             color: AppColors.black,
             textWeight: TextWeight.bold,
@@ -27,7 +30,7 @@ class PlaylistChangeCollaborativeAlert {
           ),
           actions: [
             CustomText(
-              data: AppStrings.sDChangeVisibilitySubTitle,
+              data: l10n.bsUpdatePlaylistViewMakePubliDesciription,
               color: AppColors.black,
               textSize: TextSize.medium,
               //textWeight: TextWeight.bold,
@@ -49,7 +52,7 @@ class PlaylistChangeCollaborativeAlert {
                         backgroundColor: AppColors.green,
                       ),
                       child: CustomText(
-                        data: AppStrings.sDChangeVisibilityDoPrivate,
+                        data: l10n.bsUpdatePlaylistViewMakePublic,
                         textSize: TextSize.medium,
                         textWeight: TextWeight.bold,
                         color: AppColors.black,
@@ -72,7 +75,7 @@ class PlaylistChangeCollaborativeAlert {
                   SizedBox(height: 20),
                   GestureDetector(
                     child: CustomText(
-                      data: AppStrings.sDChangeVisibilityCancel,
+                      data: l10n.updatePlaylistViewCancel,
                       textSize: TextSize.medium,
                       textWeight: TextWeight.bold,
                       color: AppColors.black,

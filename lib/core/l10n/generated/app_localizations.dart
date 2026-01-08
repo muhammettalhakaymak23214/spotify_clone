@@ -636,18 +636,6 @@ abstract class AppLocalizations {
   /// **'Oluştur'**
   String get createPlaylistViewCreate;
 
-  /// No description provided for @updatePlaylistViewChange.
-  ///
-  /// In tr, this message translates to:
-  /// **'Değiştir'**
-  String get updatePlaylistViewChange;
-
-  /// No description provided for @updatePlaylistViewRefresh.
-  ///
-  /// In tr, this message translates to:
-  /// **'Yenile'**
-  String get updatePlaylistViewRefresh;
-
   /// No description provided for @updatePlaylistViewPlaylistAddToThis.
   ///
   /// In tr, this message translates to:
@@ -771,7 +759,7 @@ abstract class AppLocalizations {
   /// No description provided for @libraryViewEmtyDownloadedList.
   ///
   /// In tr, this message translates to:
-  /// **'Sonuç bulunamadi'**
+  /// **'Henüz şarkı indirmedin'**
   String get libraryViewEmtyDownloadedList;
 
   /// No description provided for @mediaTypePlaylist.
@@ -845,6 +833,162 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Son çalınanlar'**
   String get recentlyPlayedViewRecentlyPlayed;
+
+  /// No description provided for @updatePlaylistViewRefresh.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yenile'**
+  String get updatePlaylistViewRefresh;
+
+  /// No description provided for @updatePlaylistViewRefreshError.
+  ///
+  /// In tr, this message translates to:
+  /// **'Önerilebilecek şarkı yok'**
+  String get updatePlaylistViewRefreshError;
+
+  /// No description provided for @updatePlaylistViewRecommendedSongs.
+  ///
+  /// In tr, this message translates to:
+  /// **'Önerilen Şarkılar'**
+  String get updatePlaylistViewRecommendedSongs;
+
+  /// No description provided for @updatePlaylistViewThisAddPlaylist.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu çalma listesine ekle'**
+  String get updatePlaylistViewThisAddPlaylist;
+
+  /// No description provided for @updatePlaylistViewAdd.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ekle'**
+  String get updatePlaylistViewAdd;
+
+  /// No description provided for @updatePlaylistViewGoPlaylist.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çalma listesine git'**
+  String get updatePlaylistViewGoPlaylist;
+
+  /// No description provided for @updatePlaylistViewChange.
+  ///
+  /// In tr, this message translates to:
+  /// **'Değiştir'**
+  String get updatePlaylistViewChange;
+
+  /// No description provided for @updatePlaylistViewSave.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaydet'**
+  String get updatePlaylistViewSave;
+
+  /// No description provided for @updatePlaylistViewCancel.
+  ///
+  /// In tr, this message translates to:
+  /// **'İptal'**
+  String get updatePlaylistViewCancel;
+
+  /// No description provided for @bsUpdatePlaylistViewNameAndDesciription.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ad ve ayrıntılar'**
+  String get bsUpdatePlaylistViewNameAndDesciription;
+
+  /// No description provided for @bsUpdatePlaylistViewMakePublic.
+  ///
+  /// In tr, this message translates to:
+  /// **'Herkese açık yap'**
+  String get bsUpdatePlaylistViewMakePublic;
+
+  /// No description provided for @bsUpdatePlaylistViewMakePrivate.
+  ///
+  /// In tr, this message translates to:
+  /// **'Başka kullanıcılar için erişimi engelle'**
+  String get bsUpdatePlaylistViewMakePrivate;
+
+  /// No description provided for @bsUpdatePlaylistViewDeletePlaylist.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çalma listesini sil'**
+  String get bsUpdatePlaylistViewDeletePlaylist;
+
+  /// No description provided for @bsUpdatePlaylistViewMakePublicAreYouSure.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çalma listesini başkalarıyla paylaşmak ister misin?'**
+  String get bsUpdatePlaylistViewMakePublicAreYouSure;
+
+  /// No description provided for @bsUpdatePlaylistViewMakePubliDesciription.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu çalma listesine davet ettiğin kişiler şarkı ekleyebilir ve çıkarabilir.'**
+  String get bsUpdatePlaylistViewMakePubliDesciription;
+
+  /// No description provided for @bsUpdatePlaylistViewMakePublicButton.
+  ///
+  /// In tr, this message translates to:
+  /// **'Paylaşılabilir yap'**
+  String get bsUpdatePlaylistViewMakePublicButton;
+
+  /// No description provided for @bsUpdatePlaylistViewDeletePlaylistAreYouSure.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count} adlı öğeyi silmek isteğine emin misin?'**
+  String bsUpdatePlaylistViewDeletePlaylistAreYouSure(String count);
+
+  /// No description provided for @bsUpdatePlaylistViewDelete.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sil'**
+  String get bsUpdatePlaylistViewDelete;
+
+  /// No description provided for @bsUpdatePlaylistViewCancel.
+  ///
+  /// In tr, this message translates to:
+  /// **'İptal'**
+  String get bsUpdatePlaylistViewCancel;
+
+  /// No description provided for @changePlaylistImageViewChangeCover.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kapak görselini değiştir.'**
+  String get changePlaylistImageViewChangeCover;
+
+  /// No description provided for @changePlaylistImageViewRemove.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaldır'**
+  String get changePlaylistImageViewRemove;
+
+  /// No description provided for @changePlaylistImageViewConfirm.
+  ///
+  /// In tr, this message translates to:
+  /// **'Onayla'**
+  String get changePlaylistImageViewConfirm;
+
+  /// No description provided for @bschangePlaylistImageViewErrorImageSize.
+  ///
+  /// In tr, this message translates to:
+  /// **'Dosya boyutu çok büyük'**
+  String get bschangePlaylistImageViewErrorImageSize;
+
+  /// No description provided for @bschangePlaylistImageViewPleaseSmallImage.
+  ///
+  /// In tr, this message translates to:
+  /// **'Lütfen daha küçük bir resim seçin.'**
+  String get bschangePlaylistImageViewPleaseSmallImage;
+
+  /// No description provided for @bschangePlaylistImageViewOKey.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tamam'**
+  String get bschangePlaylistImageViewOKey;
+
+  /// No description provided for @trackListViewEmptyList.
+  ///
+  /// In tr, this message translates to:
+  /// **'Liste boş'**
+  String get trackListViewEmptyList;
 }
 
 class _AppLocalizationsDelegate

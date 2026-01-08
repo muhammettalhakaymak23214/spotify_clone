@@ -312,12 +312,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get createPlaylistViewCreate => 'Oluştur';
 
   @override
-  String get updatePlaylistViewChange => 'Değiştir';
-
-  @override
-  String get updatePlaylistViewRefresh => 'Yenile';
-
-  @override
   String get updatePlaylistViewPlaylistAddToThis => 'Bu çalma listesine ekle';
 
   @override
@@ -382,7 +376,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get homeViewYourFavoriteArtists => 'Sevdiğin Sanatçılar';
 
   @override
-  String get libraryViewEmtyDownloadedList => 'Sonuç bulunamadi';
+  String get libraryViewEmtyDownloadedList => 'Henüz şarkı indirmedin';
 
   @override
   String get mediaTypePlaylist => 'ÇALMA LİSTESİNDEN ÇALINIYOR';
@@ -423,4 +417,89 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get recentlyPlayedViewRecentlyPlayed => 'Son çalınanlar';
+
+  @override
+  String get updatePlaylistViewRefresh => 'Yenile';
+
+  @override
+  String get updatePlaylistViewRefreshError => 'Önerilebilecek şarkı yok';
+
+  @override
+  String get updatePlaylistViewRecommendedSongs => 'Önerilen Şarkılar';
+
+  @override
+  String get updatePlaylistViewThisAddPlaylist => 'Bu çalma listesine ekle';
+
+  @override
+  String get updatePlaylistViewAdd => 'Ekle';
+
+  @override
+  String get updatePlaylistViewGoPlaylist => 'Çalma listesine git';
+
+  @override
+  String get updatePlaylistViewChange => 'Değiştir';
+
+  @override
+  String get updatePlaylistViewSave => 'Kaydet';
+
+  @override
+  String get updatePlaylistViewCancel => 'İptal';
+
+  @override
+  String get bsUpdatePlaylistViewNameAndDesciription => 'Ad ve ayrıntılar';
+
+  @override
+  String get bsUpdatePlaylistViewMakePublic => 'Herkese açık yap';
+
+  @override
+  String get bsUpdatePlaylistViewMakePrivate =>
+      'Başka kullanıcılar için erişimi engelle';
+
+  @override
+  String get bsUpdatePlaylistViewDeletePlaylist => 'Çalma listesini sil';
+
+  @override
+  String get bsUpdatePlaylistViewMakePublicAreYouSure =>
+      'Çalma listesini başkalarıyla paylaşmak ister misin?';
+
+  @override
+  String get bsUpdatePlaylistViewMakePubliDesciription =>
+      'Bu çalma listesine davet ettiğin kişiler şarkı ekleyebilir ve çıkarabilir.';
+
+  @override
+  String get bsUpdatePlaylistViewMakePublicButton => 'Paylaşılabilir yap';
+
+  @override
+  String bsUpdatePlaylistViewDeletePlaylistAreYouSure(String count) {
+    return '$count adlı öğeyi silmek isteğine emin misin?';
+  }
+
+  @override
+  String get bsUpdatePlaylistViewDelete => 'Sil';
+
+  @override
+  String get bsUpdatePlaylistViewCancel => 'İptal';
+
+  @override
+  String get changePlaylistImageViewChangeCover => 'Kapak görselini değiştir.';
+
+  @override
+  String get changePlaylistImageViewRemove => 'Kaldır';
+
+  @override
+  String get changePlaylistImageViewConfirm => 'Onayla';
+
+  @override
+  String get bschangePlaylistImageViewErrorImageSize =>
+      'Dosya boyutu çok büyük';
+
+  @override
+  String get bschangePlaylistImageViewPleaseSmallImage =>
+      'Lütfen daha küçük bir resim seçin.';
+
+  @override
+  String get bschangePlaylistImageViewOKey => 'Tamam';
+
+  @override
+  String get trackListViewEmptyList => 'Liste boş';
 }

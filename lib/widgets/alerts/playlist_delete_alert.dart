@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
-import 'package:spotify_clone/core/constants/app_strings.dart';
+//import 'package:spotify_clone/core/constants/app_strings.dart';
+import 'package:spotify_clone/core/l10n/generated/app_localizations.dart';
 import 'package:spotify_clone/view/main_tab_view.dart';
 import 'package:spotify_clone/view_model/update_playlist_view_model.dart';
 import 'package:spotify_clone/widgets/custom_widgets/custom_text.dart';
@@ -11,6 +12,7 @@ class PlaylistDeleteAlert {
     required UpdatePlaylistViewModel viewModel,
     required String playlistId,
   }) {
+     final l10n = AppLocalizations.of(context)!;
     return showDialog(
       context: context,
 
@@ -19,17 +21,17 @@ class PlaylistDeleteAlert {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
-          backgroundColor: AppColors.blackPanther,
+          backgroundColor: AppColors.cardBackground,
           title: CustomText(
-            data: AppStrings.sDDeletePlaylistTitle,
+            data: l10n.bsUpdatePlaylistViewDeletePlaylist,
             textSize: TextSize.medium,
             textWeight: TextWeight.bold,
           ),
           actions: [
             CustomText(
               data: viewModel.playlistName.value.length <= 20
-                  ? "${viewModel.playlistName.value} adlı öğeyi silmek istediğine emin misin?"
-                  : "${viewModel.playlistName.value.substring(0, 20)}... adlı öğeyi silmek istediğine emin misin?",
+                  ? l10n.bsUpdatePlaylistViewDeletePlaylistAreYouSure(viewModel.playlistName.value)
+                  : l10n.bsUpdatePlaylistViewDeletePlaylistAreYouSure(viewModel.playlistName.value.substring(0, 20)),
               textSize: TextSize.medium,
               textWeight: TextWeight.bold,
             ),
@@ -41,7 +43,7 @@ class PlaylistDeleteAlert {
                 children: [
                   GestureDetector(
                     child: CustomText(
-                      data: AppStrings.sDCancel,
+                      data: l10n.bsUpdatePlaylistViewCancel,
                       textSize: TextSize.medium,
                       textWeight: TextWeight.bold,
                       color: AppColors.green,
@@ -53,7 +55,7 @@ class PlaylistDeleteAlert {
                   SizedBox(width: 50),
                   GestureDetector(
                     child: CustomText(
-                      data: AppStrings.sDDelete,
+                      data: l10n.bsUpdatePlaylistViewDelete,
                       textSize: TextSize.medium,
                       textWeight: TextWeight.bold,
                       color: AppColors.green,

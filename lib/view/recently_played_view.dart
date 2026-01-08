@@ -25,9 +25,10 @@ class _RecentlyPlayedViewState extends State<RecentlyPlayedView> {
     super.initState();
     viewModel = RecentlyPlayedViewModel();
     getRecentlyPlayedTracks();
-    
+
     _scrollController.addListener(() {
-      final isBottom = _scrollController.position.pixels ==
+      final isBottom =
+          _scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent;
       if (_isAtBottom != isBottom) {
         setState(() {
@@ -57,7 +58,8 @@ class _RecentlyPlayedViewState extends State<RecentlyPlayedView> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    
+    var bottomHeight = 180.h + MediaQuery.of(context).viewPadding.bottom;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: _Constants.appBarBgColor,
@@ -66,7 +68,6 @@ class _RecentlyPlayedViewState extends State<RecentlyPlayedView> {
         title: AppText(
           text: l10n.recentlyPlayedViewRecentlyPlayed,
           style: AppTextStyle.titleL,
-      
         ),
       ),
       body: Observer(
@@ -86,19 +87,16 @@ class _RecentlyPlayedViewState extends State<RecentlyPlayedView> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        AppText(
-                          text: date,
-                          style: AppTextStyle.h2,
-                         
-                        ),
+                        AppText(text: date, style: AppTextStyle.h2),
                         IconButton(
                           icon: AnimatedRotation(
-                            turns: isExpanded ? _Constants.turnsOpen : _Constants.turnsClosed,
+                            turns: isExpanded
+                                ? _Constants.turnsOpen
+                                : _Constants.turnsClosed,
                             duration: _Constants.animationDuration,
                             child: AppIcon(
                               icon: Icons.arrow_drop_down,
-                               size: AppIconSize.large,
-                         
+                              size: AppIconSize.large,
                             ),
                           ),
                           onPressed: () {
@@ -121,7 +119,6 @@ class _RecentlyPlayedViewState extends State<RecentlyPlayedView> {
                           title: AppText(
                             text: track.name ?? "",
                             style: AppTextStyle.bodyL,
-                        
                           ),
                           leading: ClipRRect(
                             borderRadius: _Constants.imageRadius,
@@ -135,7 +132,7 @@ class _RecentlyPlayedViewState extends State<RecentlyPlayedView> {
                           subtitle: AppText(
                             text: track.artistName ?? "",
                             style: AppTextStyle.bodyM,
-                  
+
                             color: _Constants.subtitleColor,
                           ),
                         );
@@ -152,9 +149,14 @@ class _RecentlyPlayedViewState extends State<RecentlyPlayedView> {
           );
         },
       ),
+
       floatingActionButton: _isAtBottom
           ? Padding(
-              padding: _Constants.fabPadding,
+              padding: EdgeInsets.only(
+                right: 5.w,
+                bottom: bottomHeight,
+                left: 5.w,
+              ),
               child: InkWell(
                 onTap: _scrollToTop,
                 child: Container(
@@ -168,7 +170,6 @@ class _RecentlyPlayedViewState extends State<RecentlyPlayedView> {
                     icon: Icons.arrow_upward_outlined,
                     color: Colors.white,
                     size: AppIconSize.large,
-              
                   ),
                 ),
               ),
@@ -186,17 +187,13 @@ abstract final class _Constants {
   static const Color fabColor = AppColors.green;
   //Padding & Margin
   static final EdgeInsets headerPadding = EdgeInsets.symmetric(
-    horizontal: 20.w, 
+    horizontal: 20.w,
     vertical: 10.h,
   );
   static final EdgeInsets dividerPadding = EdgeInsets.symmetric(
     horizontal: 20.w,
   );
-  static  EdgeInsets fabPadding = EdgeInsets.only(
-    right: 5.w, 
-    bottom: 180.h, 
-    left: 5.w,
-  );
+
   //Sizes & Radius
   static final double fabSize = 40.w;
   static final double imageSize = 50.w;

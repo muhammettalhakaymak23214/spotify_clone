@@ -145,7 +145,7 @@ abstract final class _Constants {
   static EdgeInsets get padding => EdgeInsets.symmetric(horizontal: 40.w);
   static const Color primaryTextColor = AppColors.white;
   static const Color createButtonBackgroundColor = AppColors.green;
-  static const Color enabledBorderColor = AppColors.textFiledEnabledLineColor;
+  static const Color enabledBorderColor = AppColors.grey;
   static const Color focusedBorderColor = AppColors.white;
   static TextStyle? textFieldTextStyle(BuildContext context) =>
       Theme.of(context).textTheme.titleMedium?.copyWith(
