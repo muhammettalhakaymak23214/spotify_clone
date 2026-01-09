@@ -1,28 +1,6 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  //ileride silinecekler
-  
-/*
- 
-
-  static const Color black = Colors.black;
-
-  static const Color planSectionColor = Color.fromARGB(136, 44, 42, 42);
-
- 
-
-  //Bottom Sheet
-  static const Color dragColor = Color.fromARGB(143, 255, 255, 255);
-  
-  //TextField
-  static const Color textFiledEnabledLineColor = Colors.white54;
-*/
-  //
-
-
-
-  //Yeni düzen
   static const Color white = Colors.white;
   static const Color grey = Color.fromARGB(255, 152, 152, 152);
   static const Color green = Colors.green;
