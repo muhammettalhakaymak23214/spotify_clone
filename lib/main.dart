@@ -1,4 +1,8 @@
+import 'dart:ui';
+
 import 'package:audio_service/audio_service.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -14,6 +18,7 @@ import 'package:spotify_clone/core/services/player_service.dart';
 import 'package:spotify_clone/core/services/recently_played_service.dart';
 import 'package:spotify_clone/core/services/service_locator.dart';
 import 'package:spotify_clone/core/services/shared_preference_service.dart';
+import 'package:spotify_clone/firebase_options.dart';
 import 'package:spotify_clone/models/player_model.dart';
 import 'package:spotify_clone/models/recently_played_model.dart';
 import 'package:spotify_clone/view/main_tab_view.dart';
@@ -24,6 +29,28 @@ void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   // WidgetsFlutterBinding.ensureInitialized();
+
+ 
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+
+  FlutterError.onError = (errorDetails) {
+    FlutterError.presentError(errorDetails);
+    if (errorDetails.silent) {
+      FirebaseCrashlytics.instance.recordFlutterError(errorDetails);
+    } else {
+      FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+    }
+  };
+
+
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
+  // ------------------------------------------
 
   //Shared Preference Init
   await SharedPreferenceService.init();

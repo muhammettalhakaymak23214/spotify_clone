@@ -1,3 +1,4 @@
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -224,15 +225,20 @@ class _PremiumViewState extends State<PremiumView> {
     final l10n = AppLocalizations.of(context)!;
     return Padding(
       padding: _Constants.paddingPremiumButtonSection,
-      child: Container(
-        height: _Constants.heightPremiumButtonSection,
-        decoration: _Constants.decorationPremiumButtonSection,
-        alignment: Alignment.center,
-        child: AppText(
-          text: l10n.premiumViewGetIndividual,
-          style: AppTextStyle.bodyM,
-          color: AppColors.black,
-          fontWeight: FontWeight.bold,
+      child: InkWell(
+        onTap: (){
+         // FirebaseCrashlytics.instance.crash();
+        },
+        child: Container(
+          height: _Constants.heightPremiumButtonSection,
+          decoration: _Constants.decorationPremiumButtonSection,
+          alignment: Alignment.center,
+          child: AppText(
+            text: l10n.premiumViewGetIndividual,
+            style: AppTextStyle.bodyM,
+            color: AppColors.black,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );
