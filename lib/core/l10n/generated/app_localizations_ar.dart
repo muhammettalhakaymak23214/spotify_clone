@@ -506,4 +506,83 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get trackListViewEmptyList => 'القائمة فارغة';
+
+  @override
+  String get planIndividualTitle => 'بريميوم فردي';
+
+  @override
+  String get planIndividualSubtitle => 'حساب بريميوم واحد';
+
+  @override
+  String get planStudentTitle => 'بريميوم للطلاب';
+
+  @override
+  String get planStudentSubtitle => 'حساب بريميوم واحد';
+
+  @override
+  String get planDuoTitle => 'بريميوم لشخصين';
+
+  @override
+  String get planDuoSubtitle => 'حسابين بريميوم';
+
+  @override
+  String get planFamilyTitle => 'بريميوم للعائلة';
+
+  @override
+  String get planFamilySubtitle => '6 حسابات بريميوم';
+
+  @override
+  String get continueWithSpotify => 'المتابعة باستخدام Spotify';
+
+  @override
+  String get paymentMethodDescription =>
+      'يمكنك الدفع عبر Spotify باستخدام إحدى طرق الدفع المدعومة.';
+
+  @override
+  String get changeCountry => 'تغيير البلد';
+
+  @override
+  String get paymentChoiceDescription =>
+      'يمكنك الدفع مباشرة عبر Spotify أو باستخدام حساب Google Play الخاص بك.';
+
+  @override
+  String get choosePaymentMethod => 'اختر طريقة الدفع';
+
+  @override
+  String get termsApply => 'تطبق الشروط.';
+
+  @override
+  String get cancelAnytime => 'إلغاء الاشتراك عبر الإنترنت في أي وقت.';
+
+  @override
+  String get monthlyBilling => 'تبدأ الفوترة الشهرية اليوم.';
+
+  @override
+  String get perMonth => '/شهر';
+
+  @override
+  String get changePlan => 'تغيير الخطة';
+
+  @override
+  String get payNow => 'ادفع الآن';
+
+  @override
+  String get googlePlayPointsInfo =>
+      'ادفع باستخدام حساب Google Play الخاص بك واكسب نقاط Play.';
+
+  @override
+  String get andMore => 'والمزيد';
+
+  @override
+  String get googlePlayRedirectInfo =>
+      'سيتم توجيهك إلى Google Play لإكمال عملية الشراء. تنطبق شروط وأحكام Spotify وسياسة الخصوصية. قد يطلب منك Google Play أيضاً قبول شروط إضافية. يجب توجيه الأسئلة المتعلقة بعملية الشراء إلى Google Play.';
+
+  @override
+  String get paymentSuccessful => 'تمت عملية الدفع بنجاح';
+
+  @override
+  String get googleTokenReceived => 'تم استلام رمز Google Pay:';
+
+  @override
+  String get close => 'إغلاق';
 }

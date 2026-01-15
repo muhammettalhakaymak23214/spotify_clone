@@ -211,7 +211,32 @@
     "bschangePlaylistImageViewErrorImageSize": "Dosya boyutu çok büyük", 
     "bschangePlaylistImageViewPleaseSmallImage": "Lütfen daha küçük bir resim seçin.", 
     "bschangePlaylistImageViewOKey": "Tamam",
-    "trackListViewEmptyList": "Liste boş"
+    "trackListViewEmptyList": "Liste boş",
+    "planIndividualTitle": "Premium Bireysel",
+    "planIndividualSubtitle": "1 Premium Hesabı",
+    "planStudentTitle": "Premium Öğrenci",
+    "planStudentSubtitle": "1 Premium Hesabı",
+    "planDuoTitle": "Premium Duo",
+    "planDuoSubtitle": "2 Premium Hesabı",
+    "planFamilyTitle": "Premium Aile",
+    "planFamilySubtitle": "6 Premium Hesabı",
+    "continueWithSpotify": "Spotify ile devam et",
+    "paymentMethodDescription": "Desteklenen ödeme yöntemlerinden birini kullanarak Spotify üzerinden ödeme yapabilirsin.",
+    "changeCountry": "Ülkeyi değiştir",
+    "paymentChoiceDescription": "Doğrudan Spotify üzerinden veya Google Play hesabını kullanarak ödeme yapabilirsin.",
+    "choosePaymentMethod": "Nasıl ödeme yapılacağını seç",
+    "termsApply": "Hükümler geçerlidir.",
+    "cancelAnytime": "İstediğin zaman çevrimiçi iptal et.",
+    "monthlyBilling": "Bugünden itibaren aylık faturalandırma.",
+    "perMonth": "/ay",
+    "changePlan": "Planı değiştir",
+    "payNow": "Ödeme yap",
+    "googlePlayPointsInfo": "Google Play hesabını kullanarak ödeme yap ve Play Puanı kazan.",
+    "andMore": "ve daha fazlası",
+    "googlePlayRedirectInfo": "Satın alma işlemini tamamlamak için Google Play'e yönlendirileceksin. Spotify Hüküm ve Koşulları ile Gizlilik Politikası geçerlidir. Google Play ayrıca ek şartları kabul etmeni isteyebilir. Satın alma işleminle ilgili sorular Google Play'e yönlendirilmelidir.",
+    "paymentSuccessful": "Ödeme Başarılı",
+    "googleTokenReceived": "Google Pay Token Alındı:",
+    "close": "Kapat"
 }
 
 

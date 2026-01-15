@@ -2,11 +2,14 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pay/pay.dart';
 import 'package:spotify_clone/core/constants/app_colors.dart';
 import 'package:spotify_clone/core/constants/app_sizes.dart';
 import 'package:spotify_clone/core/constants/app_strings.dart';
+import 'package:spotify_clone/core/enums/premium_plan.dart';
 import 'package:spotify_clone/core/helpers/currency_helper.dart';
 import 'package:spotify_clone/core/l10n/generated/app_localizations.dart';
+import 'package:spotify_clone/view/payment_methods_view.dart';
 import 'package:spotify_clone/widgets/custom_widgets/app_text.dart';
 import 'package:spotify_clone/widgets/custom_widgets/custom_point.dart';
 
@@ -15,8 +18,16 @@ class PremiumView extends StatefulWidget {
   @override
   State<PremiumView> createState() => _PremiumViewState();
 }
+//late Future<PaymentConfiguration> _googlePayConfig; // Sadece tanım yap
 
 class _PremiumViewState extends State<PremiumView> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    //_googlePayConfig = PaymentConfiguration.fromAsset('configs/google_pay_payment_profile.json');
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
@@ -56,8 +67,8 @@ class _PremiumViewState extends State<PremiumView> {
               _ConditionsSection(
                 conditions1: l10n.premiumViewTermsIndividualWelcome(
                   "2",
-                  CurrencyHelper.formatPrice(45, context),
-                  CurrencyHelper.formatPrice(99, context),
+                  CurrencyHelper.formatPrice(44.99, context),
+                  CurrencyHelper.formatPrice(99.99, context),
                 ),
                 conditions2: l10n.premiumViewTermsApply,
                 conditions3: l10n.premiumViewTermsExpiryDate("2025"),
@@ -66,10 +77,19 @@ class _PremiumViewState extends State<PremiumView> {
               const _WhyPremiumSection(),
               _currentPlansSection(),
               _PlanSention(
-                title: l10n.premiumViewPromoShortWelcome(2, CurrencyHelper.formatPrice(45, context)),
+                plan: PremiumPlan.individual,
+                title: l10n.premiumViewPromoShortWelcome(
+                  2,
+                  CurrencyHelper.formatPrice(44.99, context),
+                ),
                 subtitle: l10n.premiumViewPlanIndividual,
-                price: l10n.premiumViewPlanPricePromo("2", CurrencyHelper.formatPrice(45, context)),
-                priceDesciription: l10n.premiumViewPlanPriceAfterPromo(CurrencyHelper.formatPrice(45, context)),
+                price: l10n.premiumViewPlanPricePromo(
+                  "2",
+                  CurrencyHelper.formatPrice(44.99, context),
+                ),
+                priceDesciription: l10n.premiumViewPlanPriceAfterPromo(
+                  CurrencyHelper.formatPrice(44.99, context),
+                ),
                 color: _Constants.colorPink,
                 buttonTitle: l10n.premiumViewGetIndividual,
                 packageDetails: [
@@ -78,15 +98,18 @@ class _PremiumViewState extends State<PremiumView> {
                 ],
                 conditions1: l10n.premiumViewConditionsIndividual(
                   "2",
-                  CurrencyHelper.formatPrice(45, context),
-                  CurrencyHelper.formatPrice(99, context),
+                  CurrencyHelper.formatPrice(45.99, context),
+                  CurrencyHelper.formatPrice(99.99, context),
                 ),
                 conditions2: l10n.premiumViewTermsApply,
                 conditions3: l10n.premiumViewTermsExpiryDate("2025"),
               ),
               _PlanSention(
+                plan: PremiumPlan.student,
                 subtitle: l10n.premiumViewPlanStudent,
-                price: l10n.premiumViewPlanPricePerMonth(CurrencyHelper.formatPrice(65, context)),
+                price: l10n.premiumViewPlanPricePerMonth(
+                  CurrencyHelper.formatPrice(19.99, context),
+                ),
                 color: _Constants.colorPurple,
                 buttonTitle: l10n.premiumViewGetStudent,
                 packageDetails: [
@@ -97,8 +120,11 @@ class _PremiumViewState extends State<PremiumView> {
                 conditions2: l10n.premiumViewTermsApply,
               ),
               _PlanSention(
+                plan: PremiumPlan.duo,
                 subtitle: l10n.premiumViewPlanDuo,
-                price: l10n.premiumViewPlanPricePerMonth(CurrencyHelper.formatPrice(135, context)),
+                price: l10n.premiumViewPlanPricePerMonth(
+                  CurrencyHelper.formatPrice(134.99, context),
+                ),
                 color: _Constants.colorYellow,
                 buttonTitle: l10n.premiumViewGetDuo,
                 packageDetails: [
@@ -109,8 +135,11 @@ class _PremiumViewState extends State<PremiumView> {
                 conditions2: l10n.premiumViewTermsApply,
               ),
               _PlanSention(
+                plan: PremiumPlan.family,
                 subtitle: l10n.premiumViewPlanFamily,
-                price: l10n.premiumViewPlanPricePerMonth(CurrencyHelper.formatPrice(165, context)),
+                price: l10n.premiumViewPlanPricePerMonth(
+                  CurrencyHelper.formatPrice(164.99, context),
+                ),
                 color: _Constants.colorBlue,
                 buttonTitle: l10n.premiumViewGetFamily,
                 packageDetails: [
@@ -176,7 +205,10 @@ class _PremiumViewState extends State<PremiumView> {
         child: Opacity(
           opacity: t,
           child: AppText(
-            text: l10n.premiumViewTitle("2", CurrencyHelper.formatPrice(45, context)),
+            text: l10n.premiumViewTitle(
+              "2",
+              CurrencyHelper.formatPrice(45, context),
+            ),
             style: AppTextStyle.h2,
             color: AppColors.white,
             fontWeight: FontWeight.bold,
@@ -226,8 +258,15 @@ class _PremiumViewState extends State<PremiumView> {
     return Padding(
       padding: _Constants.paddingPremiumButtonSection,
       child: InkWell(
-        onTap: (){
-         // FirebaseCrashlytics.instance.crash();
+        onTap: () {
+          // FirebaseCrashlytics.instance.crash();
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  const PaymentMethodsView(plan: PremiumPlan.individual),
+            ),
+          );
         },
         child: Container(
           height: _Constants.heightPremiumButtonSection,
@@ -326,7 +365,7 @@ class _PlanSention extends StatelessWidget {
     required this.color,
     this.conditions1,
     this.conditions2,
-    this.conditions3,
+    this.conditions3, required this.plan,
   });
   final String? title;
   final String subtitle;
@@ -338,9 +377,10 @@ class _PlanSention extends StatelessWidget {
   final String? conditions2;
   final String? conditions3;
   final Color color;
+  final  PremiumPlan plan;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context ) {
     return Padding(
       padding: _Constants.paddingPlanSentionOut,
       child: Container(
@@ -368,7 +408,7 @@ class _PlanSention extends StatelessWidget {
             ),
             _divider(),
             _planDetailSection(),
-            _buttonSection(),
+            _buttonSection(context , plan),
             _ConditionsSection(
               conditions1: conditions1,
               conditions2: conditions2,
@@ -381,24 +421,35 @@ class _PlanSention extends StatelessWidget {
     );
   }
 
-  Padding _buttonSection() {
+  Padding _buttonSection(BuildContext context , PremiumPlan plan) {
     return Padding(
       padding: _Constants.paddingButtonSection,
-      child: Container(
-        height: _Constants.heightButtonSection,
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: _Constants.radiusButtonSection,
-        ),
-        child: Center(
-          child: Padding(
-            padding: _Constants.paddingButtonSectionInText,
-            child: AppText(
-              text: buttonTitle,
-              textAlign: TextAlign.center,
-              style: AppTextStyle.bodyM,
-              color: AppColors.black,
-              fontWeight: FontWeight.bold,
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                   PaymentMethodsView(plan: plan),
+            ),
+          );
+        },
+        child: Container(
+          height: _Constants.heightButtonSection,
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: _Constants.radiusButtonSection,
+          ),
+          child: Center(
+            child: Padding(
+              padding: _Constants.paddingButtonSectionInText,
+              child: AppText(
+                text: buttonTitle,
+                textAlign: TextAlign.center,
+                style: AppTextStyle.bodyM,
+                color: AppColors.black,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ),
@@ -653,8 +704,9 @@ abstract final class _Constants {
   // Radius
   static BorderRadiusGeometry get radiusButtonSection =>
       BorderRadius.circular(20.r);
-  static BorderRadiusGeometry get radiusTopLeftContainer => BorderRadiusDirectional.only(
-  topStart: Radius.circular(10.r),  
-  bottomEnd: Radius.circular(10.r), 
-);
+  static BorderRadiusGeometry get radiusTopLeftContainer =>
+      BorderRadiusDirectional.only(
+        topStart: Radius.circular(10.r),
+        bottomEnd: Radius.circular(10.r),
+      );
 }

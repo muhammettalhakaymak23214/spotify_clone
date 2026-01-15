@@ -25,6 +25,8 @@ class AppText extends StatelessWidget {
   final FontWeight? fontWeight;
   final TextOverflow? overflow;
   final bool? softWrap;
+  final TextDecoration? decoration; 
+  final Color? decorationColor;
 
   const AppText({
     required this.text,
@@ -36,6 +38,8 @@ class AppText extends StatelessWidget {
     this.fontWeight,
     this.overflow,
     this.softWrap,
+    this.decoration,
+    this.decorationColor
   });
 
   @override
@@ -64,7 +68,7 @@ class AppText extends StatelessWidget {
       maxLines: maxLines,
       overflow: overflow ?? (maxLines != null ? TextOverflow.ellipsis : null),
       softWrap: softWrap,
-      style: selectedStyle?.copyWith(color: color, fontWeight: fontWeight),
+      style: selectedStyle?.copyWith(color: color, fontWeight: fontWeight , decoration: decoration,decorationColor: decorationColor,),
     );
   }
 }

@@ -506,4 +506,83 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get trackListViewEmptyList => 'List is empty';
+
+  @override
+  String get planIndividualTitle => 'Premium Individual';
+
+  @override
+  String get planIndividualSubtitle => '1 Premium Account';
+
+  @override
+  String get planStudentTitle => 'Premium Student';
+
+  @override
+  String get planStudentSubtitle => '1 Premium Account';
+
+  @override
+  String get planDuoTitle => 'Premium Duo';
+
+  @override
+  String get planDuoSubtitle => '2 Premium Accounts';
+
+  @override
+  String get planFamilyTitle => 'Premium Family';
+
+  @override
+  String get planFamilySubtitle => '6 Premium Accounts';
+
+  @override
+  String get continueWithSpotify => 'Continue with Spotify';
+
+  @override
+  String get paymentMethodDescription =>
+      'You can pay via Spotify using one of the supported payment methods.';
+
+  @override
+  String get changeCountry => 'Change country';
+
+  @override
+  String get paymentChoiceDescription =>
+      'You can pay directly via Spotify or using your Google Play account.';
+
+  @override
+  String get choosePaymentMethod => 'Choose how to pay';
+
+  @override
+  String get termsApply => 'Terms apply.';
+
+  @override
+  String get cancelAnytime => 'Cancel online anytime.';
+
+  @override
+  String get monthlyBilling => 'Monthly billing starts today.';
+
+  @override
+  String get perMonth => '/month';
+
+  @override
+  String get changePlan => 'Change plan';
+
+  @override
+  String get payNow => 'Pay now';
+
+  @override
+  String get googlePlayPointsInfo =>
+      'Pay using your Google Play account and earn Play Points.';
+
+  @override
+  String get andMore => 'and more';
+
+  @override
+  String get googlePlayRedirectInfo =>
+      'You will be redirected to Google Play to complete your purchase. Spotify\'s Terms and Conditions and Privacy Policy apply. Google Play may also require you to accept additional terms. Questions about your purchase should be directed to Google Play.';
+
+  @override
+  String get paymentSuccessful => 'Payment Successful';
+
+  @override
+  String get googleTokenReceived => 'Google Pay Token Received:';
+
+  @override
+  String get close => 'Close';
 }

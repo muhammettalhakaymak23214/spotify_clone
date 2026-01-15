@@ -989,6 +989,156 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Liste boş'**
   String get trackListViewEmptyList;
+
+  /// No description provided for @planIndividualTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Premium Bireysel'**
+  String get planIndividualTitle;
+
+  /// No description provided for @planIndividualSubtitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'1 Premium Hesabı'**
+  String get planIndividualSubtitle;
+
+  /// No description provided for @planStudentTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Premium Öğrenci'**
+  String get planStudentTitle;
+
+  /// No description provided for @planStudentSubtitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'1 Premium Hesabı'**
+  String get planStudentSubtitle;
+
+  /// No description provided for @planDuoTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Premium Duo'**
+  String get planDuoTitle;
+
+  /// No description provided for @planDuoSubtitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'2 Premium Hesabı'**
+  String get planDuoSubtitle;
+
+  /// No description provided for @planFamilyTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Premium Aile'**
+  String get planFamilyTitle;
+
+  /// No description provided for @planFamilySubtitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'6 Premium Hesabı'**
+  String get planFamilySubtitle;
+
+  /// No description provided for @continueWithSpotify.
+  ///
+  /// In tr, this message translates to:
+  /// **'Spotify ile devam et'**
+  String get continueWithSpotify;
+
+  /// No description provided for @paymentMethodDescription.
+  ///
+  /// In tr, this message translates to:
+  /// **'Desteklenen ödeme yöntemlerinden birini kullanarak Spotify üzerinden ödeme yapabilirsin.'**
+  String get paymentMethodDescription;
+
+  /// No description provided for @changeCountry.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ülkeyi değiştir'**
+  String get changeCountry;
+
+  /// No description provided for @paymentChoiceDescription.
+  ///
+  /// In tr, this message translates to:
+  /// **'Doğrudan Spotify üzerinden veya Google Play hesabını kullanarak ödeme yapabilirsin.'**
+  String get paymentChoiceDescription;
+
+  /// No description provided for @choosePaymentMethod.
+  ///
+  /// In tr, this message translates to:
+  /// **'Nasıl ödeme yapılacağını seç'**
+  String get choosePaymentMethod;
+
+  /// No description provided for @termsApply.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hükümler geçerlidir.'**
+  String get termsApply;
+
+  /// No description provided for @cancelAnytime.
+  ///
+  /// In tr, this message translates to:
+  /// **'İstediğin zaman çevrimiçi iptal et.'**
+  String get cancelAnytime;
+
+  /// No description provided for @monthlyBilling.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bugünden itibaren aylık faturalandırma.'**
+  String get monthlyBilling;
+
+  /// No description provided for @perMonth.
+  ///
+  /// In tr, this message translates to:
+  /// **'/ay'**
+  String get perMonth;
+
+  /// No description provided for @changePlan.
+  ///
+  /// In tr, this message translates to:
+  /// **'Planı değiştir'**
+  String get changePlan;
+
+  /// No description provided for @payNow.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ödeme yap'**
+  String get payNow;
+
+  /// No description provided for @googlePlayPointsInfo.
+  ///
+  /// In tr, this message translates to:
+  /// **'Google Play hesabını kullanarak ödeme yap ve Play Puanı kazan.'**
+  String get googlePlayPointsInfo;
+
+  /// No description provided for @andMore.
+  ///
+  /// In tr, this message translates to:
+  /// **'ve daha fazlası'**
+  String get andMore;
+
+  /// No description provided for @googlePlayRedirectInfo.
+  ///
+  /// In tr, this message translates to:
+  /// **'Satın alma işlemini tamamlamak için Google Play\'e yönlendirileceksin. Spotify Hüküm ve Koşulları ile Gizlilik Politikası geçerlidir. Google Play ayrıca ek şartları kabul etmeni isteyebilir. Satın alma işleminle ilgili sorular Google Play\'e yönlendirilmelidir.'**
+  String get googlePlayRedirectInfo;
+
+  /// No description provided for @paymentSuccessful.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ödeme Başarılı'**
+  String get paymentSuccessful;
+
+  /// No description provided for @googleTokenReceived.
+  ///
+  /// In tr, this message translates to:
+  /// **'Google Pay Token Alındı:'**
+  String get googleTokenReceived;
+
+  /// No description provided for @close.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kapat'**
+  String get close;
 }
 
 class _AppLocalizationsDelegate

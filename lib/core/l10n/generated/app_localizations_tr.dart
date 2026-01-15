@@ -502,4 +502,83 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get trackListViewEmptyList => 'Liste boş';
+
+  @override
+  String get planIndividualTitle => 'Premium Bireysel';
+
+  @override
+  String get planIndividualSubtitle => '1 Premium Hesabı';
+
+  @override
+  String get planStudentTitle => 'Premium Öğrenci';
+
+  @override
+  String get planStudentSubtitle => '1 Premium Hesabı';
+
+  @override
+  String get planDuoTitle => 'Premium Duo';
+
+  @override
+  String get planDuoSubtitle => '2 Premium Hesabı';
+
+  @override
+  String get planFamilyTitle => 'Premium Aile';
+
+  @override
+  String get planFamilySubtitle => '6 Premium Hesabı';
+
+  @override
+  String get continueWithSpotify => 'Spotify ile devam et';
+
+  @override
+  String get paymentMethodDescription =>
+      'Desteklenen ödeme yöntemlerinden birini kullanarak Spotify üzerinden ödeme yapabilirsin.';
+
+  @override
+  String get changeCountry => 'Ülkeyi değiştir';
+
+  @override
+  String get paymentChoiceDescription =>
+      'Doğrudan Spotify üzerinden veya Google Play hesabını kullanarak ödeme yapabilirsin.';
+
+  @override
+  String get choosePaymentMethod => 'Nasıl ödeme yapılacağını seç';
+
+  @override
+  String get termsApply => 'Hükümler geçerlidir.';
+
+  @override
+  String get cancelAnytime => 'İstediğin zaman çevrimiçi iptal et.';
+
+  @override
+  String get monthlyBilling => 'Bugünden itibaren aylık faturalandırma.';
+
+  @override
+  String get perMonth => '/ay';
+
+  @override
+  String get changePlan => 'Planı değiştir';
+
+  @override
+  String get payNow => 'Ödeme yap';
+
+  @override
+  String get googlePlayPointsInfo =>
+      'Google Play hesabını kullanarak ödeme yap ve Play Puanı kazan.';
+
+  @override
+  String get andMore => 've daha fazlası';
+
+  @override
+  String get googlePlayRedirectInfo =>
+      'Satın alma işlemini tamamlamak için Google Play\'e yönlendirileceksin. Spotify Hüküm ve Koşulları ile Gizlilik Politikası geçerlidir. Google Play ayrıca ek şartları kabul etmeni isteyebilir. Satın alma işleminle ilgili sorular Google Play\'e yönlendirilmelidir.';
+
+  @override
+  String get paymentSuccessful => 'Ödeme Başarılı';
+
+  @override
+  String get googleTokenReceived => 'Google Pay Token Alındı:';
+
+  @override
+  String get close => 'Kapat';
 }

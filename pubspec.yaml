@@ -81,6 +81,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   firebase_core: ^4.3.0
   firebase_crashlytics: ^5.0.6
+  pay: ^3.3.0
 
 dev_dependencies:
   flutter_test:
@@ -111,6 +112,7 @@ flutter:
   assets:
    - assets/png/
    - assets/lottie/
+   - assets/configs/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
